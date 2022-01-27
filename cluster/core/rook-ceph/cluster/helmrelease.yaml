@@ -23,6 +23,7 @@ spec:
     toolbox:
       enabled: true
     ingress:
+      enabled: true
       dashboard:
         annotations:
           kubernetes.io/ingress.class: "traefik"
