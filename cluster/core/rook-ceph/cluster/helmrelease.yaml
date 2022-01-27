@@ -26,6 +26,7 @@ spec:
       dashboard:
         annotations:
           kubernetes.io/ingress.class: "traefik"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
@@ -35,7 +36,6 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-            secret-name: "rook-tls"
     cephClusterSpec:
       crashCollector:
         disable: false
