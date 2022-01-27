@@ -35,6 +35,7 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
+            secret-name: "rook-tls"
     cephClusterSpec:
       crashCollector:
         disable: false
