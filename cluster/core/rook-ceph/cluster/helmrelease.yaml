@@ -63,6 +63,7 @@ spec:
               - name: "sdb"
     cephBlockPools:
       - name: ceph-blockpool
+        namespace: rook-ceph
         spec:
           failureDomain: host
           replicated:
