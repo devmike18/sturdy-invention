@@ -6,11 +6,11 @@ metadata:
   namespace: rook-ceph
 spec:
   metadataPool:
-    replicated:
-      size: 1
+    - replicated:
+      size: 3
   dataPools:
     - replicated:
-      size: 1
+      size: 3
   preserveFilesystemOnDelete: false
   metadataServer:
     activeCount: 1
