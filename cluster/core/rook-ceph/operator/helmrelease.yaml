@@ -15,9 +15,14 @@ spec:
         kind: HelmRepository
         name: rook-ceph-charts
         namespace: flux-system
+  install:
+    createNamespace: true
+    crds: CreateReplace
+  upgrade:
+    crds: CreateReplace
   values:
     crds:
-      enabled: false
+      enabled: true
     csi:
       enableCephfsDriver: false
       enableCephfsSnapshotter: false
