@@ -38,6 +38,7 @@ spec:
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
+            secret-name: "rook-tls"
     cephClusterSpec:
       crashCollector:
         disable: false
@@ -63,7 +64,6 @@ spec:
               - name: "sdb"
     cephBlockPools:
       - name: ceph-blockpool
-        namespace: rook-ceph
         spec:
           failureDomain: host
           replicated:
