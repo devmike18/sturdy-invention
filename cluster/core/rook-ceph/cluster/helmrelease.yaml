@@ -18,6 +18,22 @@ spec:
   dependsOn:
     - name: rook-ceph
   values:
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "weather-sunset"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hosts:
+          - host: "rook.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "rook.${SECRET_DOMAIN}"
     monitoring:
       enabled: true
 
