@@ -23,10 +23,10 @@ spec:
     ingress:
       ingressClassName: "traefik"
       dashboard:
-        ingressClassName: "traefik"
         annotations:
+          hajimari.io/icon: "harddisk"
+          hajimari.io/appName: "rook-ceph"
           hajimari.io/enable: "true"
-          hajimari.io/icon: "weather-sunset"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
           name: "rook.${SECRET_DOMAIN}"
@@ -38,7 +38,6 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
-        ssl: false
       storage:
         useAllNodes: false
         useAllDevices: false
