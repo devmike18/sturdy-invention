@@ -24,6 +24,7 @@ spec:
       ingressClassName: "traefik"
       dashboard:
         annotations:
+          kubernetes.io/ingress.class: "traefik"
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
           hajimari.io/enable: "true"
