@@ -44,13 +44,13 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "k3s-wo-01"
+          - name: "knode1"
             devices:
               - name: "sdb"
-          - name: "k3s-wo-02"
+          - name: "knode2"
             devices:
               - name: "sdb"
-          - name: "k3s-wo-05"
+          - name: "knode3"
             devices:
               - name: "sdb"
     cephBlockPools:
