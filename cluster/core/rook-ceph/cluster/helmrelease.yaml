@@ -21,6 +21,7 @@ spec:
     monitoring:
       enabled: true
     ingress:
+      ingressClassName: "traefik"
       dashboard:
         ingressClassName: "traefik"
         annotations:
