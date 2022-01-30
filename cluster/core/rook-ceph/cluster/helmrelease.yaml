@@ -25,7 +25,6 @@ spec:
       dashboard:
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/ingress.class: "traefik"
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
@@ -39,6 +38,7 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        ssl: false
       storage:
         useAllNodes: false
         useAllDevices: false
