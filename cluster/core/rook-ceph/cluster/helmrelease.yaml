@@ -18,37 +18,23 @@ spec:
   dependsOn:
     - name: rook-ceph
   values:
+    monitoring:
+      enabled: true
     ingress:
-      main:
-        enabled: true
+      dashboard:
         ingressClassName: "traefik"
         annotations:
+          kubernetes.io/ingress.class: "traefik"
           hajimari.io/enable: "true"
           hajimari.io/icon: "weather-sunset"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        hosts:
-          - host: "rook.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+        host:
+          name: "rook.${SECRET_DOMAIN}"
+          path: "/"
         tls:
           - hosts:
               - "rook.${SECRET_DOMAIN}"
-    monitoring:
-      enabled: true
-
-    toolbox:
-      enabled: true
-
-    dashboard:
-      enabled: true
-      ssl: false
-
     cephClusterSpec:
-      crashCollector:
-        disable: false
-      mgr:
-        count: 2
       dashboard:
         enabled: true
         urlPrefix: /
@@ -58,13 +44,13 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "knode1"
+          - name: "k3s-wo-01"
             devices:
               - name: "sdb"
-          - name: "knode2"
+          - name: "k3s-wo-02"
             devices:
               - name: "sdb"
-          - name: "knode3"
+          - name: "k3s-wo-05"
             devices:
               - name: "sdb"
     cephBlockPools:
@@ -72,7 +58,6 @@ spec:
         spec:
           failureDomain: host
           replicated:
-            requireSafeReplicaSize: false
             size: 3
         storageClass:
           enabled: true
