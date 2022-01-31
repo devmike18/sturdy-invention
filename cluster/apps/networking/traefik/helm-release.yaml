@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://helm.traefik.io/traefik
       chart: traefik
-      version: 10.9.1
+      version: 10.11.1
       sourceRef:
         kind: HelmRepository
         name: traefik-charts
@@ -22,6 +22,8 @@ spec:
   values:
     image:
       name: ghcr.io/k8s-at-home/traefik
+      tag: v2.6.0
+      pullPolicy: IfNotPresent
     deployment:
       kind: Deployment
       replicas: 1
