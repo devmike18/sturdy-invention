@@ -19,16 +19,15 @@ spec:
   values:
     monitoring:
       enabled: true
+    toolbox:
+      enabled: true
     ingress:
       dashboard:
         ingressClassName: "traefik"
         annotations:
-          kubernetes.io/ingress.class: "traefik"
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
           hajimari.io/enable: "true"
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: "/"
@@ -38,6 +37,8 @@ spec:
     cephClusterSpec:
       crashCollector:
         disable: false
+      mgr:
+        count: 2
       dashboard:
         enabled: true
         urlPrefix: /
