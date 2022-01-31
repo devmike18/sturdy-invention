@@ -28,6 +28,7 @@ spec:
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
           hajimari.io/enable: "true"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: "/"
