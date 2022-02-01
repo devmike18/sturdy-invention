@@ -19,7 +19,7 @@ spec:
 
   dependsOn:
     - name: traefik
-      namespace: network
+      namespace: networking
 
   values:
     image:
