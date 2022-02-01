@@ -64,14 +64,14 @@ spec:
       config:
         enabled: true
         existingClaim: jellyfin-config-v1
-#      media:
-#        enabled: true
-#        type: custom
-#        volumeSpec:
-#          nfs:
-#            server: "${NFS_SERVER}"
-#            path: /mnt/user/media
-#        mountPath: /media
+      media:
+        enabled: true
+        type: custom
+        volumeSpec:
+          nfs:
+            server: "${NFS_SERVER}"
+            path: /volume1/video
+        mountPath: /media
       transcode:
         enabled: true
         type: emptyDir
