@@ -34,9 +34,9 @@ spec:
 
     dnsPolicy: ClusterFirstWithHostNet
 
-#    envFrom:
-#      - secretRef:
-#          name: home-assistant-secrets
+    envFrom:
+      - secretRef:
+          name: home-assistant-secrets
 
     service:
       main:
