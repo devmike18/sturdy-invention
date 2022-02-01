@@ -1,0 +1,130 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts
+      chart: home-assistant
+      version: 12.0.1
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: traefik
+      namespace: network
+
+  values:
+    image:
+      repository: homeassistant/home-assistant
+      pullPolicy: IfNotPresent
+      tag: 2021.12.10
+
+    env:
+      TZ: "America/Toronto"
+
+    hostNetwork: true
+
+    dnsPolicy: ClusterFirstWithHostNet
+
+#    envFrom:
+#      - secretRef:
+#          name: home-assistant-secrets
+
+    service:
+      main:
+        type: LoadBalancer
+        externalIPs:
+          - ${METALLB_HOMEASSISTANT_ADDR}
+        externalTrafficPolicy: Local
+
+    probes:
+      liveness:
+        enabled: false
+      readiness:
+        enabled: false
+      startup:
+        enabled: false
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: home-assistant-config-v1
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          external-dns/is-public: "true"
+          external-dns.alpha.kubernetes.io/target: "ipv4.${SECRET_DOMAIN}"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "home-assistant"
+        hosts:
+          - host: "homeassistant-new.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "homeassistant-new.${SECRET_DOMAIN}"
+
+    resources:
+      requests:
+        cpu: 75m
+        memory: 512Mi
+      limits:
+        memory: 1024Mi
+
+    addons:
+      codeserver:
+        enabled: true
+
+        image:
+          repository: ghcr.io/k8s-at-home/code-server
+          tag: v4.0.2
+
+        workingDir: "/config"
+
+        ingress:
+          enabled: true
+          ingressClassName: "traefik"
+          annotations:
+            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+            hajimari.io/enable: "true"
+            hajimari.io/icon: "microsoft-visual-studio-code"
+          hosts:
+            - host: "ha-vscode.${SECRET_DOMAIN}"
+              paths:
+                - path: /
+                  pathType: Prefix
+          tls:
+            - hosts:
+                - "ha-vscode.${SECRET_DOMAIN}"
+
+        args:
+          - --auth
+          - "none"
+          - --user-data-dir
+          - "/config/.vscode"
+          - --extensions-dir
+          - "/config/.vscode"
+
+        volumeMounts:
+          - name: config
+            mountPath: /config
+
+        resources:
+          requests:
+            cpu: 35m
+            memory: 128Mi
+          limits:
+            memory: 512Mi
