@@ -47,7 +47,7 @@ spec:
       type: S3
       config:
         bucket: "thanos"
-        endpoint: "nas02.${SECRET_DOMAIN}"
+        endpoint: "nas02.${SECRET_DOMAIN}:9001"
         insecure: true
         access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
         secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
