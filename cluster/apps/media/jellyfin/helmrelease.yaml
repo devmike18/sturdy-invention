@@ -76,6 +76,7 @@ spec:
         enabled: true
         type: emptyDir
         medium: Memory
+        mountPath: /transcodes
 
     resources:
       requests:
