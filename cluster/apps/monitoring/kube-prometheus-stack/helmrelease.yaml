@@ -225,11 +225,11 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.24.0
           version: v0.22.0
-          objectStorageConfig: |
-            type: S3
-            config:
-              bucket: "thanos"
-              endpoint: "nas02.${SECRET_DOMAIN}:9000"
-              insecure: true
-              access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
-              secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
+            #          objectStorageConfig: |
+            #            type: S3
+            #            config:
+            #              bucket: "thanos"
+            #              endpoint: "nas02.${SECRET_DOMAIN}:9000"
+            #              insecure: true
+            #              access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
+            #              secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
