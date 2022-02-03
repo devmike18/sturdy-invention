@@ -7,5 +7,6 @@ resources:
   - networking
   - system-upgrade
   - monitoring
+  - flux-system
   - home
   - media
