@@ -72,7 +72,7 @@ spec:
           nfs:
             server: "${NFS_SERVER}"
             path: /volume1/video/
-        mountPath: /media
+        mountPath: /media1/
 
     resources:
       requests:
