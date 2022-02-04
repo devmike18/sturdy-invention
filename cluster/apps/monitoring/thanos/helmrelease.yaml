@@ -67,7 +67,7 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        storageClass: "rook-ceph"
+        storageClass: ceph-block
         size: 5Gi
 
     metrics:
