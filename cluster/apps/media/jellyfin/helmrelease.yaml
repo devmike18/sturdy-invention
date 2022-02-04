@@ -66,11 +66,8 @@ spec:
         existingClaim: jellyfin-config-v1
       media:
         enabled: true
-        type: custom
-        volumeSpec:
-          nfs:
-            server: "${NFS_SERVER}"
-            path: /volume1/video
+        existingClaim: nfs-media-pvc
+        readOnly: true
         mountPath: /media
       transcode:
         enabled: true
