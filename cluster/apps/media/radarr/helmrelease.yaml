@@ -60,6 +60,8 @@ spec:
         - hosts:
             - "radarr.${SECRET_DOMAIN}"
 
+    podSecurityContext:
+      fsGroup: 568
 
     persistence:
       config:
