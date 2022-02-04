@@ -60,9 +60,6 @@ spec:
         - hosts:
             - "radarr.${SECRET_DOMAIN}"
 
-    podSecurityContext:
-      fsGroup: 568
-
     persistence:
       config:
         enabled: true
@@ -70,6 +67,7 @@ spec:
       media:
         enabled: true
         type: custom
+        readOnly: false
         volumeSpec:
           nfs:
             server: "${NFS_SERVER}"
