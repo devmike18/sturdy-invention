@@ -22,18 +22,18 @@ spec:
       tag: v4.4.0
     env:
       TZ: "America/Chicago"
-        #    service:
-        #      bittorrent:
-        #        enabled: true
-        #        type: LoadBalancer
-        #        loadBalancerIP: ${SVC_QBIT_IP}
-        #        externalTrafficPolicy: Local
-        #        ports:
-        #          bittorrent:
-        #            enabled: true
-        #            port: 50413
-        #            protocol: TCP
-        #            targetPort: 50413
+    service:
+      bittorrent:
+        enabled: true
+        type: LoadBalancer
+        loadBalancerIP: ${METALLB_QBITTORRENT_ADDR}
+        externalTrafficPolicy: Local
+        ports:
+          bittorrent:
+            enabled: true
+            port: 50413
+            protocol: TCP
+            targetPort: 50413
     ingress:
       main:
         enabled: true
