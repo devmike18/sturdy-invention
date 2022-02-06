@@ -25,9 +25,13 @@ spec:
     routed_namespaces:
       - media
     settings:
-      NOT_ROUTED_TO_GATEWAY_CIDRS: "172.22.0.0/12 ${CONFIG_LOCAL_NETWORK}"
-      VPN_LOCAL_CIDRS: "172.22.0.0/12 ${CONFIG_LOCAL_NETWORK}"
+      NOT_ROUTED_TO_GATEWAY_CIDRS: "172.22.0.0/12 10.0.0.0/24 ${CONFIG_LOCAL_NETWORK}"
+      # VPN_LOCAL_CIDRS: "172.22.0.0/12 10.0.0.0/24 ${CONFIG_LOCAL_NETWORK}"
       VXLAN_IP_NETWORK: "${CONFIG_VPNGATEWAY_NETWORK}"
+      # VPN_INTERFACE: tun0 # tun0 for openvpn, wg0 for wireguard
+      VXLAN_ID: 43
+      # VPN_BLOCK_OTHER_TRAFFIC: true
+      # VPN_TRAFFIC_PORT: "${SECRET_VPN_GATEWAY_PORT}"
     webhook:
       image:
         repository: ghcr.io/k8s-at-home/gateway-admision-controller
