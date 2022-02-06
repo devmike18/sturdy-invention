@@ -24,11 +24,11 @@ spec:
       TZ: "America/Chicago"
     hostname: qbittorrent # static name needed for vpn gateway routing
     podAnnotations:
-      setGateway: true
+      setGateway: "true"
     ingress:
       main:
         enabled: true
-        ingressClassName: traefik
+        ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "cloud-download"
