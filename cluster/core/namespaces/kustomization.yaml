@@ -9,3 +9,4 @@ resources:
   - monitoring.yaml
   - home.yaml
   - media.yaml
+  - vpn-gateway.yaml
