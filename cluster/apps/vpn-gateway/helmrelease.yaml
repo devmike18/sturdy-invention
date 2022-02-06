@@ -28,9 +28,9 @@ spec:
     settings:
       NOT_ROUTED_TO_GATEWAY_CIDRS: "10.42.0.0/24 10.43.0.0/23 172.22.0.0/12 10.0.0.0/24 ${CONFIG_LOCAL_NETWORK}"
       VPN_LOCAL_CIDRS: "10.0.0.0/8 192.168.0.0/16"
-        #VXLAN_IP_NETWORK: "${CONFIG_VPNGATEWAY_NETWORK}"
-      VPN_INTERFACE: tun0 # tun0 for openvpn, wg0 for wireguard
-      VXLAN_ID: 43
+      # VXLAN_IP_NETWORK: "${CONFIG_VPNGATEWAY_NETWORK}"
+      # VPN_INTERFACE: tun0 # tun0 for openvpn, wg0 for wireguard
+      # VXLAN_ID: 42
       # VPN_BLOCK_OTHER_TRAFFIC: true
       # VPN_TRAFFIC_PORT: "${SECRET_VPN_GATEWAY_PORT}"
     webhook:
