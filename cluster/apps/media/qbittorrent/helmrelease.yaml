@@ -23,8 +23,6 @@ spec:
     env:
       TZ: "America/Chicago"
     hostname: qbittorrent # static name needed for vpn gateway routing
-    podAnnotations:
-      setGateway: "true"
     ingress:
       main:
         enabled: true
