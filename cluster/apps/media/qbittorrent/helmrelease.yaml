@@ -65,9 +65,8 @@ spec:
         mountPath: /nfs-media
         existingClaim: nfs-media-pvc
     podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+      supplementalGroups:
+        - 5600
     resources:
       requests:
         memory: 250Mi
