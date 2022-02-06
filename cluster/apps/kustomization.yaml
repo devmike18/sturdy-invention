@@ -11,3 +11,4 @@ resources:
   - home
   - media
   - calico-system
+  - vpn-gateway
