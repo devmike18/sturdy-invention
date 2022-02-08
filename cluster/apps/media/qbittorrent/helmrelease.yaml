@@ -76,9 +76,9 @@ spec:
 
         # Note that the security context below is default.  I am being explicit in case I tinker with
         # the parent context.
-        securityContext:
-          runAsUser: 568
-          runAsGroup: 568
+        # securityContext:
+        #   runAsUser: 568
+        #   runAsGroup: 568
         wireguard:
           image:
             repository: ghcr.io/k8s-at-home/wireguard
