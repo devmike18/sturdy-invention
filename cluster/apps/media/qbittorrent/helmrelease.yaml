@@ -132,6 +132,7 @@ spec:
         volumeMounts:
           - name: config
             mountPath: /config
+            existingClaim: qbittorrent-config-v1
 
         resources:
           requests:
