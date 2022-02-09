@@ -88,6 +88,21 @@ spec:
           TZ: "America/Toronto"
           IPTABLES_BACKEND: nft
           KILLSWITCH: true
+        networkPolicy:
+          enabled: true
+          egress:
+            - to:
+                - ipBlock:
+                    cidr: 0.0.0.0/0
+              ports:
+                # VPN traffic
+                - port: ${SECRET_VPN_GATEWAY_PORT}
+                  protocol: UDP
+            - to:
+                # Allow traffic within K8S
+                - ipBlock:
+                  cidr: 10.0.0.0/8
+
         scripts:
           up: |-
             #!/bin/bash
