@@ -24,10 +24,9 @@ spec:
       TZ: ${TZ}
     hostname: qbittorrent
     podAnnotations:
-      setGateway: true
+      setGateway: "true"
     podLabels:
-      setGateway: true
-
+      setGateway: "true"
     ingress:
       main:
         enabled: true
