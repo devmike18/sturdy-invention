@@ -22,7 +22,6 @@ spec:
       tag: v4.4.0
     env:
       TZ: "America/Toronto"
-      WAIT_FOR_VPN: "false"
     ingress:
       main:
         enabled: true
@@ -62,108 +61,7 @@ spec:
         readOnly: false
         mountPath: /nfs-media
         existingClaim: nfs-media-pvc
-      # This volume is used to facilitate status reporting between QBT and the VPN client.
-      shared:
-        enabled: true
-        type: emptyDir
-        mountPath: /shared
 
-    # VPN config section
-    addons:
-      vpn:
-        enabled: true
-        type: wireguard
-
-        # Note that the security context below is default.  I am being explicit in case I tinker with
-        # the parent context.
-        # securityContext:
-        #   runAsUser: 568
-        #   runAsGroup: 568
-        wireguard:
-          image:
-            repository: ghcr.io/k8s-at-home/wireguard
-            tag: v1.0.20210914
-        configFileSecret: qbittorrent-vpn-secret
-        env:
-          TZ: "America/Toronto"
-          IPTABLES_BACKEND: nft
-          KILLSWITCH: false
-        networkPolicy:
-          enabled: true
-          egress:
-            - to:
-                - ipBlock:
-                    cidr: 0.0.0.0/0
-              ports:
-                # VPN traffic
-                - port: ${SECRET_VPN_GATEWAY_PORT}
-                  protocol: UDP
-                - port: ${SECRET_VPN_GATEWAY_PORT}
-                  protocol: TCP
-                - port: 53 # DNS
-                  protocol: UDP
-            - to:
-                # Allow traffic within K8S
-                - ipBlock:
-                    cidr: ${NETWORK_K8S_CLUSTER_CIDR}
-                - ipBlock:
-                    cidr: ${NETWORK_K8S_SERVICE_CIDR}
-                - namespaceSelector: {}
-
-        livenessProbe:
-          exec:
-            command:
-              - sh
-              - -c
-              - if [ $(curl -s https://am.i.mullvad.net/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
-          initialDelaySeconds: 30
-          periodSeconds: 60
-          failureThreshold: 1
-        scripts:
-          up: |-
-            #!/bin/bash
-            echo "connected" > /shared/vpnstatus
-          down: |-
-            #!/bin/bash
-            echo "disconnected" > /shared/vpnstatus
-
-      codeserver:
-        enabled: true
-        image:
-          repository: ghcr.io/k8s-at-home/code-server
-          tag: v4.0.2
-        workingDir: "/config"
-        ingress:
-          enabled: true
-          ingressClassName: "traefik"
-          annotations:
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "microsoft-visual-studio-code"
-          hosts:
-            - host: "qbt-vscode.${SECRET_DOMAIN}"
-              paths:
-                - path: /
-                  pathType: Prefix
-          tls:
-            - hosts:
-                - "qbt-vscode.${SECRET_DOMAIN}"
-        args:
-          - --auth
-          - "none"
-          - --user-data-dir
-          - "/config/.vscode"
-          - --extensions-dir
-          - "/config/.vscode"
-        volumeMounts:
-          - name: config
-            mountPath: /config
-        resources:
-          requests:
-            cpu: 35m
-            memory: 128Mi
-          limits:
-            memory: 512Mi
     resources:
       requests:
         memory: 250Mi
