@@ -98,13 +98,10 @@ spec:
 
       codeserver:
         enabled: true
-
         image:
           repository: ghcr.io/k8s-at-home/code-server
           tag: v4.0.2
-
         workingDir: "/config"
-
         ingress:
           enabled: true
           ingressClassName: "traefik"
@@ -120,7 +117,6 @@ spec:
           tls:
             - hosts:
                 - "qbt-vscode.${SECRET_DOMAIN}"
-
         args:
           - --auth
           - "none"
@@ -128,22 +124,15 @@ spec:
           - "/config/.vscode"
           - --extensions-dir
           - "/config/.vscode"
-
         volumeMounts:
           - name: config
             mountPath: /config
-
         resources:
           requests:
             cpu: 35m
             memory: 128Mi
           limits:
             memory: 512Mi
-
-
-    podSecurityContext:
-      supplementalGroups:
-        - 5600
     resources:
       requests:
         memory: 250Mi
