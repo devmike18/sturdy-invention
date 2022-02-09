@@ -110,6 +110,15 @@ spec:
                     cidr: ${NETWORK_K8S_SERVICE_CIDR}
                 - namespaceSelector: {}
 
+        livenessProbe:
+          exec:
+            command:
+              - sh
+              - -c
+              - if [ $(curl -s https://am.i.mullvad.net/country) = '${VPN_COUNTRY}' ]; then exit 0; else exit $?; fi
+          initialDelaySeconds: 30
+          periodSeconds: 60
+          failureThreshold: 1
         scripts:
           up: |-
             #!/bin/bash
