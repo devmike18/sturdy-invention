@@ -22,7 +22,7 @@ spec:
       tag: v4.4.0
     env:
       TZ: "America/Toronto"
-      WAIT_FOR_VPN: "true"
+      WAIT_FOR_VPN: "false"
     ingress:
       main:
         enabled: true
@@ -87,7 +87,7 @@ spec:
         env:
           TZ: "America/Toronto"
           IPTABLES_BACKEND: nft
-          KILLSWITCH: true
+          KILLSWITCH: false
         networkPolicy:
           enabled: true
           egress:
