@@ -120,7 +120,11 @@ spec:
         insecureSkipVerify: true
 
     kubeScheduler:
-      enabled: false
+      enabled: true
+      endpoints:
+        - 192.168.8.21
+        - 192.168.8.22
+        - 192.168.8.23
       service:
         enabled: true
         port: 10259
@@ -131,10 +135,18 @@ spec:
         insecureSkipVerify: true
 
     kubeProxy:
-      enabled: false
+      enabled: true
+      endpoints:
+        - 192.168.8.21
+        - 192.168.8.22
+        - 192.168.8.23
 
     kubeEtcd:
       enabled: true
+      endpoints:
+        - 192.168.8.21
+        - 192.168.8.22
+        - 192.168.8.23
       service:
         enabled: true
         port: 2381
