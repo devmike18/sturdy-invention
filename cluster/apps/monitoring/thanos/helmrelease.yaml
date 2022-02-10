@@ -29,6 +29,7 @@ spec:
 
     query:
       enabled: true
+      replicaCount: 1
       replicaLabels:
         - replica
       dnsDiscovery:
@@ -46,7 +47,7 @@ spec:
     objstoreConfig: |
       type: S3
       config:
-        bucket: "thanos"
+        bucket: thanos
         endpoint: "nas02.${SECRET_DOMAIN}:9000"
         insecure: true
         access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
@@ -68,7 +69,10 @@ spec:
       persistence:
         enabled: true
         storageClass: ceph-block
-        size: 5Gi
+        size: 20Gi
+
+    ruler:
+      enabled: false
 
     metrics:
       enabled: true

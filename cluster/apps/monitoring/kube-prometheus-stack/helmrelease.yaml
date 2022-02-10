@@ -110,10 +110,6 @@ spec:
 
     kubeControllerManager:
       enabled: true
-      endpoints:
-        - 192.168.8.21
-        - 192.168.8.22
-        - 192.168.8.23
       service:
         enabled: true
         port: 10257
@@ -125,10 +121,6 @@ spec:
 
     kubeScheduler:
       enabled: true
-      endpoints:
-        - 192.168.8.21
-        - 192.168.8.22
-        - 192.168.8.23
       service:
         enabled: true
         port: 10259
@@ -140,17 +132,9 @@ spec:
 
     kubeProxy:
       enabled: true
-      endpoints:
-        - 192.168.8.21
-        - 192.168.8.22
-        - 192.168.8.23
 
     kubeEtcd:
       enabled: true
-      endpoints:
-        - 192.168.8.21
-        - 192.168.8.22
-        - 192.168.8.23
       service:
         enabled: true
         port: 2381
@@ -225,6 +209,9 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.24.0
           version: v0.22.0
+          objectStorageConfig:
+            name: thanos-objstore-secret
+            key: objstore.yml
             #          objectStorageConfig: |
             #            type: S3
             #            config:
