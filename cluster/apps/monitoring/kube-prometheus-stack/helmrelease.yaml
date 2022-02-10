@@ -38,11 +38,11 @@ spec:
                 text: >-
                   {{ range .Alerts -}}
                     **Alert:** {{ .Annotations.title }}{{ if .Labels.severity }} - `{{ .Labels.severity }}`{{ end }}
-                    **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
-                    **Details:**
-                      {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
-                      {{ end }}
+                  **Description:** {{ if ne .Annotations.description ""}}{{ .Annotations.description }}{{else}}N/A{{ end }}
+                  **Details:**
+                    {{ range .Labels.SortedPairs }} • *{{ .Name }}:* `{{ .Value }}`
                     {{ end }}
+                  {{ end }}
         route:
           group_by: ['alertname', 'job']
           group_wait: 30s
