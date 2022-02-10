@@ -109,7 +109,7 @@ spec:
       enabled: true
 
     kubeControllerManager:
-      enabled: true
+      enabled: false
       service:
         enabled: true
         port: 10257
@@ -120,7 +120,7 @@ spec:
         insecureSkipVerify: true
 
     kubeScheduler:
-      enabled: true
+      enabled: false
       service:
         enabled: true
         port: 10259
@@ -131,7 +131,7 @@ spec:
         insecureSkipVerify: true
 
     kubeProxy:
-      enabled: true
+      enabled: false
 
     kubeEtcd:
       enabled: true
