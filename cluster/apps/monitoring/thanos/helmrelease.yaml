@@ -43,7 +43,6 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         tls: true
 
-          #    existingObjstoreSecret: thanos-objstore
     objstoreConfig: |
       type: S3
       config:
@@ -65,8 +64,7 @@ spec:
       enabled: true
       persistence:
         enabled: true
-        storageClass: ceph-block
-        size: 20Gi
+        size: 5Gi
 
     ruler:
       enabled: false
