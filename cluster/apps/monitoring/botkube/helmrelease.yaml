@@ -23,6 +23,7 @@ spec:
       pullPolicy: Always
     serviceMonitor:
       enabled: true
+    logLevel: debug
     communications:
       discord:
         enabled: true
