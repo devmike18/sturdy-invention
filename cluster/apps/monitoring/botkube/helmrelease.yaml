@@ -21,7 +21,10 @@ spec:
       repository: infracloudio/botkube
       tag: v0.12.3
       pullPolicy: Always
-    logLevel: debug
+    # logLevel: debug
+    extraAnnotations:
+      secret.reloader.stakater.com/reload: botkube-configmap
+
     serviceMonitor:
       enabled: true
     config:
@@ -223,17 +226,17 @@ spec:
 
     valuesFrom:
       - kind: Secret
-        name: "botkube-discord"
+        name: botkube-discord
         optional: false
         valuesKey: discord-token
         targetPath: communications.discord.token
       - kind: Secret
-        name: "botkube-discord"
+        name: botkube-discord
         optional: false
         valuesKey: discord-botid
         targetPath: communications.discord.botid
       - kind: Secret
-        name: "botkube-discord"
+        name: botkube-discord
         optional:
         valuesKey: discord-channel
         targetPath: communications.discord.channel
