@@ -27,7 +27,6 @@ spec:
       settings:
         clustername: ${CLUSTER_NAME}
       communications:
-        existingSecretName: botkube-discord
         discord:
           enabled: true
           notiftype: short
@@ -223,7 +222,19 @@ spec:
       limits:
         memory: 128Mi
 
-  # valuesFrom:
-  # - kind: Secret
-  #   name: "botkube-helm-values"
-  #   optional: false
+    valuesFrom:
+      - kind: Secret
+        name: "botkube-discord"
+        optional: false
+        valuesKey: discord-token
+        targetPath: communications.discord.token
+      - kind: Secret
+        name: "botkube-discord"
+        optional: false
+        valuesKey: discord-botid
+        targetPath: communications.discord.botid
+      - kind: Secret
+        name: "botkube-discord"
+        optional:
+        valuesKey: discord-channel
+        targetPath: communications.discord.channel
