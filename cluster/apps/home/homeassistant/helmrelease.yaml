@@ -66,6 +66,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
           hajimari.io/icon: "home-assistant"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
           - host: "homeassistant-new.${SECRET_DOMAIN}"
             paths:
@@ -74,6 +75,7 @@ spec:
         tls:
           - hosts:
               - "homeassistant-new.${SECRET_DOMAIN}"
+            secretName: "homeassistant-tls"
 
     resources:
       requests:
