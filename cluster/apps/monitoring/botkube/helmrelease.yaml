@@ -21,6 +21,7 @@ spec:
       repository: infracloudio/botkube
       tag: v0.12.3
       pullPolicy: Always
+    logLevel: debug
     serviceMonitor:
       enabled: true
     config:
