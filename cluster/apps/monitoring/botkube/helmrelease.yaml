@@ -32,6 +32,12 @@ spec:
         channel: "650761898463330357"
     config:
       recommendations: true
+      ssl:
+        enabled: false
+      settings:
+        kubectl:
+          enabled: true
+          restrictAccess: false
       resources:
         - name: v1/services
           namespaces:
