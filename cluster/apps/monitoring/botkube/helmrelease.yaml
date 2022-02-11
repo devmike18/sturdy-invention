@@ -237,6 +237,6 @@ spec:
         targetPath: communications.discord.botid
       - kind: Secret
         name: botkube-discord
-        optional:
+        optional: false
         valuesKey: discord-channel
         targetPath: communications.discord.channel
