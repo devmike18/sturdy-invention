@@ -31,6 +31,9 @@ spec:
       communications:
         discord:
           enabled: true
+          token: "${SECRET_BOTKUBE_DISCORD_TOKEN}"
+          botid: "${SECRET_BOTKUBE_DISCORD_BOTID}"
+          channel: "${SECRET_BOTKUBE_DISCORD_CHANNEL}"
           notiftype: short
       resources:
         - name: v1/services
@@ -223,20 +226,3 @@ spec:
         memory: 64Mi
       limits:
         memory: 128Mi
-
-    valuesFrom:
-      - kind: Secret
-        name: botkube-discord
-        optional: false
-        valuesKey: discord-token
-        targetPath: communications.discord.token
-      - kind: Secret
-        name: botkube-discord
-        optional: false
-        valuesKey: discord-botid
-        targetPath: communications.discord.botid
-      - kind: Secret
-        name: botkube-discord
-        optional: false
-        valuesKey: discord-channel
-        targetPath: communications.discord.channel
