@@ -5,3 +5,4 @@ resources:
   - helmrelease.yaml
   - config-values.yaml
   - secrets.sops.yaml
+  - kustomize-config.yaml
