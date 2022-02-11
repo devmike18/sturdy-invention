@@ -21,20 +21,16 @@ spec:
       repository: infracloudio/botkube
       tag: v0.12.3
       pullPolicy: Always
-    # logLevel: debug
-    extraAnnotations:
-      secret.reloader.stakater.com/reload: botkube-configmap
-
     serviceMonitor:
       enabled: true
+    communications:
+      discord:
+        enabled: true
+        token: "${SECRET_BOTKUBE_DISCORD_TOKEN}"
+        botid: "${SECRET_BOTKUBE_DISCORD_BOTID}"
+        channel: "${SECRET_BOTKUBE_DISCORD_CHANNEL}"
     config:
-      communications:
-        discord:
-          enabled: true
-          token: "${SECRET_BOTKUBE_DISCORD_TOKEN}"
-          botid: "${SECRET_BOTKUBE_DISCORD_BOTID}"
-          channel: "${SECRET_BOTKUBE_DISCORD_CHANNEL}"
-          notiftype: short
+      recommendations: true
       resources:
         - name: v1/services
           namespaces:
