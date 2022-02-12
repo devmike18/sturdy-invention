@@ -8,3 +8,4 @@ resources:
   - botkube
   - loki
   - promtail
+  - speedtest-exporter
