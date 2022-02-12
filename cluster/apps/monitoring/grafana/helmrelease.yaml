@@ -34,6 +34,8 @@ spec:
       GF_PANELS_DISABLE_SANITIZE_HTML: true
       GF_LOG_FILTERS: rendering:debug
         #      VAR_BLOCKY_URL: "http://blocky.network.svc.cluster.local:4000"
+      GF_DATE_FORMATS_USE_BROWSER_LOCALE: true
+      DS_PROMETHEUS: "prometheus"
 
     grafana.ini:
       server:
@@ -88,7 +90,9 @@ spec:
             - "grafana.${SECRET_DOMAIN}"
 
     persistence:
-      enabled: false
+      enabled: true
+      type: pvc
+      existingClaim: grafana-config-v1
 
     plugins:
       - natel-discrete-panel
@@ -97,6 +101,9 @@ spec:
       - grafana-clock-panel
       - vonage-status-panel
       - grafana-worldmap-panel
+      - grafana-polystat-panel
+      - mxswat-separator-panel
+      - farski-blendstat-panel
 
     dashboardProviders:
       dashboardproviders.yaml:
@@ -108,6 +115,7 @@ spec:
             type: file
             disableDeletion: false
             editable: true
+            allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/default
 
@@ -167,6 +175,10 @@ spec:
         # thanos-overview:
         #   revision: 4
         #   datasource: Prometheus
+        speedtest:
+          gnetId: 13665
+          revision: 1
+          datasource: Prometheus
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
