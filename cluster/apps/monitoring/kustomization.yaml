@@ -9,3 +9,4 @@ resources:
   - loki
   - promtail
   - speedtest-exporter
+  - snmp-exporter-switch-0
