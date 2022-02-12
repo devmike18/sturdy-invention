@@ -36,7 +36,7 @@ spec:
           module:
             - if_mib
           target:
-            - "${SECRET_SNMP_SWITCH_ADDR}"
+            - 10.0.0.253
       path: /snmp
       # interval: 60s
       scrapeTimeout: 10s
