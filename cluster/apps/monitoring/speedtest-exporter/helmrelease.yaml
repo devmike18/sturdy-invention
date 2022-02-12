@@ -22,8 +22,11 @@ spec:
       tag: v3.3.4
     env:
       TZ: "${TZ}"
-    prometheus:
+    metrics:
+      enabled: true
       serviceMonitor:
         enabled: true
         interval: 1h
         scrapeTimeout: 1m
+      prometheusRule:
+        enabled: true
