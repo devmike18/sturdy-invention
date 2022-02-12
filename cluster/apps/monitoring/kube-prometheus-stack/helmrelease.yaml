@@ -141,17 +141,6 @@ spec:
         - 192.168.8.22
         - 192.168.8.23
 
-    kubeEtcd:
-      enabled: true
-      endpoints:
-        - 192.168.8.21
-        - 192.168.8.22
-        - 192.168.8.23
-      service:
-        enabled: true
-        port: 2381
-        targetPort: 2381
-
     prometheusOperator:
       prometheusConfigReloader:
         resources:
