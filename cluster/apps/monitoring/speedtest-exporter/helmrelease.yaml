@@ -30,3 +30,6 @@ spec:
         scrapeTimeout: 1m
       prometheusRule:
         enabled: true
+        jitterLimit: 30
+        pingLimit: 30
+        downloadLimit: 8
