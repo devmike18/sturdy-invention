@@ -31,8 +31,6 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
-      selector:
-        prometheus: prometheus
       params:
         enabled: true
         conf:
