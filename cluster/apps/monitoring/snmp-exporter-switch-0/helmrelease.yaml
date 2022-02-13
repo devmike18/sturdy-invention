@@ -18,6 +18,7 @@ spec:
       interval: 5m
   values:
     fullnameOverride: snmp-exporter-switch-0
+    nameOverride: snmp-exporter-switch-0
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
@@ -30,6 +31,8 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      selector:
+        prometheus: prometheus
       params:
         enabled: true
         conf:
@@ -39,7 +42,7 @@ spec:
             - 10.0.0.253
       path: /snmp
       # interval: 60s
-      scrapeTimeout: 10s
+      scrapeTimeout: 30s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
