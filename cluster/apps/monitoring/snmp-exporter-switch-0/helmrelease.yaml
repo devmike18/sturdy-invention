@@ -39,7 +39,6 @@ spec:
           target:
             - 10.0.0.253
       path: /snmp
-      interval: 60s
       scrapeTimeout: 30s
       relabelings:
         - sourceLabels: [__param_target]
