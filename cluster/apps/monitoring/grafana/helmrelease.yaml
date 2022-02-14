@@ -183,6 +183,10 @@ spec:
           gnetId: 13665
           revision: 1
           datasource: Prometheus
+        metallb:
+          gnetId: 14127
+          revision: 1
+          datasource: Prometheus
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
