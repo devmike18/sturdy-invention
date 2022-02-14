@@ -10,3 +10,4 @@ resources:
   - home.yaml
   - media.yaml
   - vpn-gateway.yaml
+  - velero.yaml
