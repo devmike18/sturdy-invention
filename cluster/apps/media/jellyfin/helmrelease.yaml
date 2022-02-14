@@ -29,6 +29,9 @@ spec:
       TZ: "America/Toronto"
       JELLYFIN_CACHE_DIR: "/config/cache"
 
+    podAnnotations:
+      backup.velero.io/backup-volumes: data
+
     podSecurityContext:
       supplementalGroups:
         - 44
