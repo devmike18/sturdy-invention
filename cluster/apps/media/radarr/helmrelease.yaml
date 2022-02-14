@@ -69,6 +69,8 @@ spec:
       runAsUser: 1001
       runAsGroup: 1001
       fsGroup: 1001
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
     resources:
       requests:
         cpu: "0.04"
