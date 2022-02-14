@@ -190,6 +190,7 @@ spec:
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
+      backup.velero.io/backup-volumes: config
 
     sidecar:
       dashboards:
