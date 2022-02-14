@@ -41,6 +41,9 @@ spec:
           #        mountPath: /var/lib/unifi/backup
           #        readOnly: false
 
+    podAnnotations:
+      backup.velero.io/backup-volumes: data
+
     env:
       timezone: "${TZ}"
 
