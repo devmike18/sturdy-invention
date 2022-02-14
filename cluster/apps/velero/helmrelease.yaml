@@ -34,7 +34,6 @@ spec:
           region: us-east-1
           s3ForcePathStyle: true
           s3Url: http://nas02.${SECRET_DOMAIN}:9000
-          publicUrl: http://nas02.${SECRET_DOMAIN}:9001/
       resticTimeout: 4h
 
     initContainers:
