@@ -13,3 +13,4 @@ resources:
   - calico-system
   - vpn-gateway
   - cert-manager
+  - velero
