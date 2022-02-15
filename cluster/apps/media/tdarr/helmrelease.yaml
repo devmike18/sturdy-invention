@@ -65,7 +65,6 @@ spec:
         enabled: true
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-bloopnet-xyz-auth@kubernetescrd"
           hajimari.io/enable: "true"
           hajimari.io/icon: alpha-t-circle
         hosts:
@@ -75,6 +74,6 @@ spec:
                 pathType: Prefix
         tls:
           - hosts:
-              - "tdarr.{$SECRET_DOMAIN}"
+              - "tdarr.${SECRET_DOMAIN}"
 
     resources: {}
