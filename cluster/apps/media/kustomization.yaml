@@ -8,4 +8,4 @@ resources:
   - sonarr
   - qbittorrent
   - prowlarr
-    #  - overseerr
+  - tdarr
