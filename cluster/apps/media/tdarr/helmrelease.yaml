@@ -64,13 +64,10 @@ spec:
       main:
         enabled: true
         annotations:
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-bloopnet-xyz-auth@kubernetescrd"
           hajimari.io/enable: "true"
-          hajimari.io/instance: "bloop-quarky"
           hajimari.io/icon: alpha-t-circle
-          hajimari.io/group: media
         hosts:
           - host: "tdarr.${SECRET_DOMAIN}"
             paths:
@@ -79,13 +76,5 @@ spec:
         tls:
           - hosts:
               - "tdarr.{$SECRET_DOMAIN}"
-    affinity:
-      nodeAffinity:
-        requiredDuringSchedulingIgnoredDuringExecution:
-          nodeSelectorTerms:
-            - matchExpressions:
-                - key: feature.node.kubernetes.io/custom-intel-gpu
-                  operator: In
-                  values:
-                    - "true"
+
     resources: {}
