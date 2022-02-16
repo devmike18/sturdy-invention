@@ -7,3 +7,6 @@ resources:
   - internal-auth.yaml
   - redirect-path.yaml
   - rfc1918.yaml
+#  - secure-headers.yaml
+  - rate-limit.yaml
+  - chain-no-auth.yaml
