@@ -27,7 +27,7 @@ spec:
       serviceMonitor:
         enabled: true
         interval: 1h
-        scrapeTimeout: 1m
+        scrapeTimeout: 5m
       prometheusRule:
         enabled: true
         jitterLimit: 30
