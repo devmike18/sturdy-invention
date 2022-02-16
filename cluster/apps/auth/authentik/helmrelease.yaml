@@ -77,4 +77,3 @@ spec:
     prometheus:
       serviceMonitor:
         create: false
-    volumeMount:
