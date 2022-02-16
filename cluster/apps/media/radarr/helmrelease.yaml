@@ -35,6 +35,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-search"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/middlewares.entrypoints: "networking-internal-auth@kubernetescrd"
         hosts:
           - host: "radarr.${SECRET_DOMAIN}"
             paths:
