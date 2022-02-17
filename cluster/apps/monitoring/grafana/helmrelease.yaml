@@ -169,6 +169,18 @@ spec:
           gnetId: 13665
           revision: 1
           datasource: Prometheus
+        unifi-sites:
+          gnetId: 11311
+          revision: 4
+          datasource: Prometheus
+        unifi-uap:
+          gnetId: 11314
+          revision: 9
+          datasource: Prometheus
+        unifi-clients:
+          gnetId: 11315
+          revision: 8
+          datasource: Prometheus
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
