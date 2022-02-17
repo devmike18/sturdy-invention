@@ -22,4 +22,4 @@ data:
   ALERT_MANAGER_DISCORD_CHANNEL: 'sturdy-invention'
   ALERT_MANAGER_DISCORD_USERNAME: 'Alert-Manager Bot'
   ALERT_MANAGER_DISCORD_IMG_URL: 'https://avatars3.githubusercontent.com/u/3380462'
-  CONFIG_UNIFIPOLLER_UNIFI_URL: 'https://unifi.networking.svc.cluster.local:8433/'
+  CONFIG_UNIFIPOLLER_UNIFI_URL: 'https://unifi.networking.svc.cluster.local:8443/'
