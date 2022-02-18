@@ -12,3 +12,4 @@ resources:
   - vpn-gateway.yaml
   - velero.yaml
   - auth.yaml
+  - falco-system.yaml
