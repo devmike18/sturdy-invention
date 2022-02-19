@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://portainer.github.io/k8s
       chart: portainer
       version: "1.0.x"
       sourceRef:
