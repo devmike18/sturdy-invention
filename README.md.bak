@@ -4,6 +4,8 @@
 
 My home cluster.  Shamelessly pilfered from all over, but mostly from k8s-at-home.  whose references and documents you'll find abundantly within.
 
+Highly opinionated template for deploying a single [k3s](https://k3s.io) cluster with [Ansible](https://www.ansible.com) and [Terraform](https://www.terraform.io) backed by [Flux](https://toolkit.fluxcd.io/) and [SOPS](https://toolkit.fluxcd.io/guides/mozilla-sops/).
+
 ## Overview
 
 - [Introduction](https://github.com/k8s-at-home/template-cluster-k3s#wave-introduction)
@@ -36,7 +38,8 @@ For provisioning the following tools will be used:
 
 ### :computer:&nbsp; Systems
 
-- One or more nodes with a fresh install of [Ubuntu Server 20.04](https://ubuntu.com/download/server). These nodes can be bare metal or VMs.  Deployment work to be done here.
+- One or more nodes with a fresh install of [Ubuntu Server 20.04](https://ubuntu.com/download/server). These nodes can be bare metal or VMs.
+- A [Cloudflare](https://www.cloudflare.com/) account with a domain, this will be managed by Terraform.
 - Some experience in debugging problems and a positive attitude ;)
 
 ### :wrench:&nbsp; Tools
