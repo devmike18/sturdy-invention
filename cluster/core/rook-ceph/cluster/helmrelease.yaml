@@ -23,7 +23,6 @@ spec:
     toolbox:
       enabled: true
     ingress:
-      ingressClassName: "traefik"
       dashboard:
         ingressClassName: "traefik"
         annotations:
@@ -31,6 +30,7 @@ spec:
           hajimari.io/appName: "rook-ceph"
           hajimari.io/enable: "true"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-internal-auth@kubernetescrd"
         host:
           name: "rook.${SECRET_DOMAIN}"
           path: "/"
