@@ -23,8 +23,9 @@ spec:
     toolbox:
       enabled: true
     ingress:
+      ingressClassName: "traefik"
       dashboard:
-        ingressClassName: "traefik"
+#        ingressClassName: "traefik"
         annotations:
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
