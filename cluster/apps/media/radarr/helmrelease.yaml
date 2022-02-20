@@ -66,6 +66,16 @@ spec:
         readOnly: false
         existingClaim: nfs-media-pvc
         mountPath: /media
+
+    metrics:
+      enabled: true
+      prometheusRule:
+        enabled: true
+      exporter:
+        image:
+          repository: ghcr.io/onedr0p/exportarr
+          tag: v1.0.0
+
     podSecurityContext:
       runAsUser: 1001
       runAsGroup: 1001
