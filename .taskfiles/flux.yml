@@ -12,3 +12,12 @@ tasks:
     cmds:
       - git add -A
       - git commit -m "task:quickcommit" && git push && flux reconcile source git -n flux-system flux-system && flux reconcile kustomization core && sleep 2 && flux reconcile kustomization apps && flux get all -A
+  deepsync:
+    desc: Sync flux-system hard and heavy
+    cmds:
+      - flux reconcile source git -n flux-system flux-system
+      - sleep 1
+      - flux reconcile kustomization core
+      - sleep 2
+      - flux reconcile kustomization apps
+      - flux get helmreleases -A
