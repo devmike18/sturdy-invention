@@ -88,18 +88,10 @@ spec:
         valueFrom:
           secretKeyRef: traefik-forward-auth-secrets
 
-    serviceAccount:
-      create: false
-    livenessProbe:
-      enabled: true
-      tcpSocket:
-        port: http
-      periodSeconds: 20
-    readinessProbe:
-      enabled: true
-      tcpSocket:
-        port: http
-      periodSeconds: 10
     service:
-      type: ClusterIP
-      port: 4181
+      main:
+        type: ClusterIP
+        ports:
+          http:
+            port:
+              4181
