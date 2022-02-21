@@ -86,7 +86,9 @@ spec:
             key: WHITELIST
       - name: SECRET
         valueFrom:
-          secretKeyRef: traefik-forward-auth-secrets
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: SECRET
 
     service:
       main:
