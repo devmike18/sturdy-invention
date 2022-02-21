@@ -14,5 +14,4 @@ resources:
   - vpn-gateway
   - cert-manager
   - velero
-#  - auth
   - falco-system

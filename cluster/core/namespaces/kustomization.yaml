@@ -11,5 +11,4 @@ resources:
   - media.yaml
   - vpn-gateway.yaml
   - velero.yaml
-  - auth.yaml
   - falco-system.yaml
