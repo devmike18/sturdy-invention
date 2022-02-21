@@ -14,8 +14,6 @@ spec:
       - "PUT"
     accessControlAllowOriginList:
       - "https://${SECRET_DOMAIN}"
-    #accessControlAllowOriginListRegex:
-    # -"https://"
     accessControlMaxAge: 100
     addVaryHeader: true
     stsPreload: true
@@ -26,7 +24,6 @@ spec:
     hostsProxyHeaders:
       - "X-Forwarded-Host"
       - "Forwarded"
-        # contentSecurityPolicy: "frame-ancestors 'self' *.bloopnet.xac.im:* *.xac.im *.quarkynet.com *.bloopnet.xyz;" # script-src 'self' code.iconify.design cdnjs.cloudflare.com; object-src 'self'; require-trusted-types-for 'script';"
     customResponseHeaders:
       X-xss-protection: "1"
       X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
