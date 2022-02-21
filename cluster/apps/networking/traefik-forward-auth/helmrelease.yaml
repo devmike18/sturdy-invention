@@ -46,6 +46,7 @@ spec:
 
     env:
       TZ: ${TZ}
+      LOG_LEVEL: debug
       PROVIDERS_GOOGLE_CLIENT_ID:
         valueFrom:
           secretKeyRef:
