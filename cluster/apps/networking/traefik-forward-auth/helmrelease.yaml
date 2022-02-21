@@ -5,14 +5,7 @@ metadata:
   name: traefik-forward-auth
   namespace: networking
 spec:
-  dependsOn:
-    - name: traefik
-      namespace: networking
-
-  maxHistory: 3
-  interval: 10m0s
-  suspend: false
-  releaseName: traefik-forward-auth
+  interval: 5m
   chart:
     spec:
       # renovate: registryUrl=https://k8s-at-home.com/charts/
@@ -22,9 +15,15 @@ spec:
         kind: HelmRepository
         name: k8s-at-home-charts
         namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: traefik
+      namespace: networking
+
+  releaseName: traefik-forward-auth
   values:
     fullnameOverride: traefik-forward-auth
-    replicaCount: 3
     image:
       repository: thomseddon/traefik-forward-auth
       tag: v2.2.0
@@ -54,8 +53,7 @@ spec:
               - "id.${SECRET_DOMAIN}"
 
     env:
-      - name: TZ
-        value: ${TZ}
+      - TZ: ${TZ}
       - name: PROVIDERS_GOOGLE_CLIENT_ID
         valueFrom:
           secretKeyRef:
