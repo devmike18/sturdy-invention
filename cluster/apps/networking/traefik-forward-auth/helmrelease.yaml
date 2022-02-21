@@ -21,19 +21,11 @@ spec:
     - name: traefik
       namespace: networking
 
-  releaseName: traefik-forward-auth
   values:
-    fullnameOverride: traefik-forward-auth
     image:
       repository: thomseddon/traefik-forward-auth
       tag: v2.2.0
       pullPolicy: IfNotPresent
-    logging:
-      level: info
-      format: text
-    providers:
-      google:
-        enabled: true
     podAnnotations:
       secret.reloader.stakater.com/reload: traefik-forward-auth-secrets
 
@@ -54,41 +46,41 @@ spec:
 
     env:
       - TZ: ${TZ}
-      - name: PROVIDERS_GOOGLE_CLIENT_ID
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_ID
-      - name: PROVIDERS_GOOGLE_CLIENT_SECRET
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_SECRET
-      - name: AUTH_HOST
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: AUTH_HOST
-      - name: COOKIE_DOMAIN
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: COOKIE_DOMAIN
-      - name: DOMAIN
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: DOMAIN
-      - name: WHITELIST
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: WHITELIST
-      - name: SECRET
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: SECRET
+      - PROVIDERS_GOOGLE_CLIENT_ID:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: CLIENT_ID
+      - PROVIDERS_GOOGLE_CLIENT_SECRET:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: CLIENT_SECRET
+      - AUTH_HOST:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: AUTH_HOST
+      - COOKIE_DOMAIN:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: COOKIE_DOMAIN
+      - DOMAIN:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: DOMAIN
+      - WHITELIST:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: WHITELIST
+      - SECRET:
+          valueFrom:
+            secretKeyRef:
+              name: traefik-forward-auth-secrets
+              key: secret
 
     service:
       main:
