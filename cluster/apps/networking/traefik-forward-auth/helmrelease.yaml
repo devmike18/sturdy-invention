@@ -45,42 +45,42 @@ spec:
               - "id.${SECRET_DOMAIN}"
 
     env:
-      - TZ: ${TZ}
-      - PROVIDERS_GOOGLE_CLIENT_ID:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: CLIENT_ID
-      - PROVIDERS_GOOGLE_CLIENT_SECRET:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: CLIENT_SECRET
-      - AUTH_HOST:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: AUTH_HOST
-      - COOKIE_DOMAIN:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: COOKIE_DOMAIN
-      - DOMAIN:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: DOMAIN
-      - WHITELIST:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: WHITELIST
-      - SECRET:
-          valueFrom:
-            secretKeyRef:
-              name: traefik-forward-auth-secrets
-              key: secret
+      TZ: ${TZ}
+      PROVIDERS_GOOGLE_CLIENT_ID:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: CLIENT_ID
+      PROVIDERS_GOOGLE_CLIENT_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: CLIENT_SECRET
+      AUTH_HOST:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: AUTH_HOST
+      COOKIE_DOMAIN:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: COOKIE_DOMAIN
+      DOMAIN:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: DOMAIN
+      WHITELIST:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: WHITELIST
+      SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: secret
 
     service:
       main:
