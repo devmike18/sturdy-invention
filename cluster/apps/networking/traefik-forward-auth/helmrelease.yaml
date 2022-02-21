@@ -66,11 +66,6 @@ spec:
           secretKeyRef:
             name: traefik-forward-auth-secrets
             key: CLIENT_SECRET
-      - name: SECRET
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: SECRET
       - name: AUTH_HOST
         valueFrom:
           secretKeyRef:
