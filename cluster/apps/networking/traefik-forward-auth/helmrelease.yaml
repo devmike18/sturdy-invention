@@ -84,6 +84,10 @@ spec:
           secretKeyRef:
             name: traefik-forward-auth-secrets
             key: WHITELIST
+      - name: SECRET
+        valueFrom:
+          secretKeyRef: traefik-forward-auth-secrets
+
     serviceAccount:
       create: false
     livenessProbe:
