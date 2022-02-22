@@ -35,6 +35,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "shovel"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         hosts:
           - host: "prowlarr.${SECRET_DOMAIN}"
             paths:
