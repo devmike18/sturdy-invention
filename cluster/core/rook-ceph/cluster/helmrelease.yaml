@@ -24,7 +24,6 @@ spec:
       enabled: true
     ingress:
       dashboard:
-        ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "harddisk"
