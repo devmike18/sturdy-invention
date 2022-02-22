@@ -23,13 +23,12 @@ spec:
     toolbox:
       enabled: true
     ingress:
-#      ingressClassName: "traefik"
       dashboard:
         ingressClassName: "traefik"
         annotations:
+          hajimari.io/enable: "true"
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
-          hajimari.io/enable: "true"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
         host:
