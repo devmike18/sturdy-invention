@@ -5,6 +5,9 @@ metadata:
   name: qbittorrent
   namespace: media
 spec:
+  dependsOn:
+    - name: vpn-gateway
+      namespace: vpn-gateway
   interval: 5m
   chart:
     spec:
@@ -19,7 +22,7 @@ spec:
   values:
     image:
       repository: ghcr.io/k8s-at-home/qbittorrent
-      tag: v4.4.0
+      tag: v4.4.1
     env:
       TZ: ${TZ}
     hostname: qbittorrent
