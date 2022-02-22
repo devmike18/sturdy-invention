@@ -25,6 +25,7 @@ spec:
     ingress:
       dashboard:
         annotations:
+          kubernetes.io/ingress.class: "traefik"
           hajimari.io/enable: "true"
           hajimari.io/icon: "harddisk"
           hajimari.io/appName: "rook-ceph"
@@ -44,6 +45,8 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        port: 7000
+        ssl: false
       storage:
         useAllNodes: false
         useAllDevices: false
