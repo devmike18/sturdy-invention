@@ -2,21 +2,10 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: traefik-sso
-  namespace: networking
-spec:
-  forwardAuth:
-    address: http://traefik-forward-auth:4181
-    trustForwardHeader: true
-    authResponseHeaders:
-      - X-Forwarded-User
----
-apiVersion: traefik.containo.us/v1alpha1
-kind: Middleware
-metadata:
   name: sso
   namespace: networking
 spec:
   chain:
     middlewares:
-      - name: traefik-sso
+      - name: traefik-forward-auth
+      # and others probably?
