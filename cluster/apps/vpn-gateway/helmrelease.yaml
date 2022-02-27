@@ -126,6 +126,8 @@ spec:
                 # VPN traffic
                 - port: ${VPN_FORWARDED_PORT_1}
                   protocol: UDP
+                - port: 53
+                  protocol: UDP
             - to:
                 - namespaceSelector: {}
             - to:
