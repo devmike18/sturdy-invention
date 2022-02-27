@@ -21,6 +21,6 @@ spec:
       timeZone: ${TZ}
 #      startTime: "3:00"
 #      endTime: "5:00"
-#      notifyUrl: ${KURED_DISCORD_WEBHOOK_URL}
+      notifyUrl: ${SECRET_KURED_DISCORD_WEBHOOK}
     metrics:
       create: true
