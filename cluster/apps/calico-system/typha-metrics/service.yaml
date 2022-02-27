@@ -11,5 +11,5 @@ spec:
     k8s-app: calico-typha
   ports:
     - name: metrics
-      port: 9091
-      targetPort: 9091
+      port: 9093
+      targetPort: 9093
