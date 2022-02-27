@@ -27,3 +27,4 @@ resources:
   - vmware-tanzu-charts.yaml
   - falco-security-charts.yaml
   - portainer-charts.yaml
+  - kubernetes-dashboard-charts.yaml
