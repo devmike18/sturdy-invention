@@ -124,7 +124,7 @@ spec:
                     cidr: 0.0.0.0/0
               ports:
                 # VPN traffic
-                - port: ${VPN_GATEWAY_VPN_PORT}
+                - port: ${VPN_GATEWAY_VPN_PORT_1}
                   protocol: UDP
             - to:
                 - namespaceSelector: {}
