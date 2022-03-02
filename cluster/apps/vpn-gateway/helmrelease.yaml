@@ -123,8 +123,6 @@ spec:
                 - port: ${VPN_FORWARDED_PORT_1}
                   protocol: UDP
             - to:
-                - namespaceSelector: {}
-            - to:
                 - ipBlock:
                     cidr: ${NETWORK_K8S_CLUSTER_CIDR}
                 - ipBlock:
