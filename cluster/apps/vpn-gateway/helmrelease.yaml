@@ -107,7 +107,7 @@ spec:
             echo "disconnected" > /config/vpnstatus
 
         networkPolicy:
-          enabled: false
+          enabled: true
 
           egress:
             - to:
