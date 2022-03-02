@@ -120,7 +120,7 @@ spec:
                     cidr: 0.0.0.0/0
               ports:
                 # VPN traffic
-                - port: ${VPN_FORWARDED_PORT_1}
+                - port: ${SECRET_VPN_GATEWAY_PORT}
                   protocol: UDP
             - to:
                 - ipBlock:
