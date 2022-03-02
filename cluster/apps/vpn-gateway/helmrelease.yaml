@@ -86,7 +86,7 @@ spec:
         env:
           TZ: "${TZ}"
           IPTABLES_BACKEND: nft
-          KILLSWITCH: "false"
+          KILLSWITCH: "true"
 
         configFileSecret: vpn-gateway-vpnsecret
 
@@ -107,7 +107,7 @@ spec:
             echo "disconnected" > /config/vpnstatus
 
         networkPolicy:
-          enabled: true
+          enabled: false
 
           egress:
             - to:
