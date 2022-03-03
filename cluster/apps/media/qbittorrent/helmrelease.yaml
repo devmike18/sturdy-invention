@@ -26,8 +26,8 @@ spec:
 
     hostname: qbittorrent
 
-    podAnnotations:
-      setGateway: "true"
+      #    podAnnotations:
+      #      setGateway: "true"
 
     ingress:
       main:
