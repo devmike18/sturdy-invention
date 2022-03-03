@@ -17,8 +17,8 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    fullnameOverride: snmp-exporter-switch-0
-    nameOverride: snmp-exporter-switch-0
+    fullnameOverride: snmp-exporter-gw-0
+    nameOverride: snmp-exporter-gw-0
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
