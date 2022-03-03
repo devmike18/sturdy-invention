@@ -12,4 +12,3 @@ resources:
   - snmp-exporter-switch-0
   - unifi-poller
   - portainer
-  - kubernetes-dashboard
