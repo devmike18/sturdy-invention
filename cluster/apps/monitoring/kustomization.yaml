@@ -10,5 +10,6 @@ resources:
   - promtail
   - speedtest-exporter
   - snmp-exporter-switch-0
+  - snmp-exporter-gw-0
   - unifi-poller
   - portainer

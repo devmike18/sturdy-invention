@@ -1,0 +1,493 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snmp-exporter-gw-0
+  namespace: monitoring
+data:
+  snmp.yaml: |
+    pfsense:
+      version: 2
+      walk:
+      - 1.3.6.1.4.1.12325.1.200.1.1  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfStatus
+      - 1.3.6.1.4.1.12325.1.200.1.2  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfCounter
+      - 1.3.6.1.4.1.12325.1.200.1.3  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfStateTable
+      #not interesting
+      #- 1.3.6.1.4.1.12325.1.200.1.4  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfSrcNodes
+      #- 1.3.6.1.4.1.12325.1.200.1.5  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfLimits
+      #- 1.3.6.1.4.1.12325.1.200.1.6  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfTimeouts
+      - 1.3.6.1.4.1.12325.1.200.1.7  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfLogInterface
+      - 1.3.6.1.4.1.12325.1.200.1.8  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfInterfaces
+      #too much data
+      #- 1.3.6.1.4.1.12325.1.200.1.9  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfTables
+      #not interesting
+      #- 1.3.6.1.4.1.12325.1.200.1.10  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfAltq
+      - 1.3.6.1.4.1.12325.1.200.1.11  #SNMPv2-SMI::enterprises::BEGEMOT-PF-MIB::pfLabels
+      metrics:
+      - name: snmp_pfStatusRunning
+        oid: 1.3.6.1.4.1.12325.1.200.1.1.1
+        type: gauge
+      - name: snmp_pfStatusRuntime
+        oid: 1.3.6.1.4.1.12325.1.200.1.1.2
+        type: gauge
+      - name: snmp_pfStatusDebug
+        oid: 1.3.6.1.4.1.12325.1.200.1.1.3
+        type: gauge
+      - name: snmp_pfStatusHostId
+        oid: 1.3.6.1.4.1.12325.1.200.1.1.4
+        type: DisplayString
+      - name: snmp_pfLabelsLblEvals
+        oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.3
+        type: counter
+        indexes:
+        - labelname: pfLabelsLblIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfLabelsLblIndex
+          labelname: pfLabelsLblName
+          oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.2
+          type: DisplayString
+      - name: snmp_pfLabelsLblBytesIn
+        oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.4
+        type: counter
+        indexes:
+        - labelname: pfLabelsLblIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfLabelsLblIndex
+          labelname: pfLabelsLblName
+          oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.2
+          type: DisplayString
+      - name: snmp_pfLabelsLblBytesOut
+        oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.5
+        type: counter
+        indexes:
+        - labelname: pfLabelsLblIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfLabelsLblIndex
+          labelname: pfLabelsLblName
+          oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.2
+          type: DisplayString
+      - name: snmp_pfLabelsLblPktsIn
+        oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.6
+        type: counter
+        indexes:
+        - labelname: pfLabelsLblIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfLabelsLblIndex
+          labelname: pfLabelsLblName
+          oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.2
+          type: DisplayString
+      - name: snmp_pfLabelsLblPktsOut
+        oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.7
+        type: counter
+        indexes:
+        - labelname: pfLabelsLblIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfLabelsLblIndex
+          labelname: pfLabelsLblName
+          oid: 1.3.6.1.4.1.12325.1.200.1.11.2.1.2
+          type: DisplayString
+      - name: snmp_pfCounterMatch
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.1
+        type: counter
+      - name: snmp_pfCounterBadOffset
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.2
+        type: counter
+      - name: snmp_pfCounterFragment
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.3
+        type: counter
+      - name: snmp_pfCounterShort
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.4
+        type: counter
+      - name: snmp_pfCounterNormalize
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.5
+        type: counter
+      - name: snmp_pfCounterMemDrop
+        oid: 1.3.6.1.4.1.12325.1.200.1.2.6
+        type: counter
+      - name: snmp_pfStateTableCount
+        oid: 1.3.6.1.4.1.12325.1.200.1.3.1
+        type: gauge
+      - name: snmp_pfStateTableSearches
+        oid: 1.3.6.1.4.1.12325.1.200.1.3.2
+        type: counter
+      - name: snmp_pfStateTableInserts
+        oid: 1.3.6.1.4.1.12325.1.200.1.3.3
+        type: counter
+      - name: snmp_pfStateTableRemovals
+        oid: 1.3.6.1.4.1.12325.1.200.1.3.4
+        type: counter
+      - name: snmp_pfLogInterfaceName
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.1
+        type: DisplayString
+      - name: snmp_pfLogInterfaceIp4BytesIn
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.2
+        type: counter
+      - name: snmp_pfLogInterfaceIp4BytesOut
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.3
+        type: counter
+      - name: snmp_pfLogInterfaceIp4PktsInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.4
+        type: counter
+      - name: snmp_pfLogInterfaceIp4PktsInDrop
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.5
+        type: counter
+      - name: snmp_pfLogInterfaceIp4PktsOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.6
+        type: counter
+      - name: snmp_pfLogInterfaceIp4PktsOutDrop
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.7
+        type: counter
+      - name: snmp_pfLogInterfaceIp6BytesIn
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.8
+        type: counter
+      - name: snmp_pfLogInterfaceIp6BytesOut
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.9
+        type: counter
+      - name: snmp_pfLogInterfaceIp6PktsInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.10
+        type: counter
+      - name: snmp_pfLogInterfaceIp6PktsInDrop
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.11
+        type: counter
+      - name: snmp_pfLogInterfaceIp6PktsOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.12
+        type: counter
+      - name: snmp_pfLogInterfaceIp6PktsOutDrop
+        oid: 1.3.6.1.4.1.12325.1.200.1.7.13
+        type: counter
+      - name: snmp_pfInterfacesIfNumber
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.1
+        type: gauge
+      - name: snmp_pfInterfacesIfTZero
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.4
+        type: gauge
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIfRefsState
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.5
+        type: gauge
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIfRefsRule
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.6
+        type: gauge
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4BytesInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.7
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4BytesInBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.8
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4BytesOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.9
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4BytesOutBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.10
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4PktsInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.11
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4PktsInBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.12
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4PktsOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.13
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf4PktsOutBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.14
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6BytesInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.15
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6BytesInBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.16
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6BytesOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.17
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6BytesOutBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.18
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6PktsInPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.19
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6PktsInBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.20
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6PktsOutPass
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.21
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
+      - name: snmp_pfInterfacesIf6PktsOutBlock
+        oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.22
+        type: counter
+        indexes:
+        - labelname: pfInterfacesIfIndex
+          type: gauge
+        lookups:
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfDescr
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.2
+          type: DisplayString
+        - labels:
+          - pfInterfacesIfIndex
+          labelname: pfInterfacesIfType
+          oid: 1.3.6.1.4.1.12325.1.200.1.8.2.1.3
+          type: gauge
