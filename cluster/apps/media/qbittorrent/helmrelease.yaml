@@ -93,4 +93,4 @@ spec:
 
     addons:
       netshoot:
-        enabled: true
+        enabled: false
