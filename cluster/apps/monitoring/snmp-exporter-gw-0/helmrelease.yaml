@@ -37,7 +37,7 @@ spec:
           module:
             - pfsense
           target:
-            - 10.0.0.254
+            - 192.168.8.1
       path: /snmp
       scrapeTimeout: 30s
       relabelings:
