@@ -25,11 +25,9 @@ spec:
       annotations:
         kubernetes.io/ingress.class: "traefik"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+      path: /
       hosts:
-        - host: "docker-registry.${SECRET_DOMAIN}"
-          paths:
-            - path: /
-              pathType: Prefix
+        - "docker-registry.${SECRET_DOMAIN}"
       tls:
         - hosts:
             - "docker-registry.${SECRET_DOMAIN}"
