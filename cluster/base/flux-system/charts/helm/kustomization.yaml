@@ -28,3 +28,4 @@ resources:
   - falco-security-charts.yaml
   - portainer-charts.yaml
   - kubernetes-dashboard-charts.yaml
+  - twuni-charts.yaml

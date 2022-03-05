@@ -10,3 +10,4 @@ resources:
   - home.yaml
   - media.yaml
   - velero.yaml
+  - utility.yaml
