@@ -40,8 +40,6 @@ spec:
         hajimari.io/icon: "robot"
       hosts:
         - host: "stackstorm.${SECRET_DOMAIN}"
-          paths:
-            - path: /
       tls:
         - hosts:
             - "stackstorm.${SECRET_DOMAIN}"
