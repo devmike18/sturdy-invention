@@ -1,0 +1,62 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: stackstorm
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: stackstorm-ha
+      version: 0.80.0
+      sourceRef:
+        kind: HelmRepository
+        name: stackstorm-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: traefik
+      namespace: networking
+
+  values:
+    image:
+      repository: stackstorm
+      pullPolicy: IfNotPresent
+      tag: 3.6
+
+    st2:
+      username: st2admin
+      password: "${SECRET_STACKSTORM_st2admin_PASSWORD}"
+
+    ingress:
+      enabled: true
+      ingressClassName: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "robot"
+      hosts:
+        - host: "stackstorm.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+      tls:
+        - hosts:
+            - "stackstorm.${SECRET_DOMAIN}"
+
+    mongodb:
+      enabled: true
+      auth:
+        username: "st2-admin"
+        password: "${SECRET_STACKSTORM_MONGODO-st2-admin_PASSWORD}"
+        rootPassword: "${SECRET_STACKSTORM_MONGODB-ROOT_PASSWORD}"
+        replicaSetKey: "${SECRET_STACKSTORM_REPLICASET_KEY}"
+
+    rabbitmq:
+      enabled: true
+      auth:
+        username: "admin"
+        password: "${SECRET_STACKSTORM_RABBITMQ_PASSWORD}"
+        erlangCookie: "${SECRET_STACKSTORM_RABBITMQ_ERLANGCOOKIE}"
