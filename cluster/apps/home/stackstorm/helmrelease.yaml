@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: stackstorm-ha
-      version: 0.80.0
+      version: "0.80.0"
       sourceRef:
         kind: HelmRepository
         name: stackstorm-charts
@@ -40,6 +40,10 @@ spec:
         hajimari.io/icon: "robot"
       hosts:
         - host: "stackstorm.${SECRET_DOMAIN}"
+          paths:
+            - path: /
+              serviceName: "st2web"
+              servicePort: 80
       tls:
         - hosts:
             - "stackstorm.${SECRET_DOMAIN}"
