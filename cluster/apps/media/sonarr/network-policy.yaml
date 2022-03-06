@@ -29,12 +29,12 @@ spec:
         - namespaceSelector:
             matchLabels:
               name: monitoring
-              podSelector:
-                matchLabels:
-                  app.kubernetes.io/instance: prometheus-prometheus
-                  app.kubernetes.io/managed-by: prometheus-operator
-                  app.kubernetes.io/name: prometheus
-                  operator.prometheus.io/name: prometheus-prometheus
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: prometheus-prometheus
+              app.kubernetes.io/managed-by: prometheus-operator
+              app.kubernetes.io/name: prometheus
+              operator.prometheus.io/name: prometheus-prometheus
       ports:
         - port: 9793
           protocol: TCP
