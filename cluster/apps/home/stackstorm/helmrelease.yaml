@@ -24,7 +24,7 @@ spec:
     image:
       repository: stackstorm
       pullPolicy: IfNotPresent
-      tag: 3.6
+      tag: "3.6"
 
     st2:
       username: st2admin
