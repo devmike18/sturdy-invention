@@ -50,8 +50,8 @@ spec:
       enabled: true
       auth:
         username: "st2-admin"
-        password: "${SECRET_STACKSTORM_MONGODO-st2-admin_PASSWORD}"
-        rootPassword: "${SECRET_STACKSTORM_MONGODB-ROOT_PASSWORD}"
+        password: "${SECRET_STACKSTORM_MONGODB_st2_admin_PASSWORD}"
+        rootPassword: "${SECRET_STACKSTORM_MONGODB_ROOT_PASSWORD}"
         replicaSetKey: "${SECRET_STACKSTORM_REPLICASET_KEY}"
 
     rabbitmq:
