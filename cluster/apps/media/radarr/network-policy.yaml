@@ -1,0 +1,71 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: radarr-network
+  namespace: media
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/instance: radarr
+      app.kubernetes.io/name: radarr
+  policyTypes:
+    - Ingress
+    - Egress
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: networking
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: traefik
+              app.kubernetes.io/name: traefik
+      ports:
+        - port: 7878
+          protocol: TCP
+    - from:
+        - namespaceSelector:
+            matchLabels:
+              name: monitoring
+          podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: prometheus-prometheus
+              app.kubernetes.io/managed-by: prometheus-operator
+              app.kubernetes.io/name: prometheus
+              operator.prometheus.io/name: prometheus-prometheus
+      ports:
+        - port: 9793
+          protocol: TCP
+    - from:
+        - podSelector: {}
+  egress:
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: prowlarr
+              app.kubernetes.io/name: prowlarr
+      ports:
+        - port: 9696
+          protocol: TCP
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/instance: qbittorrent
+              app.kubernetes.io/name: qbittorrent
+      ports:
+        - port: 8080
+          protocol: TCP
+    - to:
+        - ipBlock:
+            cidr: 0.0.0.0/0
+      ports:
+        - port: 443
+          protocol: TCP
+    - ports:
+        - port: 53
+          protocol: UDP
+      to:
+        - namespaceSelector: {}
+          podSelector:
+            matchLabels:
+              k8s-app: kube-dns
