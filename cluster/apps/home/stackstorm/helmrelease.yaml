@@ -32,8 +32,8 @@ spec:
 
     ingress:
       enabled: true
-      ingressClassName: "traefik"
       annotations:
+        kubernetes.io/ingress.class: "traefik"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         hajimari.io/enable: "true"
