@@ -8,6 +8,7 @@ spec:
   interval: 5m
   chart:
     spec:
+      # renovate: registryUrl=https://helm.stackstorm.com/
       chart: stackstorm-ha
       version: "0.80.0"
       sourceRef:
