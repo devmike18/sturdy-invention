@@ -32,12 +32,10 @@ spec:
       enabled: true
       namespace: monitoring
       params:
-        enabled: true
-        conf:
-          module:
-            - if_mib
-          target:
-            - 10.0.0.253
+        module:
+          - if_mib
+        name: switch-0
+        target: 10.0.0.253
       path: /snmp
       scrapeTimeout: 30s
       relabelings:
