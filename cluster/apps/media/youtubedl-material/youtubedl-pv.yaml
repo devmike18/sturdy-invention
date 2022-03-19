@@ -1,0 +1,144 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-youtubedl-video-pv
+  namespace: media
+spec:
+  storageClassName: youtubedl-video
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${NFS_SERVER}"
+    path: "/volume1/video/YoutubeDL/video"
+  mountOptions:
+    - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-youtubedl-subscriptions-pv
+  namespace: media
+spec:
+  storageClassName: youtubedl-subscriptions
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${NFS_SERVER}"
+    path: "/volume1/video/YoutubeDL/subscriptions"
+  mountOptions:
+    - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-youtubedl-audio-pv
+  namespace: media
+spec:
+  storageClassName: youtubedl-audio
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${NFS_SERVER}"
+    path: "/volume1/video/YoutubeDL/audio"
+  mountOptions:
+    - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nfs-youtubedl-users-pv
+  namespace: media
+spec:
+  storageClassName: youtubedl-users
+  capacity:
+    storage: 1Mi
+  accessModes:
+    - ReadWriteMany
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: "${NFS_SERVER}"
+    path: "/volume1/video/YoutubeDL/users"
+  mountOptions:
+    - nfsvers=4.1
+    - tcp
+    - intr
+    - hard
+    - noatime
+    - nodiratime
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-youtubedl-video-pvc
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: youtubedl-video
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-youtubedl-subscriptions-pvc
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: youtubedl-subscriptions
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-youtubedl-audio-pvc
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: youtubedl-audio
+  resources:
+    requests:
+      storage: 1Mi
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nfs-youtubedl-users-pvc
+  namespace: media
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: youtubedl-users
+  resources:
+    requests:
+      storage: 1Mi
