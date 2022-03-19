@@ -31,7 +31,7 @@ jobs:
         with:
           input: ./cluster/kustomization.yaml
           format: template
-          template: template/sarif.tpl
+          template: templates/sarif.tpl
           output: kubesec-results.sarif
           exit-code: "0"
           
