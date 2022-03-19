@@ -9,3 +9,4 @@ resources:
   - qbittorrent
   - prowlarr
   - bazarr
+  - youtubedl-material
