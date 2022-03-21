@@ -22,11 +22,10 @@ spec:
       namespace: networking
 
   values:
-    image:
-      repository: ghcr.io/k8s-at-home/bazarr
-      tag: v1.0.3
+
     env:
       TZ: "${TZ}"
+
     ingress:
       main:
         enabled: true
@@ -44,6 +43,7 @@ spec:
         tls:
           - hosts:
               - "bazarr.${SECRET_DOMAIN}"
+
     api:
       enabled: true
       ingressClassName: "traefik"
@@ -58,6 +58,7 @@ spec:
       tls:
         - hosts:
             - "bazarr.${SECRET_DOMAIN}"
+ 
     persistence:
       config:
         enabled: true
