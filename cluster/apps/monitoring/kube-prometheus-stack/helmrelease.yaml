@@ -63,6 +63,7 @@ spec:
             target_match:
               severity: 'warning'
             equal: ['alertname', 'namespace']
+
       ingress:
         enabled: true
         pathType: Prefix
@@ -74,7 +75,7 @@ spec:
         tls:
           - hosts:
               - "alert-manager.${SECRET_DOMAIN}"
-            # secretName: alert-manager-cert
+
       alertmanagerSpec:
         storage:
           volumeClaimTemplate:
@@ -86,6 +87,9 @@ spec:
 
     kube-state-metrics:
       fullnameOverride: kube-state-metrics
+
+    kubeStateMetrics:
+      enabled: true
 
     grafana:
       enabled: false
