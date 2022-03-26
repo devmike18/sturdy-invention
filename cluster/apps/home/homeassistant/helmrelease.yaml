@@ -30,8 +30,8 @@ spec:
     env:
       TZ: "${TZ}"
 
-    hostNetwork: true
-    dnsPolicy: ClusterFirstWithHostNet
+        #    hostNetwork: true
+        #    dnsPolicy: ClusterFirstWithHostNet
 
     envFrom:
       - secretRef:
@@ -77,14 +77,6 @@ spec:
           - hosts:
               - "homeassistant.${SECRET_DOMAIN}"
             secretName: "homeassistant-tls"
-
-    metrics:
-      enabled: true
-      bearerTokenSecret:
-        name: "prometheus-hass"
-        key: "token"
-      prometheusRule:
-        enabled: true
 
     resources:
       requests:
