@@ -5,3 +5,4 @@ resources:
   - helmrelease.yaml
   - home-assistant-config-pvc.yaml
   - home-assistant-secrets.sops.yaml
+  - prometheus-secrets.sops.yaml

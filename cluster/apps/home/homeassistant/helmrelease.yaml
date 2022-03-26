@@ -78,6 +78,14 @@ spec:
               - "homeassistant.${SECRET_DOMAIN}"
             secretName: "homeassistant-tls"
 
+    metrics:
+      enabled: true
+      bearerTokenSecret:
+        name: "prometheus-hass"
+        key: "token"
+      prometheusRule:
+        enabled: true
+
     resources:
       requests:
         cpu: 75m
