@@ -69,13 +69,13 @@ spec:
           hajimari.io/icon: "home-assistant"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
-          - host: "homeassistant-new.${SECRET_DOMAIN}"
+          - host: "homeassistant.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "homeassistant-new.${SECRET_DOMAIN}"
+              - "homeassistant.${SECRET_DOMAIN}"
             secretName: "homeassistant-tls"
 
     resources:
