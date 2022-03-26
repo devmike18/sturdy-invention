@@ -244,4 +244,4 @@ spec:
             bearer_token: ${SECRET_HOMEASSISTANT_PROMETHEUS_TOKEN}
             static_configs:
               - targets:
-                  - "homeassistant:8123"
+                  - "homeassistant.${SECRET_DOMAIN}"
