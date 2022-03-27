@@ -6,3 +6,4 @@ resources:
   - dashboard
   - middlewares
   - tls-store
+  - ingressroute
