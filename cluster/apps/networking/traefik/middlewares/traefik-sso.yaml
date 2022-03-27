@@ -8,4 +8,5 @@ spec:
   chain:
     middlewares:
       - name: traefik-forward-auth
+      - name: error-pages
       # and others probably?
