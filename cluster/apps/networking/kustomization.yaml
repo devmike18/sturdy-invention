@@ -6,3 +6,4 @@ resources:
   - unifi
   - wildcard-certificate
   - traefik-forward-auth
+  - error-pages

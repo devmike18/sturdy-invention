@@ -9,3 +9,4 @@ resources:
   - rate-limit.yaml
   - chain-no-auth.yaml
   - traefik-sso.yaml
+  - error-pages.yaml
