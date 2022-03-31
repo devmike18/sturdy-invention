@@ -23,9 +23,9 @@ spec:
 
   values:
     image:
-      repository: homeassistant/home-assistant
+      repository: ghcr.io/home-assistant/home-assistant
       pullPolicy: IfNotPresent
-      tag: 2022.3.2
+      tag: 2022.3.8
 
     env:
       TZ: "${TZ}"
@@ -85,13 +85,21 @@ spec:
       limits:
         memory: 1024Mi
 
+          #    metrics:
+          #      enabled: true
+          #      serviceMonitor:
+          #        interval: 1m
+          #        scrapeTimeout: 30s
+          #      prometheusRule:
+          #        enabled: true
+
     addons:
       codeserver:
         enabled: true
 
         image:
           repository: ghcr.io/k8s-at-home/code-server
-          tag: v4.1.0
+          tag: 4.1.0
 
         workingDir: "/config"
 
