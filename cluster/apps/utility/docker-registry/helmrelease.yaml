@@ -20,11 +20,13 @@ spec:
     image:
       repository: registry
       tag: 2.7.1
+
     ingress:
       enabled: true
       className: "traefik"
       annotations:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
       path: /
       hosts:
         - "docker-registry.${SECRET_DOMAIN}"
@@ -48,4 +50,6 @@ spec:
     metrics:
       enabled: true
       serviceMonitor:
+        enabled: true
+      prometheusRule:
         enabled: true
