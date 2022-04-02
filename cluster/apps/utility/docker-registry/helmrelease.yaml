@@ -51,5 +51,3 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
-      prometheusRule:
-        enabled: true
