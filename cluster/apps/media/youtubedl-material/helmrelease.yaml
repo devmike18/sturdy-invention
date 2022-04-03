@@ -20,7 +20,8 @@ spec:
   values:
     image:
       repository: tzahi12345/youtubedl-material
-      tag: "4.2"
+      # tag: "4.2"
+      tag: nightly # I ALSO like to live dangerously
       pullPolicy: IfNotPresent
 
     env:
