@@ -1,0 +1,51 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: registry-quay.io
+  namespace: utility
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://helm.twun.io
+      chart: docker-registry
+      version: "2.1.0"
+      sourceRef:
+        kind: HelmRepository
+        name: twuni-charts
+        namespace: flux-system
+      interval: 1m
+  values:
+    image:
+      repository: registry
+      tag: 2.8.1
+
+    ingress:
+      enabled: true
+      className: "traefik"
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
+      path: /
+      hosts:
+        - "quay-registry.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - "quay-registry.${SECRET_DOMAIN}"
+
+    storage: filesystem
+
+    persistence:
+      enabled: true
+      size: "10Gi"
+      storageClass: "ceph-block"
+
+    proxy:
+      enabled: true
+      remoteurl: https://quay.io
+
+    metrics:
+      enabled: true
+      serviceMonitor:
+        enabled: true

@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: docker-registry
+  name: registry-ghcr.io
   namespace: utility
 spec:
   interval: 5m
@@ -29,10 +29,10 @@ spec:
         traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
       path: /
       hosts:
-        - "docker-registry.${SECRET_DOMAIN}"
+        - "ghcr-registry.${SECRET_DOMAIN}"
       tls:
         - hosts:
-            - "docker-registry.${SECRET_DOMAIN}"
+            - "ghcr-registry.${SECRET_DOMAIN}"
 
     storage: filesystem
 
@@ -43,9 +43,7 @@ spec:
 
     proxy:
       enabled: true
-      remoteurl: https://registry-1.docker.io
-      username: "${SECRET_DOCKERHUB_USER}"
-      password: "${SECRET_DOCKERHUB_PASSWORD}"
+      remoteurl: https://ghcr.io
 
     metrics:
       enabled: true
