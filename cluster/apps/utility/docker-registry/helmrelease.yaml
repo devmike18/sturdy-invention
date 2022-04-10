@@ -19,7 +19,7 @@ spec:
   values:
     image:
       repository: registry
-      tag: 2.7.1
+      tag: 2.8.1
 
     ingress:
       enabled: true
