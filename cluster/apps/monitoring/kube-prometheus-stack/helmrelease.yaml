@@ -224,23 +224,16 @@ spec:
         thanos:
           image: quay.io/thanos/thanos:v0.25.2
           version: v0.22.0
-          objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yml
-            #          objectStorageConfig: |
-            #            type: S3
-            #            config:
-            #              bucket: "thanos"
-            #              endpoint: "nas02.${SECRET_DOMAIN}:9000"
-            #              insecure: true
-            #              access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
-            #             secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
+            #          objectStorageConfig:
+            #            name: thanos-objstore-secret
+            #            key: objstore.yml
+          objectStorageConfig: |
+            type: S3
+              config:
+                bucket: "thanos"
+                endpoint: "${SECRET_MINIO_ENDPOINT}:9000"
+                insecure: true
+                access_key: "${SECRET_MINIO_THANOS_ACCESSKEY}"
+                secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
 
-        additionalScrapeConfigs:
-          - job_name: 'homeassistant'
-            scrape_interval: 60s
-            metrics_path: /api/prometheus
-            bearer_token: ${SECRET_HOMEASSISTANT_PROMETHEUS_TOKEN}
-            static_configs:
-              - targets:
-                  - "homeassistant.${SECRET_DOMAIN}"
+        additionalScrapeConfigs: []
