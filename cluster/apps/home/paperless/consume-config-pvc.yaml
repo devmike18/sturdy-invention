@@ -5,6 +5,7 @@ metadata:
   name: paperless-consume-pv
   namespace: home
 spec:
+  storageClassName: paperless-consume
   capacity:
     storage: 1Mi
   accessModes:
@@ -27,6 +28,7 @@ metadata:
   name: paperless-consume-pvc
   namespace: home
 spec:
+  storageClassName: paperless-consume
   accessModes:
     - ReadWriteMany
   resources:

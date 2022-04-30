@@ -5,6 +5,7 @@ metadata:
   name: paperless-media-pv
   namespace: home
 spec:
+  storageClassName: paperless-media
   capacity:
     storage: 1Mi
   accessModes:
@@ -27,6 +28,7 @@ metadata:
   name: paperless-media-pvc
   namespace: home
 spec:
+  storageClassName: papaerless-media
   accessModes:
     - ReadWriteMany
   resources:
