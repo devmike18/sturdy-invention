@@ -5,6 +5,7 @@ metadata:
   name: paperless-export-pv
   namespace: home
 spec:
+  storageClassName: paperless-export
   capacity:
     storage: 1Mi
   accessModes:
@@ -27,6 +28,7 @@ metadata:
   name: paperless-export-pvc
   namespace: home
 spec:
+  storageClassName: paperless-export
   accessModes:
     - ReadWriteMany
   resources:
