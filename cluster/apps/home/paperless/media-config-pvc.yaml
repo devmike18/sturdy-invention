@@ -28,7 +28,7 @@ metadata:
   name: paperless-media-pvc
   namespace: home
 spec:
-  storageClassName: papaerless-media
+  storageClassName: paperless-media
   accessModes:
     - ReadWriteMany
   resources:
