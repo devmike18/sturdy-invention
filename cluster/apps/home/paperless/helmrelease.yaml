@@ -42,7 +42,7 @@ spec:
       PAPERLESS_ADMIN_PASSWORD: "${SECRET_PAPERLESS_ADMINPASSWORD}"
       PAPERLESS_ADMIN_USER: "${SECRET_PAPERLESS_ADMINUSERNAME}"
       PAPERLESS_SECRET_KEY: "${SECRET_PAPERLESS_SECRETKEY}"
-      PAPERLESS_REDIS: "redis://paperless-redis-headless:6379"
+      PAPERLESS_REDIS: "redis://paperless-redis-master:6379"
 
     persistence:
       data:
