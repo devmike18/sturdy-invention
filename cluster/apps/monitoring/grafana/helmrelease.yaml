@@ -88,7 +88,6 @@ spec:
     persistence:
       enabled: true
       type: pvc
-      storageClassName: ceph-block
       existingClaim: grafana-config-v1
 
     plugins:
