@@ -26,9 +26,6 @@ spec:
     image:
       repository: ghcr.io/k8s-at-home/grafana
 
-    deploymentStrategy:
-      type: Recreate
-
     env:
       GF_EXPLORE_ENABLED: true
       GF_PANELS_DISABLE_SANITIZE_HTML: true
@@ -91,6 +88,7 @@ spec:
     persistence:
       enabled: true
       type: pvc
+      storageClassName: ceph-block
       existingClaim: grafana-config-v1
 
     plugins:
