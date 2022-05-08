@@ -39,7 +39,7 @@ spec:
       create: true
       class: "traefik"
       host: "k10.${SECRET_DOMAIN}"
-      urlPath: "/"
+      urlPath: ""
       pathType: Prefix
       tls:
         enabled: true
