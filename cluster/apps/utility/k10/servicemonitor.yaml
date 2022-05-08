@@ -3,11 +3,11 @@ apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
   name: k10
-  namespace: kasten-io
+  namespace: utility
 spec:
   namespaceSelector:
     matchNames:
-      - kasten-io
+      - utility
   selector:
     matchLabels:
       app: prometheus
