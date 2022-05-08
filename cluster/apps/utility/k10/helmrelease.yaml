@@ -1,0 +1,46 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  releaseName: k10
+  interval: 5m
+  chart:
+    spec:
+      chart: k10
+      version: 4.5.14
+      sourceRef:
+        kind: HelmRepository
+        name: kasten
+        namespace: flux-system
+      interval: 5m
+  values:
+    eula:
+      accept: true
+      company: "${SECRET_K10_EULA_COMPANY}"
+      email: "${SECRET_K10_EULA_EMAIL}"
+    global:
+      persistence:
+        storageClass: rook-ceph
+        size: 5Gi
+    auth:
+      tokenAuth:
+        enabled: true
+    clusterName: k8s
+    ingress:
+      annotations:
+        hajimari.io/enable: "true"
+        hajimari.io/icon: "floppy-disk"
+        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+        cert-manager.io/cluster-issuer: letsencrypt-production
+      create: true
+      class: "traefik"
+      host: "k10.${SECRET_DOMAIN}"
+      urlPath: "/"
+      tls:
+        enabled: true
+        secretName: k10-tls
+    grafana:
+      enabled: false
