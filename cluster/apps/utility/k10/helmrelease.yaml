@@ -23,7 +23,7 @@ spec:
       email: "${SECRET_K10_EULA_EMAIL}"
     global:
       persistence:
-        storageClass: rook-ceph
+        storageClass: ceph-block
         size: 5Gi
     auth:
       tokenAuth:
