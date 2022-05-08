@@ -5,3 +5,4 @@ resources:
   - registry-docker
   - registry-ghcr
   - registry-quay
+  - k10
