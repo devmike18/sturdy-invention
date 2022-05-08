@@ -177,6 +177,10 @@ spec:
           gnetId: 11315
           revision: 8
           datasource: Prometheus
+        k8s-deployments:
+          gnetId: 8588
+          revision: 1
+          datasource: Prometheus
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
