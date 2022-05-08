@@ -39,10 +39,16 @@ spec:
       create: true
       class: "traefik"
       host: "k10.${SECRET_DOMAIN}"
-        #urlPath: ""
-        #pathType: Prefix
+      urlPath: k10
+      pathType: Prefix
       tls:
         enabled: true
         secretName: "k10-tls"
+
+    prometheus:
+      enabled: true
+      server:
+        persistentVolume:
+          enabled: false
     grafana:
       enabled: false
