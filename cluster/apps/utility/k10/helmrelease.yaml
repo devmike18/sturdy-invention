@@ -25,10 +25,7 @@ spec:
       persistence:
         storageClass: ceph-block
         size: 5Gi
-    auth:
-      tokenAuth:
-        enabled: true
-    clusterName: k8s
+    clusterName: sturdy-invention
     ingress:
       annotations:
         hajimari.io/enable: "true"
