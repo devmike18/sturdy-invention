@@ -100,6 +100,7 @@ spec:
       - grafana-polystat-panel
       - mxswat-separator-panel
       - farski-blendstat-panel
+      - clarity89-finnhub-datasource
 
     dashboardProviders:
       dashboardproviders.yaml:
