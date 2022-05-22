@@ -204,45 +204,6 @@ spec:
           events:
             - update
             - error
-        - name: rbac.authorization.k8s.io/v1/rolebindings
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: rbac.authorization.k8s.io/v1/clusterrolebindings
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: rbac.authorization.k8s.io/v1/clusterroles
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
 
     resources:
       requests:
