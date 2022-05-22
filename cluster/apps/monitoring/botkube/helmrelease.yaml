@@ -39,6 +39,27 @@ spec:
           enabled: true
           restrictAccess: false
       resources:
+        - name: velero.io/v1/backups
+          namespaces:
+            include:
+              - all
+          events:
+            - all
+          updateSetting:
+            includeDiff: true
+            fields:
+              - status.phase
+        - name: velero.io/v1/restores
+          namespaces:
+            include:
+              - all
+          events:
+            - all
+          updateSetting:
+            includeDiff: true
+            fields:
+              - status.phase
+
         - name: v1/services
           namespaces:
             include:
