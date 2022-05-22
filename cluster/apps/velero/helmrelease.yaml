@@ -51,7 +51,7 @@ spec:
       daily-backup:
         schedule: "0 6 * * *"
         template:
-          ttl: "168h"
+          ttl: "336h"
 
     metrics:
       enabled: true
