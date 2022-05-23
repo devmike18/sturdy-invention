@@ -36,9 +36,9 @@ spec:
             - synology
           name: nas02
           target: "${NFS_SERVER}"
+          interval: 60s
+          scrapeTimeout: 60s
       path: /snmp
-      scrapeInterval: 60s
-      scrapeTimeout: 60s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
