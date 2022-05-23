@@ -2749,7 +2749,9 @@ data:
           type: DisplayString
         - labels: []
           labelname: serviceInfoIndex
-            #auth:
+      version: 2
+      auth:
+        community: public
         #security_level: authPriv
         #username: sturdy-invention
         #password: ${SECRET_SYNOLOGY_SNMP_PASS}
