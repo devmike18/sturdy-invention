@@ -2749,10 +2749,10 @@ data:
           type: DisplayString
         - labels: []
           labelname: serviceInfoIndex
-      auth:
-        security_level: authPriv
-        username: sturdy-invention
-        password: ${SECRET_SYNOLOGY_SNMP_PASS}
-        auth_protocol: MD5
-        priv_protocol: DES
-        priv_password: ${SECRET_SYNOLOGY_SNMP_PRIVPASS}
+            #auth:
+        #security_level: authPriv
+        #username: sturdy-invention
+        #password: ${SECRET_SYNOLOGY_SNMP_PASS}
+        #auth_protocol: MD5
+        #priv_protocol: DES
+        #priv_password: ${SECRET_SYNOLOGY_SNMP_PRIVPASS}
