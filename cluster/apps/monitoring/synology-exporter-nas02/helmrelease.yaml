@@ -37,7 +37,7 @@ spec:
           name: nas02
           target: "${NFS_SERVER}"
       path: /snmp
-      scrapeTimeout: 30s
+      scrapeTimeout: 60s
       relabelings:
         - sourceLabels: [__param_target]
           targetLabel: instance
