@@ -5,9 +5,6 @@
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
-  "schedule": [
-    "every weekend"
-  ],
   // set up ignored deps
   "ignoreDeps": [
     "ghcr.io/fluxcd/helm-controller",
@@ -37,10 +34,25 @@
     ]
   },
   "regexManagers": [
+    // Read and process GitHub Releases
+    {
+      "fileMatch": [
+        "cluster/.+\\.ya?ml$",
+        "ansible/.+\\.ya?ml$",
+        "hackis/.+\\.sh$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?)( versioning=(?<versioning>.*?))?\n *url: https:\/\/github\\.com\/(?<depName>.*?)\\.git\n *ref:\n *tag: (?<currentValue>.*)\n",
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_version: \"(?<currentValue>.*)\"\n",
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_VERSION=\"(?<currentValue>.*)\"\n"
+      ],
+      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
+      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
+    },
     // regexManager to read and process HelmRelease files
     {
       "fileMatch": [
-        "cluster/.+\\.ya?ml$"
+        "cluster/.+\\.ya?ml$",
       ],
       "matchStrings": [
         // helm releases
@@ -48,6 +60,28 @@
       ],
       "datasourceTemplate": "helm"
     },
+    // Read and process Custom Resource Definitions
+    {
+      "fileMatch": [
+        "cluster/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n",
+        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
+      ],
+      "datasourceTemplate": "helm"
+    },
+    // Read and process Custom Resources
+    {
+      "fileMatch": [
+        "cluster/.+\\.ya?ml$"
+      ],
+      "matchStrings": [
+        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n .*: (?<currentValue>.*=?)"
+      ],
+      "datasourceTemplate": "docker"
+    }
+  ],
     // regexManager to read and process cert-manager CRD's
     {
       "fileMatch": [
