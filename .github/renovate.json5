@@ -80,8 +80,7 @@
         "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n .*: (?<currentValue>.*=?)"
       ],
       "datasourceTemplate": "docker"
-    }
-  ],
+    },
     // regexManager to read and process cert-manager CRD's
     {
       "fileMatch": [
