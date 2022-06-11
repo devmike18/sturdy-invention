@@ -41,4 +41,3 @@ jobs:
           body: |
             Update HelmReleases inorder for Renovate to pick up new versions of Helm charts
           labels: renovate/annotations
-:wq!
