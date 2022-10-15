@@ -22,5 +22,5 @@ data:
   ALERT_MANAGER_DISCORD_USERNAME: 'Alert-Manager Bot'
   ALERT_MANAGER_DISCORD_IMG_URL: 'https://avatars3.githubusercontent.com/u/3380462'
   CONFIG_UNIFIPOLLER_UNIFI_URL: 'https://unifi.networking.svc.cluster.local:8443/'
-  PLEX_EXTERNAL_PORT: 32400
+  PLEX_EXTERNAL_PORT: "32400"
   PLEX_NOAUTH_NETWORKS: "10.0.0.0/24 192.168.8.0/24"
