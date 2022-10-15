@@ -4,6 +4,7 @@ kind: Kustomization
 resources:
   - media-pv.yaml
   - jellyfin
+  - plex
   - radarr
   - sonarr
   - qbittorrent
