@@ -1,0 +1,147 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: plex
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: plex
+      version: 6.4.3
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-at-home-charts
+        namespace: flux-system
+      interval: 5m
+  install:
+    remediation:
+      retries: 4
+  upgrade:
+    remediation:
+      remediateLastFailure: true
+  values:
+    image:
+      repository: ghcr.io/k8s-at-home/plex # {"$imagepolicy": "flux-system:plex:name"}
+      tag: v1.29.0.6244-819d3678c # {"$imagepolicy": "flux-system:plex:tag"}
+      imagePullPolicy: IfNotPresent
+    env:
+      TZ: "${TZ}"
+      ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}/"
+      ALLOWED_NETWORKS: "${PLEX_NOAUTH_NETWORKS}"
+      PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
+      # https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
+      PLEX_PREFERENCE_1: "FriendlyName=Hampstead"
+      PLEX_PREFERENCE_2: "BackgroundTranscodeLowPriority=1"
+      PLEX_PREFERENCE_3: "ManualPortMappingMode=1"
+      PLEX_PREFERENCE_4: "ManualPortMappingPort=${PLEX_EXTERNAL_PORT}"
+      # PLEX_PREFERENCE_5: "LanNetworksBandwidth=192.168.0.0/16\,10.0.0.0/8"
+      PLEX_PREFERENCE_6: "TranscoderTempDirectory=/tmp"
+      PLEX_PREFERENCE_7: "GdmEnabled=1"
+      # PLEX_PREFERENCE_8: "TranscoderH264BackgroundPreset=fast"
+    podSecurityContext:
+      # Hardware acceleration using an Intel iGPU w/ QuickSync
+      # These IDs below should be matched to your `video` and `render` group on the host
+      # To obtain those IDs run the following grep statement on the host:
+      # $ cat /etc/group | grep "video\|render"
+      # video:x:44:
+      # render:x:109:
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 5600
+        # Custom Camelus Group(s)
+        - 65541
+        - 65536
+        - 65537
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${METALLB_PLEX_ADDR}
+        externalTrafficPolicy: Local
+        annotations:
+          metallb.universe.tf/allow-shared-ip: plex
+          traefik.ingress.kubernetes.io/service.serversscheme: https
+          coredns.io/hostname: plex
+        port:
+          port: 32400
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "plex"
+          hajimari.io/appName: "Plex"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          # traefik.ingress.kubernetes.io/router.tls.options: "networking-plex@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.priority: "150"
+          # traefik.ingress.kubernetes.io/router.middlewares: "networking-plex-add-web@kubernetescrd"
+        hosts:
+          - host: "plex.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "{{ (index .Values.ingress.main.hosts 0).host }}"
+    persistence:
+      config:
+        enabled: true
+        storageClass: "local-path"
+        accessMode: ReadWriteOnce
+        size: 20Gi
+      transcode:
+        enabled: true
+        type: emptyDir
+        accessMode: ReadWriteOnce
+        emptyDir:
+          enabled: true
+          sizeLimit: 10Gi
+      tmp:
+        enabled: true
+        type: emptyDir
+        medium: Memory
+      nfs-media-pvc:
+        enabled: true
+        existingClaim: nfs-media-pvc
+        mountPath: /Data
+        readOnly: false
+      nfs-media-2-pvc:
+        enabled: true
+        existingClaim: nfs-media-2-pvc
+        mountPath: /Data2
+        readOnly: false
+      nfs-misc-pvc:
+        enabled: true
+        existingClaim: nfs-misc-pvc
+        mountPath: /DataR
+        readOnly: false
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
+    resources:
+      requests:
+        cpu: 100m
+        memory: 1500Mi
+      limits:
+        memory: 9000Mi
+    addons:
+      promtail:
+        enabled: true
+        image:
+          repository: grafana/promtail
+          tag: 2.6.1
+        loki: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        logs:
+          - name: promtail/plex
+            path: "/config/Library/Application Support/Plex Media Server/Logs/*.log"
+          - name: promtail/plex/plugins
+            path: "/config/Library/Application Support/Plex Media Server/Logs/PMS Plugin Logs/*.log"
+        volumeMounts:
+          - name: config
+            mountPath: /config
+            readOnly: true
+        securityContext:
+          runAsUser: 0
