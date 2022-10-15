@@ -24,9 +24,9 @@ resources:
   - rook-ceph-charts.yaml
   - stakater-charts.yaml
   - traefik-charts.yaml
-  - weaveworks-kured-charts.yaml
   - vmware-tanzu-charts.yaml
   - portainer-charts.yaml
   - kubernetes-dashboard-charts.yaml
   - twuni-charts.yaml
   - stackstorm-charts.yaml
+  - kubereboot-charts.yaml
