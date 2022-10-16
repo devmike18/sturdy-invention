@@ -22,7 +22,7 @@ spec:
       repository: k8s-at-home/promtail
 
     config:
-      lokiAddress: http://loki-write.monitoring.svc.cluster.local:3100/loki/api/v1/push
+      lokiAddress: http://loki-gateway:80/loki/api/v1/push
       snippets:
         extraScrapeConfigs: |
           - job_name: syslog
