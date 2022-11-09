@@ -30,7 +30,8 @@ spec:
       retries: 7
 
   values:
-
+    deploymentStrategy:
+      type: Recreate
     replicas: 1
 
     env:
