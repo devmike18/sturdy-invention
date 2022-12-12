@@ -8,7 +8,7 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: kured
+      chart: kubereboot
       version: 4.1.0
       sourceRef:
         kind: HelmRepository
