@@ -10,22 +10,21 @@ spec:
     spec:
       # renovate: registryUrl=https://vmware-tanzu.github.io/helm-charts
       chart: velero
-      version: 2.32.4
+      version: 3.1.2
       sourceRef:
         kind: HelmRepository
         name: vmware-tanzu-charts
         namespace: flux-system
       interval: 5m
+  install:
+    crds: Create
+  upgrade:
+    crds: CreateReplace
   values:
-    image:
-      repository: ghcr.io/k8s-at-home/velero
-
     configuration:
       extraEnvVars:
         TZ: "${TZ}"
-
       provider: aws
-
       backupStorageLocation:
         name: default
         bucket: velero
@@ -34,11 +33,15 @@ spec:
           region: us-east-1
           s3ForcePathStyle: true
           s3Url: http://192.168.8.5:9000
-      resticTimeout: 4h
+      volumeSnapshotLocation:
+        name: aws
+        config:
+          region: us-east-1
+      resticTimeout: 6h
 
     initContainers:
       - name: velero-plugin-for-aws
-        image: ghcr.io/k8s-at-home/velero-plugin-for-aws:v1.5.0
+        image: velero/velero-plugin-for-aws:v1.6.0
         imagePullPolicy: IfNotPresent
         volumeMounts:
           - mountPath: /target
@@ -47,29 +50,16 @@ spec:
     credentials:
       existingSecret: velero-minio-credentials
 
-    schedules:
-      daily-backup:
-        schedule: "0 6 * * *"
-        template:
-          ttl: "336h"
-
     metrics:
       enabled: true
       serviceMonitor:
         enabled: true
     backupsEnabled: true
-    snapshotsEnabled: false
+    snapshotsEnabled: true
     upgradeCRDs: false
-    cleanUpCRDs: false
 
-    kubectl:
-      image:
-        repository: ghcr.io/k8s-at-home/kubectl
-        tag: v1.25.4
-
-    deployRestic: true
-
-    restic:
+    deployNodeAgent: true
+    nodeAgent:
       podVolumePath: /var/lib/kubelet/pods
       privileged: false
       tolerations:
@@ -85,10 +75,10 @@ spec:
           cpu: 15m
         limits:
           memory: 3000Mi
+          cpu: null
 
-    resources:
-      requests:
-        memory: 300Mi
-        cpu: 25m
-      limits:
-        memory: 1500Mi
+    schedules:
+      daily-backup:
+        schedule: "0 6 * * *"
+        template:
+          ttl: "336h"
