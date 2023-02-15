@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
-      tag: v1.31.0.6654-02189b09f # {"$imagepolicy": "flux-system:plex:tag"}
+      tag: 1.31.0.6654-02189b09f
       imagePullPolicy: IfNotPresent
     env:
       TZ: "${TZ}"
