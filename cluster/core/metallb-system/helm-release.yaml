@@ -16,10 +16,6 @@ spec:
         name: metallb-charts
         namespace: flux-system
 
-  dependsOn:
-    - name: tigera-operator
-      namespace: tigera-operator
-
   install:
     remediation:
       retries: 5
