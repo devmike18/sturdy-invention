@@ -23,8 +23,8 @@ spec:
       remediateLastFailure: true
   values:
     image:
-      repository: ghcr.io/k8s-at-home/plex # {"$imagepolicy": "flux-system:plex:name"}
-      tag: v1.29.0.6244-819d3678c # {"$imagepolicy": "flux-system:plex:tag"}
+      repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
+      tag: v1.31.0.6654-02189b09f # {"$imagepolicy": "flux-system:plex:tag"}
       imagePullPolicy: IfNotPresent
     env:
       TZ: "${TZ}"
