@@ -19,4 +19,4 @@
           "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}"
       }
     ]
-  }1
+  }
