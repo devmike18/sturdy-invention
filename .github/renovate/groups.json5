@@ -1,0 +1,55 @@
+{
+  packageRules: [
+    {
+      "description": "Cert-Manager image (for CRDs) and chart",
+      "groupName": "Cert-Manager",
+      "matchPackagePatterns": ["cert-manager"],
+      "matchDatasources": ["docker", "helm"],
+      "group": { "commitMessageTopic": "{{{groupName}}} group" },
+      "separateMinorPatch": true
+    },
+    {
+      description: "Rook-Ceph image and chart",
+      groupName: "Rook Ceph",
+      matchPackagePatterns: ["rook.ceph"],
+      matchDatasources: ["docker", "helm"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+      separateMinorPatch: true,
+      stabilityDays: 2,
+    },
+    {
+      description: "Thanos image and chart - versions do not match",
+      groupName: "Thanos",
+      matchDatasources: ["docker", "github-releases", "helm"],
+      matchPackagePatterns: ["quay.io/thanos/thanos", "thanos"],
+      matchUpdateTypes: ["minor", "patch"],
+      group: { commitMessageTopic: "{{{groupName}}} group" },
+      separateMinorPatch: false,
+      stabilityDays: 2,
+    },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: [
+        "k8s.gcr.io/kube-apiserver",
+        "k8s.gcr.io/kube-controller-manager",
+        "k8s.gcr.io/kube-scheduler",
+        "ghcr.io/siderolabs/kubelet",
+      ],
+      groupName: "kubernetes",
+      additionalBranchPrefix: "",
+      separateMinorPatch: true,
+    },
+    {
+      "matchDatasources": [
+        "github-tags",
+        "docker"
+      ],
+      "matchPackagePatterns": [
+        "rancher/system-upgrade-controller"
+      ],
+      "groupName": "system-upgrade-controller-suite",
+      "additionalBranchPrefix": "",
+      "separateMinorPatch": true
+    }
+  ],
+}

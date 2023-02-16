@@ -1,0 +1,64 @@
+{
+    "packageRules": [
+      {
+        description: "Auto merge container digests",
+        matchDatasources: ["docker"],
+        automerge: true,
+        automergeType: "branch",
+        requiredStatusChecks: null,
+        matchUpdateTypes: ["digest"],
+        matchPackagePattern: ["ghcr.io/k8s-at-home", "ghcr.io/onedr0p"],
+      },
+      {
+        "datasources": ["docker", "github-tags"],
+        "automerge": true,
+        "automergeType": "branch",
+        "requiredStatusChecks": null,
+        "updateTypes": ["minor", "patch"],
+        "packageNames": [
+          "ghcr.io/onedr0p/lidarr",
+          "homeassistant/home-assistant",
+          "ghcr.io/onedr0p/radarr",
+          "ghcr.io/onedr0p/sonarr",
+          "ghcr.io/onedr0p/bazarr",
+          "ghcr.io/onedr0p/prowlarr",
+          "renovatebot/github-action"
+        ]
+      },
+      {
+        "datasources": ["docker", "github-tags"],
+        "automerge": true,
+        "requiredStatusChecks": null,
+        "schedule": "after 1am and before 5am",
+        "updateTypes": ["minor", "patch"],
+        "packageNames": [
+          "ghcr.io/onedr0p/plex",
+          "homeassistant/home-assistant",
+          "plexinc/pms-docker"
+        ]
+      },
+      {
+        "datasources": ["helm"],
+        "automerge": true,
+        "automergeType": "branch",
+        "requiredStatusChecks": null,
+        "updateTypes": ["minor", "patch"],
+        "packageNames": [
+          "grafana",
+          "thanos",
+          "kube-prometheus-stack",
+          "velero"
+        ]
+      },
+      {
+        "matchManagers": ["github-actions"],
+        "automerge": true,
+        "automergeType": "branch",
+        "requiredStatusChecks": null,
+        "matchUpdateTypes": ["minor", "patch"],
+        "packageNames": [
+          "renovatebot/github-action"
+        ]
+      }
+    ]
+  }
