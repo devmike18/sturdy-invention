@@ -1,10 +1,40 @@
 {
-  "enabled": true,
-  "semanticCommits": "enabled",
-  "dependencyDashboard": true,
+  "extends": [
+    ":enableRenovate",
+    "config:base",
+    ":semanticCommits",
+    ":dependencyDashboard",
+    ":enablePreCommit",
+    ":disableRateLimiting",
+    ":separatePatchReleases",
+    ":autodetectPinVersions",
+    ":rebaseStalePrs",
+    ":automergePatch",
+    ":gomod",
+    "docker:enableMajor",
+    "github>devmike18/sturdy-invention//.github/renovate/allowedVersions.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/commitMessage",
+    "github>devmike18/sturdy-invention//.github/renovate/autoMerge.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/labels.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/groups.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/disabledDatasources.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/semanticCommits"
+  ],
+
+  "timezone": "Canada/Eastern",
   "dependencyDashboardTitle": "Renovate Dashboard",
   "suppressNotifications": ["prIgnoreNotification"],
   "rebaseWhen": "conflicted",
+
+  "platform": "github",
+  "username": "renovate[bot]",
+  "repositories": ["devmike18/sturdy-invention"],
+  "onboarding": false,
+  "requireConfig": false,
+  "gitAuthor": "renovate <devmike18@users.noreply.github.com>",
+
+
+
   // set up ignored deps
   "ignoreDeps": [
     "ghcr.io/fluxcd/helm-controller",
@@ -14,9 +44,6 @@
     "ghcr.io/fluxcd/notification-controller",
     "ghcr.io/fluxcd/source-controller"
   ],
-  "pre-commit": {
-    "enabled": true
-  },
   "flux": {
     "fileMatch": [
       "cluster/.+\\.ya?ml$"
@@ -39,7 +66,7 @@
       "fileMatch": [
         "cluster/.+\\.ya?ml$",
         "ansible/.+\\.ya?ml$",
-        "hackis/.+\\.sh$"
+        "hacks/.+\\.sh$"
       ],
       "matchStrings": [
         "datasource=(?<datasource>.*?)( versioning=(?<versioning>.*?))?\n *url: https:\/\/github\\.com\/(?<depName>.*?)\\.git\n *ref:\n *tag: (?<currentValue>.*)\n",
