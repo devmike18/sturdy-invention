@@ -1,0 +1,13 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: monitoring
+resources: []
+configMapGenerator:
+  - name: grafana-dashboard-qbittorrent
+    files:
+      - qbittorrent-dashboard.json
+generatorOptions:
+  disableNameSuffixHash: true
+  # labels:
+  #   grafana_dashboard: "1"
