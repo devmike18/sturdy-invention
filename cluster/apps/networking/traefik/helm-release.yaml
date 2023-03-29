@@ -20,10 +20,6 @@ spec:
     - name: cert-manager
       namespace: cert-manager
   values:
-    image:
-      name: ghcr.io/k8s-at-home/traefik
-      tag: v2.6.2
-      pullPolicy: IfNotPresent
     deployment:
       kind: Deployment
       replicas: 1
