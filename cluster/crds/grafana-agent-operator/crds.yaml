@@ -6,9 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m
-  url: ssh://git@github.com/grafana/helm-charts.git
-  secretRef:
-    name: flux-system
+  url: https://github.com/grafana/helm-charts.git
   ref:
     # renovate: datasource=github-releases depName=grafana-agent-operator
     tag: grafana-agent-operator-0.2.8
