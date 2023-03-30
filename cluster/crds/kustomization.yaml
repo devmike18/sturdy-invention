@@ -5,3 +5,4 @@ resources:
   - traefik
   - kube-prometheus-stack
   - velero
+  - ./grafana-agent-operator/crds.yaml
