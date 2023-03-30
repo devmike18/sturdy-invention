@@ -5,5 +5,10 @@ resources:
   - helmrelease.yaml
   - prometheus-rule.yaml
   - secret.sops.yaml
-  - loki-alerting-rules.yaml
   - dashboard
+configMapGenerator:
+  - name: loki-alerting-rules
+    files:
+      - loki-alerting-rules.yaml=loki-alerting-rules.yaml
+generatorOptions:
+  disableNameSuffixHash: true
