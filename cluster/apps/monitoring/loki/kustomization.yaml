@@ -5,4 +5,5 @@ resources:
   - helmrelease.yaml
   - prometheus-rule.yaml
   - secret.sops.yaml
+  - loki-alerting-rules.yaml
   - dashboard
