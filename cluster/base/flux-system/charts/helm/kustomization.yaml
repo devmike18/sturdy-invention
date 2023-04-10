@@ -30,3 +30,4 @@ resources:
   - twuni-charts.yaml
   - stackstorm-charts.yaml
   - kubereboot-charts.yaml
+  - bjw-s-charts.yaml
