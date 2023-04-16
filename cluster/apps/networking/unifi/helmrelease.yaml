@@ -31,15 +31,6 @@ spec:
       data:
         enabled: true
         existingClaim: unifi-data-v1
-          #      backup:
-          #        enabled: true
-          #        type: custom
-          #        volumeSpec:
-          #          nfs:
-          #            server: "${NFS_SERVER}"
-          #            path: /mnt/user/k3s-backup/unifi
-          #        mountPath: /var/lib/unifi/backup
-          #        readOnly: false
 
     podAnnotations:
       backup.velero.io/backup-volumes: data
@@ -64,6 +55,9 @@ spec:
           - hosts:
               - "unifi.${SECRET_DOMAIN}"
 
+      portal:
+        enabled: true
+
     service:
       main:
         enabled: true
@@ -71,25 +65,15 @@ spec:
         externalIPs:
           - ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
-          #      udp:
-          #        enabled: true
-          #        type: LoadBalancer
-          #        externalIPs:
-          #          - ${METALLB_UNIFI_ADDR}
-          #        externalTrafficPolicy: Local
-          #        ports:
-          #          stun:
-          #            enabled: true
-          #            port: 3478
-          #            protocol: UDP
-          #          syslog:
-          #            enabled: true
-          #            port: 5514
-          #            protocol: UDP
-          #          discovery:
-          #            enabled: true
-          #            port: 10001
-          #            protocol: UDP
+        ports:
+          portal-http:
+            enabled: true
+            port: 8880
+            protocol: HTTP
+          portal-https:
+            enabled: true
+            port: 8843
+            protocol: HTTPS
 
     resources:
       requests:
