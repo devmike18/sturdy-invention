@@ -51,12 +51,12 @@ spec:
       TIMEZONE: "${TZ}"
 
     persistence:
-      data:
+      unifi:
         enabled: true
         existingClaim: unifi-data-v1
 
     podAnnotations:
-      backup.velero.io/backup-volumes: data
+      backup.velero.io/backup-volumes: unifi
 
     ingress:
       main:
