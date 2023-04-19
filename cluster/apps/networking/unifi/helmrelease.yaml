@@ -8,24 +8,47 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: unifi
-      version: 5.1.2
+      chart: app-template
+      version: 1.3.2
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-helm-charts
         namespace: flux-system
       interval: 5m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
 
   dependsOn:
     - name: traefik
       namespace: networking
 
   values:
+    controller:
+      type: StatefulSet
+
     image:
       repository: jacobalberty/unifi
       tag: v7.3.83
       pullPolicy: IfNotPresent
+
+    env:
+      RUNAS_UID0: "false"
+      UNIFI_UID: "999"
+      UNIFI_GID: "999"
+      UNIFI_STDOUT: "true"
+      JVM_INIT_HEAP_SIZE:
+      JVN_MAX_HEAP_SIZE: 1024M
+      TIMEZONE: "${TZ}"
 
     persistence:
       data:
@@ -34,9 +57,6 @@ spec:
 
     podAnnotations:
       backup.velero.io/backup-volumes: data
-
-    env:
-      timezone: "${TZ}"
 
     ingress:
       main:
@@ -47,16 +67,13 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "lan"
         hosts:
-          - host: "unifi.${SECRET_DOMAIN}"
+          - host: &host "unifi.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "unifi.${SECRET_DOMAIN}"
-
-      portal:
-        enabled: true
+              - *host
 
     service:
       main:
@@ -66,28 +83,41 @@ spec:
           - ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
         ports:
-          portal-http:
+          http:
+            port: 8443
+            protocol: HTTPS
+          controller:
             enabled: true
+            port: 8080
+            protocol: TCP
+          portal-http:
+            enabled: false
             port: 8880
             protocol: HTTP
           portal-https:
-            enabled: true
+            enabled: false
             port: 8843
             protocol: HTTPS
+          speedtest:
+            enabled: true
+            port: 6789
+            protocol: TCP
+          stun:
+            enabled: true
+            port: 3478
+            protocol: UDP
+          syslog:
+            enabled: true
+            port: 5514
+            protocol: UDP
+          discovery:
+            enabled: true
+            port: 10001
+            protocol: UDP
 
     resources:
       requests:
-        memory: 500Mi
+        memory: 500M
         cpu: 15m
       limits:
-        memory: 750Mi
-
-    logging:
-      promtail:
-        enabled: true
-        image:
-          repository: grafana/promtail
-          tag: 2.7.3
-          pullPolicy: IfNotPresent
-        loki:
-          url: http://loki.monitoring.svc.cluster.local:3100/loki/api/v1/push
+        memory: 1390M
