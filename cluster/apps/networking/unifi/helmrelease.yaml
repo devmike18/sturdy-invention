@@ -34,7 +34,7 @@ spec:
 
   values:
     controller:
-      type: StatefulSet
+      type: statefulset
 
     image:
       repository: jacobalberty/unifi
