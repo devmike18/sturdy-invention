@@ -8,12 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      # renovate: registryUrl=https://storage.googleapis.com/t3n-helm-charts
       chart: mosquitto
-      version: 4.8.2
+      version: 2.4.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: t3n-charts
         namespace: flux-system
       interval: 5m
 
@@ -22,27 +22,23 @@ spec:
       repository: eclipse-mosquitto
       tag: 2.0.15
 
-    env:
-      TZ: "${TZ}"
-
     service:
-      main:
-        type: LoadBalancer
-        externalIPs:
-          - ${METALLB_MOSQUITTO_ADDR}
-        externalTrafficPolicy: Local
+      type: LoadBalancer
+      loadBalancerIP:
+        - ${METALLB_MOSQUITTO_ADDR}
+      externalTrafficPolicy: Local
+
+    monitoring:
+      podMonitor:
+        enabled: true
+      sidecar:
+        enabled: true
 
     persistence:
-      data:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClassName: ceph-block
-      configinc:
-        enabled: true
-        accessMode: ReadWriteOnce
-        size: 1Gi
-        storageClassName: ceph-block
+      enabled: true
+      accessMode: ReadWriteOnce
+      size: 1Gi
+      storageClassName: ceph-block
 
     resources:
       requests:
