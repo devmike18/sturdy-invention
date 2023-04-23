@@ -4,4 +4,4 @@ kind: Kustomization
 resources:
   - homeassistant
   - mosquitto
-  - paperless
+    #  - paperless
