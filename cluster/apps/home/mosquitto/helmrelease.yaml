@@ -27,6 +27,15 @@ spec:
       loadBalancerIP: "${METALLB_MOSQUITTO_ADDR}"
       externalTrafficPolicy: Local
 
+    config: |
+     persistence true
+     persistence_location /mosquitto/data/
+     log_dest stdout
+     allow_anonymous true
+     listener 1883
+     listener 9090
+     protocol websockets
+
     monitoring:
       podMonitor:
         enabled: true
