@@ -24,8 +24,7 @@ spec:
 
     service:
       type: LoadBalancer
-      loadBalancerIP:
-        - ${METALLB_MOSQUITTO_ADDR}
+      loadBalancerIP: "${METALLB_MOSQUITTO_ADDR}"
       externalTrafficPolicy: Local
 
     monitoring:
