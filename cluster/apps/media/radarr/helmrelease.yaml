@@ -27,7 +27,6 @@ spec:
 
     env:
       TZ: "${TZ}"
-      RADARR__API_KEY: "${SECRET_RADARR_APIKEY}"
     ingress:
       main:
         enabled: true
@@ -68,17 +67,6 @@ spec:
         readOnly: false
         existingClaim: nfs-media-pvc
         mountPath: /media
-
-    metrics:
-      enabled: true
-      prometheusRule:
-        enabled: true
-      exporter:
-        image:
-          repository: ghcr.io/onedr0p/exportarr
-          tag: v1.3.1
-        env:
-          APIKEY: "${SECRET_RADARR_APIKEY}"
 
     podSecurityContext:
       runAsUser: 1001
