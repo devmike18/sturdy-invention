@@ -32,3 +32,4 @@ resources:
   - kubereboot-charts.yaml
   - bjw-s-charts.yaml
   - t3n-charts.yaml
+  - geek-cookbook-charts.yaml
