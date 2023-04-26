@@ -23,8 +23,8 @@ spec:
 
   values:
     image:
-      repository: ghcr.io/k8s-at-home/radarr
-      tag: v4.2.4.6635
+      repository: lscr.io/linuxserver/radarr
+      tag: 4.4.4
 
     env:
       TZ: "${TZ}"
