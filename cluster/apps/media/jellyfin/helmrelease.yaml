@@ -26,6 +26,10 @@ spec:
       TZ: "${TZ}"
       JELLYFIN_CACHE_DIR: "/config/cache"
 
+    image:
+      repository: ghcr.io/onedr0p/jellyfin
+      tag: 10.8.10
+
     podAnnotations:
       backup.velero.io/backup-volumes: data
 
