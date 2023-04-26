@@ -27,6 +27,7 @@ spec:
 
     env:
       TZ: "${TZ}"
+      RADARR__API_KEY: "${SECRET_RADARR_APIKEY}"
     ingress:
       main:
         enabled: true
@@ -76,6 +77,8 @@ spec:
         image:
           repository: ghcr.io/onedr0p/exportarr
           tag: v1.3.1
+        env:
+          APIKEY: "${SECRET_RADARR_APIKEY}"
 
     podSecurityContext:
       runAsUser: 1001
