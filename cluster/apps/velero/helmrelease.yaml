@@ -24,9 +24,9 @@ spec:
     configuration:
       extraEnvVars:
         TZ: "${TZ}"
-      provider: aws
       backupStorageLocation:
         name: aws
+        provider: aws
         bucket: velero
         default: true
         config:
@@ -35,6 +35,7 @@ spec:
             s3Url: http://192.168.8.5:9000
       volumeSnapshotLocation:
         name: aws
+        provider: aws
         config:
           - region: us-east-1
       resticTimeout: 6h
