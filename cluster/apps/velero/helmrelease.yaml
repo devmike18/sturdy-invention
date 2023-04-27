@@ -33,11 +33,13 @@ spec:
           - region: us-east-1
             s3ForcePathStyle: true
             s3Url: http://192.168.8.5:9000
+
       volumeSnapshotLocation:
         name: aws
         provider: aws
         config:
           - region: us-east-1
+
       resticTimeout: 6h
 
     initContainers:
