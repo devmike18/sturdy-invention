@@ -11,3 +11,4 @@ resources:
   - media.yaml
   - velero.yaml
   - utility.yaml
+  - stable-diffusion-webui
