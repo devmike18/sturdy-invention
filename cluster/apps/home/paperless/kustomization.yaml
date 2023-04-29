@@ -1,9 +1,0 @@
----
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-resources:
-  - helmrelease.yaml
-  - consume-config-pvc.yaml
-  - data-config-pvc.yaml
-  - export-config-pvc.yaml
-  - media-config-pvc.yaml
