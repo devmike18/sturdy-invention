@@ -164,16 +164,16 @@ spec:
       volumes:
         - name: shared-embeddings
           persistentVolumeClaim:
-            claimName: shared-embeddings
+            claimName: nfs-aiml-shared-embeddings
         - name: shared-extensions
           persistentVolumeClaim:
-            claimName: shared-extensions
+            claimName: nfs-aiml-shared-extensions
         - name: shared-models
           persistentVolumeClaim:
-            claimName: shared-models
+            claimName: nfs-aiml-shared-models
         - name: shared-outputs
           persistentVolumeClaim:
-            claimName: shared-outputs
+            claimName: nfs-aiml-shared-outputs
   volumeClaimTemplates:
     - metadata:
         name: datadir

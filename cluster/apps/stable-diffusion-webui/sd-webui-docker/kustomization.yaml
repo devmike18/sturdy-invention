@@ -15,7 +15,7 @@ resources:
   # [BASES] Basic things.
   # PersistentVolumeClaim
   # - https://raw.githubusercontent.com/ebiiim/sd-webui-docker/v1.2.0/k8s/bases/pvc.yaml
-  - bases/pvc.yaml
+  # - bases/pvc.yaml
   # StatefulSet
   # - https://raw.githubusercontent.com/ebiiim/sd-webui-docker/v1.2.0/k8s/bases/sts.yaml
   - bases/sts.yaml
@@ -61,57 +61,57 @@ patches:
         value: ceph-block
 
   # [PersistentVolumeClaim/shared-embeddings] To set storageClassName and storage size, uncomment the patch.
-  - target:
-      group: ""
-      version: v1
-      kind: PersistentVolumeClaim
-      name: shared-embeddings
-    patch: |-
-      - op: add
-        path: /spec/storageClassName
-        value: ceph-block
-      - op: replace
-        path: /spec/resources/requests/storage
-        value: 3Gi
+  #- target:
+  #    group: ""
+  #    version: v1
+  #    kind: PersistentVolumeClaim
+  #    name: shared-embeddings
+  #  patch: |-
+  #    - op: add
+  #      path: /spec/storageClassName
+  #      value: ceph-block
+  #    - op: replace
+  #      path: /spec/resources/requests/storage
+  #      value: 3Gi
 
   # [PersistentVolumeClaim/shared-extensions] To set storageClassName and storage size, uncomment the patch.
-  - target:
-      group: ""
-      version: v1
-      kind: PersistentVolumeClaim
-      name: shared-extensions
-    patch: |-
-      - op: add
-        path: /spec/storageClassName
-        value: ceph-block
-      - op: replace
-        path: /spec/resources/requests/storage
-        value: 3Gi
+  #- target:
+  #    group: ""
+  #    version: v1
+  #    kind: PersistentVolumeClaim
+  #    name: shared-extensions
+  #  patch: |-
+  #    - op: add
+  #      path: /spec/storageClassName
+  #      value: ceph-block
+  #    - op: replace
+  #      path: /spec/resources/requests/storage
+  #      value: 3Gi
 
   # [PersistentVolumeClaim/shared-models] To set storageClassName and storage size, uncomment the patch.
-  - target:
-      group: ""
-      version: v1
-      kind: PersistentVolumeClaim
-      name: shared-models
-    patch: |-
-      - op: add
-        path: /spec/storageClassName
-        value: ceph-block
-      - op: replace
-        path: /spec/resources/requests/storage
-        value: 15Gi
+  #- target:
+  #    group: ""
+  #    version: v1
+  #    kind: PersistentVolumeClaim
+  #    name: shared-models
+  #  patch: |-
+  #    - op: add
+  #      path: /spec/storageClassName
+  #      value: ceph-block
+  #    - op: replace
+  #      path: /spec/resources/requests/storage
+  #      value: 15Gi
 
   # [PersistentVolumeClaim/shared-outputs] To set storageClassName and storage size, uncomment the patch.
-  - target:
-      group: ""
-      version: v1
-      kind: PersistentVolumeClaim
-      name: shared-outputs
-    patch: |-
-      - op: add
-        path: /spec/storageClassName
-        value: ceph-block
-      - op: replace
-        path: /spec/resources/requests/storage
-        value: 15Gi
+  #- target:
+  #    group: ""
+  #    version: v1
+  #    kind: PersistentVolumeClaim
+  #    name: shared-outputs
+  #  patch: |-
+  #    - op: add
+  #      path: /spec/storageClassName
+  #      value: ceph-block
+  #    - op: replace
+  #      path: /spec/resources/requests/storage
+  #      value: 15Gi
