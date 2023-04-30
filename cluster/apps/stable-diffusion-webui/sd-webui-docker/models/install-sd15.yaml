@@ -25,6 +25,6 @@ spec:
       volumes:
         - name: shared-models
           persistentVolumeClaim:
-            claimName: shared-models
+            claimName: nfs-aiml-pvc-models
       restartPolicy: Never
   backoffLimit: 3
