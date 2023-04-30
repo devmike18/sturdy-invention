@@ -17,4 +17,4 @@ spec:
                   name: http
   tls:
     - hosts:
-        - "table-diffusion.${SECRET_DOMAIN}"
+        - "stable-diffusion.${SECRET_DOMAIN}"
