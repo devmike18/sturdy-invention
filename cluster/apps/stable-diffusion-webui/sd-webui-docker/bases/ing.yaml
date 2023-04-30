@@ -1,10 +1,11 @@
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: stable-diffusion-webui
 spec:
   rules:
-    - host: stable-diffusion-webui.example.com
+    - host: "stable-diffusion.${SECRET_DOMAIN}"
       http:
         paths:
           - path: /
@@ -14,3 +15,6 @@ spec:
                 name: stable-diffusion-webui
                 port:
                   name: http
+  tls:
+    - hosts:
+        - "table-diffusion.${SECRET_DOMAIN}"
