@@ -142,7 +142,10 @@ spec:
               value: "/datadir/.cache"
           args:
             - --api
-            - --xformers # assumes GPU mode
+              #- --xformers # assumes GPU mode
+            - --skip-torch-cuda-test
+            - --no-half
+            - --use-cpu all
             - --disable-nan-check # this is required to use some models
             - --no-download-sd-model # models are downloaded by batches
             - --data-dir=/datadir
