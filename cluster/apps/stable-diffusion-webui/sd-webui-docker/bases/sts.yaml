@@ -131,7 +131,6 @@ spec:
               readOnly: true
             - name: shared-extensions
               mountPath: /datadir/extensions
-              readOnly: true
             - name: shared-models
               mountPath: /datadir/models
               readOnly: true
