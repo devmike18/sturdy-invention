@@ -144,6 +144,7 @@ spec:
             - --api
               #- --xformers # assumes GPU mode
             - --skip-torch-cuda-test
+            - --enable-insecure-extension-access
             - --no-half
             - --use-cpu=all
             - --disable-nan-check # this is required to use some models
