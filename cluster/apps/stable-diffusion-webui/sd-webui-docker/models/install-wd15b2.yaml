@@ -39,9 +39,9 @@ spec:
       volumes:
         - name: shared-embeddings
           persistentVolumeClaim:
-            claimName: shared-embeddings
+            claimName: nfs-aiml-pvc-embeddings
         - name: shared-models
           persistentVolumeClaim:
-            claimName: shared-models
+            claimName: nfs-aiml-pvc-models
       restartPolicy: Never
   backoffLimit: 3
