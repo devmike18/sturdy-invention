@@ -30,7 +30,7 @@ resources:
   # Stable Diffusion 1.5 (License: CreativeML Open RAIL-M)
   - models/install-sd15.yaml
   # Waifu Diffusion 1.5 beta2 (License: Fair AI Public License 1.0-SD)
-  # - models/install-wd15b2.yaml
+  - models/install-wd15b2.yaml
 
 patchesStrategicMerge: []
 
