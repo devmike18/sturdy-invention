@@ -4,7 +4,7 @@ kind: Kustomization
 images:
   - name: sd-webui
     newName: ghcr.io/ebiiim/sd-webui
-    newTag: v1.1.0 # same as v1.2.0
+    newTag: 1.2.0 # same as v1.2.0
 
 namespace: stable-diffusion-webui
 
