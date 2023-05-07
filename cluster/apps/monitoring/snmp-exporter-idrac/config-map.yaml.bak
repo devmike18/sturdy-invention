@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: snmp-exporter-gw-0
+  name: snmp-exporter-idrac
   namespace: monitoring
 data:
   snmp.yaml: |
