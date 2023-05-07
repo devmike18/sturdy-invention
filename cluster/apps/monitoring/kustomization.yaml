@@ -13,4 +13,4 @@ resources:
   - snmp-exporter-gw-0
   - synology-exporter-nas02
   - unifi-poller
-  - portainer
+    #  - portainer
