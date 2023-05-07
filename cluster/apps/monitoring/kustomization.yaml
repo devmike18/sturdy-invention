@@ -11,6 +11,7 @@ resources:
   - speedtest-exporter
   - snmp-exporter-switch-0
   - snmp-exporter-gw-0
+  - snmp-exporter-idrac
   - synology-exporter-nas02
   - unifi-poller
     #  - portainer

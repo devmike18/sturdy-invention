@@ -1,0 +1,47 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: snmp-exporter-idrac
+  namespace: monitoring
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://prometheus-community.github.io/helm-charts
+      chart: prometheus-snmp-exporter
+      version: 1.4.0
+      sourceRef:
+        kind: HelmRepository
+        name: prometheus-community-charts
+        namespace: flux-system
+      interval: 5m
+  values:
+    fullnameOverride: snmp-exporter-idrac
+    nameOverride: snmp-exporter-idrac
+    extraArgs:
+      - "--config.file=/config/snmp.yaml"
+    extraConfigmapMounts:
+      - name: snmp-exporter-idrac
+        mountPath: /config/snmp.yaml
+        subPath: snmp.yaml
+        configMap: snmp-exporter-idrac
+        readOnly: true
+        defaultMode: 420
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      params:
+        - module:
+            - dell_idrac
+          name: idrac0
+          target: 10.0.0.88
+        - module:
+            - dell_idrac
+          name: idrac1
+          target: 10.0.0.89
+      path: /snmp
+      scrapeTimeout: 30s
+      relabelings:
+        - sourceLabels: [__param_target]
+          targetLabel: instance
