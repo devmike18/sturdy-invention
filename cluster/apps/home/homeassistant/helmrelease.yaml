@@ -98,7 +98,7 @@ spec:
 
         image:
           repository: codercom/code-server
-          tag: v4.13.0
+          tag: 4.13.0
 
         workingDir: "/config"
 
