@@ -8,11 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      chart: app-template
-      version: 1.5.0
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
+      chart: home-assistant
+      version: 13.4.2
       sourceRef:
         kind: HelmRepository
-        name: bjw-s-charts
+        name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
 
@@ -29,6 +30,9 @@ spec:
     env:
       TZ: "${TZ}"
 
+        #    hostNetwork: true
+        #    dnsPolicy: ClusterFirstWithHostNet
+
     envFrom:
       - secretRef:
           name: home-assistant-secrets
@@ -39,9 +43,6 @@ spec:
         externalIPs:
           - ${METALLB_HOMEASSISTANT_ADDR}
         externalTrafficPolicy: Local
-        ports:
-          http:
-            port: 8123
 
     probes:
       liveness:
@@ -49,7 +50,7 @@ spec:
       readiness:
         enabled: false
       startup:
-        enabled: true
+        enabled: false
 
     podAnnotations:
       backup.velero.io/backup-volumes: config
@@ -82,7 +83,7 @@ spec:
         cpu: 75m
         memory: 512Mi
       limits:
-        memory: 2048Mi
+        memory: 1024Mi
 
           #    metrics:
           #      enabled: true
@@ -97,8 +98,8 @@ spec:
         enabled: true
 
         image:
-          repository: codercom/code-server
-          tag: v4.13.0
+          repository: ghcr.io/k8s-at-home/code-server
+          tag: v4.6.0
 
         workingDir: "/config"
 
@@ -106,11 +107,9 @@ spec:
           enabled: true
           ingressClassName: "traefik"
           annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             hajimari.io/enable: "true"
             hajimari.io/icon: "microsoft-visual-studio-code"
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           hosts:
             - host: "ha-vscode.${SECRET_DOMAIN}"
               paths:
@@ -119,7 +118,6 @@ spec:
           tls:
             - hosts:
                 - "ha-vscode.${SECRET_DOMAIN}"
-              secretName: "ha-vscode-tls"
 
         args:
           - --auth
