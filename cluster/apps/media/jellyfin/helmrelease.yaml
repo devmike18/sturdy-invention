@@ -54,6 +54,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-play"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
           - host: "jellyfin.${SECRET_DOMAIN}"
             paths:
@@ -62,6 +63,7 @@ spec:
         tls:
           - hosts:
               - "jellyfin.${SECRET_DOMAIN}"
+            secretNBame: "jellyfin-tls"
 
 
     persistence:
@@ -85,4 +87,4 @@ spec:
         memory: 2Gi
       limits:
         cpu: 2
-        memory: 8Gi
+        memory: 12Gi
