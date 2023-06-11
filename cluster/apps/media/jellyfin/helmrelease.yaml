@@ -8,13 +8,13 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: jellyfin
-      version: 9.5.3
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
+      interval: 5m
 
   dependsOn:
     - name: traefik
@@ -82,6 +82,7 @@ spec:
     resources:
       requests:
         cpu: 1
-        memory: 4Gi
+        memory: 2Gi
       limits:
+        cpu: 2
         memory: 8Gi
