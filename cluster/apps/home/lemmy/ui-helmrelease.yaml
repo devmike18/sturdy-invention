@@ -1,0 +1,58 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: lemmy-ui
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: lemmy
+      namespace: home
+
+  values:
+    image:
+      repository: dessalines/lemmy-ui
+      pullPolicy: IfNotPresent
+      tag: 0.17.3
+    env:
+      TZ: "${TZ}"
+      LEMMY_UI_LEMMY_INTERNAL_HOST: "lemmy:8536"
+      LEMMY_UI_LEMMY_EXTERNAL_HOST: "lemmy.${SECRET_DOMAIN}"
+      LEMMY_HTTPS: "true"
+      LEMMY_UI_DEBUG: "true"
+
+    service:
+      main:
+        ports:
+          http:
+            port: 1234
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "share"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: "lemmy.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "lemmy.${SECRET_DOMAIN}"
+            secretName: "lemmy-tls"

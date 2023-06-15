@@ -1,0 +1,56 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: pictrs
+  namespace: home
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: lemmy
+      namespace: home
+
+  values:
+    image:
+      repository: asonix/pictrs
+      pullPolicy: IfNotPresent
+      tag: 0.40-rc.3
+
+    env:
+      TZ: "${TZ}"
+      PICTRS__API_KEY: "API_KEY"
+      RUST_LOG: "debug"
+      RUST_BACKTRACE: "full"
+      PICTRS__MEDIA__VIDEO_CODEC: "vp9"
+      PICTRS__MEDIA__GIF__MAX_WIDTH: "256"
+      PICTRS__MEDIA__GIF__MAX_HEIGHT: "256"
+      PICTRS__MEDIA__GIF__MAX_AREA: "65536"
+      PICTRS__MEDIA__GIF__MAX_FRAME_COUNT: "400"
+
+    service:
+      main:
+        ports:
+          http:
+            port: 8080
+
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        mountPath: /mnt
+        existingClaim: pictrs-data-pvc
+
+    podSecurityContext:
+      runAsUser: 991
+      runAsGroup: 991
+      fsGroup: 991
