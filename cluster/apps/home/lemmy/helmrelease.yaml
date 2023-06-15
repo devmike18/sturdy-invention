@@ -74,11 +74,10 @@ spec:
         image:
           repository: bitnami/postgresql
           tag: 15.3.0-debian-11-r7
-        postgresql:
-          auth:
-            username: "lemmy"
-            password: "${SECRET_LEMMY_DBPASS}"
-            database: "lemmy"
+        auth:
+          username: "lemmy"
+          password: "${SECRET_LEMMY_DBPASS}"
+          database: "lemmy"
 
     persistence:
       config:
