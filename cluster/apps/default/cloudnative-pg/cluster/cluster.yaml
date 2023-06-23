@@ -15,7 +15,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteMany
-      storageClassName: postgres
+      #storageClassName: postgres
       volumeMode: Filesystem
       resources:
         requests:
