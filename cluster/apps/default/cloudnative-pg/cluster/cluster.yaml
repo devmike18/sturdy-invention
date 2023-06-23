@@ -16,14 +16,15 @@ spec:
       accessModes:
         - ReadWriteMany
       storageClassName: postgres
+      volumeMode: Filesystem
       resources:
         requests:
           storage: 10Mi
   superuserSecret:
     name: secret-cloudnative-pg-admin
-  # bootstrap:
-  #   recovery:
-  #     source: &previous-cluster postgres-v2
+# bootstrap:
+#   recovery:
+#     source: &previous-cluster postgres-v2
   postgresql:
     parameters:
       max_connections: "600"
