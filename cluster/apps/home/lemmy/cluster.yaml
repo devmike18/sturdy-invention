@@ -21,7 +21,7 @@ spec:
         requests:
           storage: 1Mi
   enableSuperuserAccess: true
-  superUserSecret:
+  superuserSecret:
     name: cluster-lemmy-superuser
 # bootstrap:
 #   recovery:
