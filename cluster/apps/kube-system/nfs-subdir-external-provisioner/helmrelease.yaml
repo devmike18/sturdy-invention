@@ -22,7 +22,7 @@ spec:
       # tag: v4.0.2
       # Defaults are fine for now, pilfered from h3mmy, so keeping that wisdom handy
     nfs:
-      server: "${ NFS_SERVER }"
+      server: "${NFS_SERVER}"
       path: "/volume1/nfs-cluster-root"
       mountOptions:
         - nfsvers=4.1
