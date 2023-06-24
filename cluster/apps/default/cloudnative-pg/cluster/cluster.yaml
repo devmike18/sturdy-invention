@@ -15,7 +15,7 @@ spec:
     pvcTemplate:
       accessModes:
         - ReadWriteOnce
-      storageClassName: postgres
+      storageClassName: nfs-client
       volumeMode: Filesystem
       resources:
         requests:
