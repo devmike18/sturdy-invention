@@ -69,6 +69,7 @@ spec:
       config:
         enabled: true
         existingClaim: jellyfin-config-v1
+        mountPath: /config
       media:
         enabled: true
         existingClaim: nfs-media-pvc
