@@ -17,10 +17,9 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    image:
-      # repository: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-provisioner
-      # tag: v4.0.2
-      # Defaults are fine for now, pilfered from h3mmy, so keeping that wisdom handy
+    #image:
+    #  repository: gcr.io/k8s-staging-sig-storage/nfs-subdir-external-provisioner
+    #  tag: v4.0.2
     nfs:
       server: "${NFS_SERVER}"
       path: "/volume1/nfs-cluster-root"
