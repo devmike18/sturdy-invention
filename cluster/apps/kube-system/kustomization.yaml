@@ -6,3 +6,4 @@ resources:
   - reflector
   - reloader
   - kured
+  - nfs-subdir-external-provisioner
