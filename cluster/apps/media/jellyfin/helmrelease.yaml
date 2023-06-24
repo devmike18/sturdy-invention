@@ -69,6 +69,7 @@ spec:
       config:
         enabled: true
         existingClaim: jellyfin-config-v1
+        readOnly: false
         mountPath: /config
       media:
         enabled: true
