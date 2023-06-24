@@ -20,6 +20,7 @@ spec:
       resources:
         requests:
           storage: 1Mi
+  enableSuperuserAccess: true
   superuserSecret:
     name: secret-cloudnative-pg-admin
 # bootstrap:
