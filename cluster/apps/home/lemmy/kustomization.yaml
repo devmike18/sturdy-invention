@@ -7,3 +7,4 @@ resources:
   - pictrs-helmrelease.yaml
   - pictrs-data-pvc.yaml
   - cluster.yaml
+  - cluster-secrets.sops.yaml
