@@ -2,8 +2,8 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: postgres
-  namespace: default
+  name: cluster-lemmy
+  namespace: home
 spec:
   instances: 3
   imageName: ghcr.io/cloudnative-pg/postgresql:14.8-6
@@ -21,11 +21,17 @@ spec:
         requests:
           storage: 1Mi
   enableSuperuserAccess: true
-  superuserSecret:
-    name: secret-cloudnative-pg-admin
+  superUserSecret:
+    name: cluster-lemmy-superuser
 # bootstrap:
 #   recovery:
 #     source: &previous-cluster postgres-v2
+  bootstrap:
+    initdb:
+      database: lemmy
+      owner: lemmy
+      secret:
+        name: cluster-lemmy-app-user
   postgresql:
     parameters:
       max_connections: "600"

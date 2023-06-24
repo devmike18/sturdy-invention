@@ -6,3 +6,4 @@ resources:
   - ui-helmrelease.yaml
   - pictrs-helmrelease.yaml
   - pictrs-data-pvc.yaml
+  - cluster.yaml
