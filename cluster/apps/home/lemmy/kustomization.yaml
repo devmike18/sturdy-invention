@@ -8,3 +8,4 @@ resources:
   - pictrs-data-pvc.yaml
   - cluster.yaml
   - cluster-secrets.sops.yaml
+  - secret.sops.yaml
