@@ -62,23 +62,12 @@ spec:
               database: {
                   user: "lemmy"
                   password: "${SECRET_LEMMY_DBPASS}"
-                  host: "postgres-rw.default.svc.cluster.local"
+                  host: "cluster-lemmy-rw"
                   port: 5432
                   database: "lemmy"
                   pool_size: 1
                 }
             }
-
-    initContainers:
-      init-db:
-        image: ghcr.io/onedr0p/postgres-initdb:14.8
-        imagePullPolicy: IfNotPresent
-        env:
-          POSTGRES_DB: lemmy
-          POSTGRES_HOST: postgres-rw.default.svc.cluster.local
-          POSTGRES_SUPER_PASS: "${SECRET_PG_ADMINPASS}"
-          POSTGRES_PASS: "${SECRET_LEMMY_DBPASS}"
-          POSTGRES_USER: "lemmy"
 
     persistence:
       config:
