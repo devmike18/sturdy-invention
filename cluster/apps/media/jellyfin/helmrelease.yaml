@@ -39,12 +39,11 @@ spec:
         - 109
         - 100
 
-        #    service:
-        #      main:
-        #        type: LoadBalancer
-        #        externalIPs:
-        #          - "${METALLB_JELLYFIN_ADDR}"
-        #        externalTrafficPolicy: Local
+    service:
+      main:
+        ports:
+          http:
+            port: 8096
 
     ingress:
       main:
