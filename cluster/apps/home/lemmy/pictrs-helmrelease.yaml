@@ -24,7 +24,7 @@ spec:
     image:
       repository: asonix/pictrs
       pullPolicy: IfNotPresent
-      tag: 0.40-rc.3
+      tag: 0.40-rc.8
 
     env:
       TZ: "${TZ}"
