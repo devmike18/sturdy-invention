@@ -1,0 +1,24 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: lemmy-ingress
+  namespace: home
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - kind: Rule
+      match: "Host(`lemmy.${SECRET_DOMAIN}`) && !((HeadersRegexp(`Accept`, `^application/.*$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
+      services:
+        - kind: Service
+          name: lemmy-ui
+          port: 1234
+    - kind: Rule
+      match: "Host(`lemmy.${SECRET_DOMAIN}`) && ((HeadersRegexp(`Accept`, `^application/.*$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
+      services:
+        - kind: Service
+          name: lemmy
+          port: 8536
+  tls:
+    secretName: "${SECRET_DOMAIN/./-}-tls"

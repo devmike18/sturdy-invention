@@ -38,21 +38,21 @@ spec:
           http:
             port: 1234
 
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          hajimari.io/enable: "true"
-          hajimari.io/icon: "share"
-          cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: "lemmy.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "lemmy.${SECRET_DOMAIN}"
-            secretName: "lemmy-tls"
+              #    ingress:
+              #      main:
+              #        enabled: true
+              #        ingressClassName: "traefik"
+              #        annotations:
+              #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+              #          hajimari.io/enable: "true"
+              #          hajimari.io/icon: "share"
+              #          cert-manager.io/cluster-issuer: "letsencrypt-production"
+              #        hosts:
+              #          - host: "lemmy.${SECRET_DOMAIN}"
+              #            paths:
+              #              - path: /
+              #                pathType: Prefix
+              #        tls:
+              #          - hosts:
+              #              - "lemmy.${SECRET_DOMAIN}"
+              #            secretName: "lemmy-tls"
