@@ -60,15 +60,15 @@ spec:
               }
 
               database: {
-                  user: "lemmy"
-                  password: "${SECRET_LEMMY_DBPASS}"
+                  user: "postgres"
+                  password: "${SECRET_PG_ADMINPASS}"
                   host: "cluster-lemmy-rw"
                   port: 5432
                   database: "lemmy"
                   pool_size: 1
                 }
             }
-
+    # TODO: This requires a bit of first-run and subsequent run setup.  Learn how to define that in a manifest and fix this.  For now commit once to init and commit again for launch.
     persistence:
       config:
         enabled: true
