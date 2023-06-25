@@ -39,7 +39,7 @@ spec:
               setup: {
                 admin_username: "${SECRET_LEMMY_ADMINUSER}"
                 admin_password: "${SECRET_LEMMY_ADMINPASS}"
-                site_name: "jvnlemmy"
+                site_name: "Hampstead Lemmy"
               }
 
               hostname: "lemmy.${SECRET_DOMAIN}"
@@ -65,7 +65,7 @@ spec:
                   host: "cluster-lemmy-rw"
                   port: 5432
                   database: "lemmy"
-                  pool_size: 1
+                  pool_size: 3
                 }
             }
     # TODO: This requires a bit of first-run and subsequent run setup.  Learn how to define that in a manifest and fix this.  For now commit once to init and commit again for launch.
