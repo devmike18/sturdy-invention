@@ -9,3 +9,4 @@ resources:
   - cluster.yaml
   - cluster-secrets.sops.yaml
   - secret.sops.yaml
+  - ingressroute.yaml
