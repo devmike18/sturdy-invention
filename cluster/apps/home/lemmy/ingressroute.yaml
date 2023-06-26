@@ -9,13 +9,14 @@ spec:
     - websecure
   routes:
     - kind: Rule
-      match: "Host(`lemmy.${SECRET_DOMAIN}`) && !((HeadersRegexp(`Accept`, `^application/.*$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
+      #      match: "Host(`lemmy.${SECRET_DOMAIN}`) && !((HeadersRegexp(`Accept`, `^application/.*$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
+      match: "Host(`lemmy.${SECRET_DOMAIN}`)"
       services:
         - kind: Service
           name: lemmy-ui
           port: 1234
     - kind: Rule
-      match: "Host(`lemmy.${SECRET_DOMAIN}`) && ((HeadersRegexp(`Accept`, `^application/.*$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
+      match: "Host(`lemmy.${SECRET_DOMAIN}`) && ((HeadersRegexp(`Accept`, `^application\/activity+json$$`)) || (HeadersRegexp(`Accept`, `^application\/ld+json; profile=\"https:\/\/www.w3.org\/ns\/activitystreams\"$$`)) || (Method(`POST`)) || (PathPrefix(`/api`) || PathPrefix(`/pictrs`) || PathPrefix(`/feeds`) || PathPrefix(`/nodeinfo`) || PathPrefix(`/.well-known`)))"
       services:
         - kind: Service
           name: lemmy
