@@ -52,17 +52,6 @@ spec:
 
               federation: {
                 enabled: true
-                allowed_instances: [
-                  "sopuli.xyz",
-                  "lemmy.world",
-                  "sh.itjust.works",
-                  "lemmy.fmhy.ml",
-                  "vlemmy.net",
-                  "discuss.tchncs.de",
-                  "lemm.ee",
-                  "reddthat.com"
-                ],
-                strict_allowlist: false
               }
 
               hostname: "lemmy.${SECRET_DOMAIN}"
