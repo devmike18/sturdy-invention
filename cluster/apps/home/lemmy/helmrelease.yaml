@@ -45,9 +45,9 @@ spec:
                 admin_username: "${SECRET_LEMMY_ADMINUSER}"
                 admin_password: "${SECRET_LEMMY_ADMINPASS}"
                 site_name: "Hampstead Lemmy"
-                enable_downvotes: true
-                open_registration: false
-                enable_nsfw: true
+                # enable_downvotes: true  ?? IU guess these fields aren't valid in docker?
+                # open_registration: false
+                # enable_nsfw: true
               }
 
               federation: {
