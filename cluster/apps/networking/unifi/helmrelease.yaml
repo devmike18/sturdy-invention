@@ -38,7 +38,7 @@ spec:
 
     image:
       repository: jacobalberty/unifi
-      tag: v7.4.156
+      tag: v7.4.162
       pullPolicy: IfNotPresent
 
     env:
