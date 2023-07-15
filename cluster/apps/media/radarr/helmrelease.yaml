@@ -30,6 +30,11 @@ spec:
 
     env:
       TZ: "${TZ}"
+    service:
+      main:
+        ports:
+          http:
+            port: 7878
     ingress:
       main:
         enabled: true
