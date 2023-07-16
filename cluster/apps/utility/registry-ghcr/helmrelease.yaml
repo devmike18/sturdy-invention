@@ -34,16 +34,31 @@ spec:
         - hosts:
             - "ghcr-registry.${SECRET_DOMAIN}"
 
-    storage: filesystem
+    storage: s3
 
-    persistence:
-      enabled: true
-      size: "10Gi"
-      storageClass: "ceph-block"
+    secrets:
+      s3:
+        accessKey: "registry-ghcr"
+        secretKey: "${SECRET_GHCR_MINIOPASS}"
+
+    s3:
+      bucket: registry-ghcr
+      regionEndpoint: http://192.168.8.5:9000
+      rootdirectory: /ghcr-io
+      region: internal
+      secure: false
+      encrypt: false
+
+      #    persistence:
+      #      enabled: true
+      #      size: "10Gi"
+      #      storageClass: "ceph-block"
 
     proxy:
       enabled: true
       remoteurl: https://ghcr.io
+      username: "${SECRET_GHCR_USERNAME}"
+      password: "${SECRET_GHCR_PAT}"
 
     metrics:
       enabled: true
