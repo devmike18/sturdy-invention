@@ -45,10 +45,24 @@ spec:
       bucket: registry-ghcr
       regionEndpoint: http://192.168.8.5:9000
       rootdirectory: /ghcr-io
-      region: internal
+      region: us-east-1
       secure: false
       encrypt: false
-      chunksize: 5242880
+
+    configData:
+      http:
+        debug:
+          prometheus:
+            enabled: true
+      storage:
+        s3:
+          chunksize: 5242880
+        cache:
+          # Disabled as per https://github.com/twuni/docker-registry.helm/pull/105
+          # TODO: Remove when https://github.com/twuni/docker-registry.helm/pull/105 is merged and released
+          blobdescriptor: disabled
+        redirect:
+          disable: true
 
       #    persistence:
       #      enabled: true
@@ -65,3 +79,7 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+
+    garbageCollect:
+      enabled: true
+      schedule: "0 2 * * *"
