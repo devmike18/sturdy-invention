@@ -48,6 +48,7 @@ spec:
       region: internal
       secure: false
       encrypt: false
+      chunksize: 5242880
 
       #    persistence:
       #      enabled: true
