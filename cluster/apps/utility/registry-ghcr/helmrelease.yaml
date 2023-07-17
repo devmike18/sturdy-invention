@@ -57,12 +57,6 @@ spec:
       storage:
         s3:
           chunksize: 5242880
-        cache:
-          # Disabled as per https://github.com/twuni/docker-registry.helm/pull/105
-          # TODO: Remove when https://github.com/twuni/docker-registry.helm/pull/105 is merged and released
-          blobdescriptor: disabled
-        redirect:
-          disable: true
 
       #    persistence:
       #      enabled: true
