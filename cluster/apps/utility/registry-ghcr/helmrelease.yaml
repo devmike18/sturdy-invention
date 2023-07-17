@@ -34,34 +34,35 @@ spec:
         - hosts:
             - "ghcr-registry.${SECRET_DOMAIN}"
 
-    storage: s3
+              #    storage: s3
+    storage: filesystem
 
-    secrets:
-      s3:
-        accessKey: "registry-ghcr"
-        secretKey: "${SECRET_GHCR_MINIOPASS}"
+      #secrets:
+      #      s3:
+      #        accessKey: "registry-ghcr"
+      #        secretKey: "${SECRET_GHCR_MINIOPASS}"
 
-    s3:
-      bucket: registry-ghcr
-      regionEndpoint: http://192.168.8.5:9000
-      rootdirectory: /ghcr-io
-      region: us-east-1
-      secure: false
-      encrypt: false
+      #    s3:
+      #      bucket: registry-ghcr
+      #      regionEndpoint: http://192.168.8.5:9000
+      #      rootdirectory: /ghcr-io
+      #      region: us-east-1
+      #      secure: false
+      #      encrypt: false
 
     configData:
       http:
         debug:
           prometheus:
             enabled: true
-      storage:
-        s3:
-          chunksize: 5242880
+              #      storage:
+              #        s3:
+              #          chunksize: 5242880
 
-      #    persistence:
-      #      enabled: true
-      #      size: "10Gi"
-      #      storageClass: "ceph-block"
+    persistence:
+      enabled: true
+      size: "10Gi"
+      storageClass: "ceph-block"
 
     proxy:
       enabled: true
