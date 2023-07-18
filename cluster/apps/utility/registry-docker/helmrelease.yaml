@@ -34,12 +34,35 @@ spec:
         - hosts:
             - "docker-registry.${SECRET_DOMAIN}"
 
-    storage: filesystem
+    storage: s3
 
-    persistence:
-      enabled: true
-      size: "10Gi"
-      storageClass: "ceph-block"
+    secrets:
+      s3:
+        accessKey: "registry-ghcr"
+        secretKey: "${SECRET_GHCR_MINIOPASS}"
+
+    s3:
+      bucket: registry
+      regionEndpoint: http://192.168.8.5:9000
+      rootdirectory: /dockerhub
+      region: us-east-1
+      secure: false
+      encrypt: false
+
+    configData:
+      http:
+        debug:
+          prometheus:
+            enabled: true
+      storage:
+        s3:
+          chunksize: 104857600 #100MB
+            #storage: filesystem
+
+            #    persistence:
+            #      enabled: true
+            #      size: "10Gi"
+            #      storageClass: "ceph-block"
 
     proxy:
       enabled: true
