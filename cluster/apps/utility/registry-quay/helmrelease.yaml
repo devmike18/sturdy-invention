@@ -73,3 +73,7 @@ spec:
       enabled: true
       serviceMonitor:
         enabled: true
+
+    garbageCollect:
+      enabled: true
+      schedule: "0 2 * * *"
