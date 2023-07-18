@@ -34,35 +34,36 @@ spec:
         - hosts:
             - "ghcr-registry.${SECRET_DOMAIN}"
 
-              #    storage: s3
-    storage: filesystem
+    storage: s3
 
-      #secrets:
-      #      s3:
-      #        accessKey: "registry-ghcr"
-      #        secretKey: "${SECRET_GHCR_MINIOPASS}"
+    secrets:
+      s3:
+        accessKey: "registry-ghcr"
+        secretKey: "${SECRET_GHCR_MINIOPASS}"
 
-      #    s3:
-      #      bucket: registry-ghcr
-      #      regionEndpoint: http://192.168.8.5:9000
-      #      rootdirectory: /ghcr-io
-      #      region: us-east-1
-      #      secure: false
-      #      encrypt: false
+    s3:
+      bucket: registry
+      regionEndpoint: http://192.168.8.5:9000
+      rootdirectory: /dockerhub
+      region: us-east-1
+      secure: false
+      encrypt: false
 
     configData:
       http:
         debug:
           prometheus:
             enabled: true
-              #      storage:
-              #        s3:
-              #          chunksize: 5242880
+      storage:
+        s3:
+          chunksize: 104857600 #100MB
 
-    persistence:
-      enabled: true
-      size: "10Gi"
-      storageClass: "ceph-block"
+    #   storage: filesystem
+
+    #   persistence:
+      #   enabled: true
+      #   size: "10Gi"
+      #   storageClass: "ceph-block"
 
     proxy:
       enabled: true
