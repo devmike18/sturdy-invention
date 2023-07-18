@@ -44,7 +44,7 @@ spec:
     s3:
       bucket: registry
       regionEndpoint: http://192.168.8.5:9000
-      rootdirectory: /dockerhub
+      rootdirectory: /ghcr_io
       region: us-east-1
       secure: false
       encrypt: false
