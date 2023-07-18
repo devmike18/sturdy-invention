@@ -41,6 +41,7 @@ spec:
         ingressClassName: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         tls: true
 
     objstoreConfig: |
@@ -54,11 +55,28 @@ spec:
 
     bucketweb:
       enabled: true
+      ingress:
+        enabled: true
+        hostname: "thanos-bucketweb.${SECRET_DOMAIN}"
+        ingressClassName: "traefik"
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+        tls: true
 
     compactor:
       enabled: true
       persistence:
         enabled: false
+      retentionResolutionRaw: 30d
+      retentionResolution5m: 30d
+      retentionResolution1h: 5y
+      resources:
+        requests:
+          cpu: 15m
+          memory: 256M
+        limits:
+          memory: 512M
 
     storegateway:
       enabled: true
