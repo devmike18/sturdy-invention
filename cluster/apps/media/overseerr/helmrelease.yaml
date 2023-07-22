@@ -31,6 +31,12 @@ spec:
       TZ: "${TZ}"
       LOG_LEVEL: "info"
 
+    service:
+      main:
+        ports:
+          http:
+            port: 5055
+
     ingress:
       main:
         enabled: true
