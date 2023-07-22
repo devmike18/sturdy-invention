@@ -46,7 +46,6 @@ spec:
           hajimari.io/icon: "movie-search"
           hajimari.io/appName: "Requests"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         hosts:
           - host: "requests.${SECRET_DOMAIN}"
             paths:
