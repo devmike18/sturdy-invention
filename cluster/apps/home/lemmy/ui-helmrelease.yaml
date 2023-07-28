@@ -24,7 +24,7 @@ spec:
     image:
       repository: dessalines/lemmy-ui
       pullPolicy: IfNotPresent
-      tag: 0.18.2
+      tag: 0.18.3
     env:
       TZ: "${TZ}"
       LEMMY_UI_LEMMY_INTERNAL_HOST: "lemmy:8536"
