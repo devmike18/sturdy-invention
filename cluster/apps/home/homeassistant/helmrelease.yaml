@@ -21,8 +21,6 @@ spec:
       namespace: networking
 
   values:
-    controller:
-      type: statefulset
     image:
       repository: ghcr.io/home-assistant/home-assistant
       pullPolicy: IfNotPresent
@@ -96,18 +94,16 @@ spec:
 
     addons:
       codeserver:
-        enabled: true
+        enabled: false
 
         image:
-          repository: codercom/code-server
+          repository: ghcr.io/coder/code-server
           tag: 4.16.1
-
-        workingDir: "/config"
 
         ingress:
           enabled: true
+          ingressClassName: "traefik"
           annotations:
-            kubernetes.io/ingress.class: "traefik"
             cert-manager.io/cluster-issuer: "letsencrypt-production"
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             hajimari.io/enable: "true"
@@ -121,8 +117,11 @@ spec:
           tls:
             - hosts:
                 - "ha-vscode.${SECRET_DOMAIN}"
-              secretName: "ha-vscode-tls"
+              secretNamse: "ha-vscode-tls"
 
+        env:
+          TZ: "${TZ}"
+        workingDir: "/config"
         args:
           - --auth
           - "none"
@@ -140,4 +139,4 @@ spec:
             cpu: 35m
             memory: 128Mi
           limits:
-            memory: 512Mi
+            memory: 1024Mi
