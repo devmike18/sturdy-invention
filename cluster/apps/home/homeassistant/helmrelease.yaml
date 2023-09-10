@@ -129,6 +129,7 @@ spec:
           - "/config/.vscode"
           - --extensions-dir
           - "/config/.vscode"
+          - --verbose
 
         volumeMounts:
           - name: config
