@@ -1,0 +1,83 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: threadfin
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      chart: app-template
+      version: 1.5.1
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: traefik
+      namespace: networking
+
+  values:
+
+    env:
+      TZ: "${TZ}"
+      THREADFIN_HOME: "/home/threadfin"
+      THREADFIN_BIN: "/home/threadfin/bin"
+      THREADFIN_CONF: "/home/threadfin/conf"
+
+    image:
+      repository: fyb3roptik/threadfin
+      tag: 1.0.16
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+
+    service:
+      main:
+        ports:
+          http:
+            port: 34400
+
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:arrow-decision"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: "threadfin.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "threadfin.${SECRET_DOMAIN}"
+            secretNBame: "threadfin-tls"
+
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: threadfin-config-v1
+        readOnly: false
+        mountPath: /home/threadfin
+
+    resources:
+      requests:
+        cpu: 25m
+        memory: 512Mi
+      limits:
+        cpu: 2
+        memory: 12Gi

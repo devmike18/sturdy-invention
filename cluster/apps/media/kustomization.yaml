@@ -11,3 +11,4 @@ resources:
   - prowlarr
   - bazarr
   - overseerr
+  - threadfin
