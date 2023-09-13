@@ -24,9 +24,6 @@ spec:
 
     env:
       TZ: "${TZ}"
-      THREADFIN_HOME: "/home/threadfin"
-      THREADFIN_BIN: "/home/threadfin/bin"
-      THREADFIN_CONF: "/home/threadfin/conf"
 
     image:
       repository: fyb3roptik/threadfin
@@ -72,7 +69,7 @@ spec:
         enabled: true
         existingClaim: threadfin-config-v1
         readOnly: false
-        mountPath: /home/threadfin
+        mountPath: /home/threadfin/conf
 
     resources:
       requests:
