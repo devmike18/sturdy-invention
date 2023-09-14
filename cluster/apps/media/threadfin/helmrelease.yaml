@@ -24,19 +24,11 @@ spec:
 
     env:
       TZ: "${TZ}"
+      THREADFIN_PORT: 34400
 
     image:
       repository: fyb3roptik/threadfin
       tag: 1.0.16
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
 
     service:
       main:
@@ -62,7 +54,6 @@ spec:
           - hosts:
               - "threadfin.${SECRET_DOMAIN}"
             secretNBame: "threadfin-tls"
-
 
     persistence:
       config:
