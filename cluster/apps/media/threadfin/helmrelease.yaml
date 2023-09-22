@@ -28,7 +28,7 @@ spec:
 
     image:
       repository: fyb3roptik/threadfin
-      tag: 1.0.16
+      tag: 1.0.17
 
     service:
       main:
