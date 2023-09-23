@@ -8,12 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: prowlarr
-      version: 4.5.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
       interval: 5m
 
@@ -29,13 +29,31 @@ spec:
     env:
       TZ: "${TZ}"
 
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+
+    service:
+      main:
+        ports:
+          http:
+            port: 9696
+
     ingress:
       main:
         enabled: true
         ingressClassName: "traefik"
         annotations:
           hajimari.io/enable: "true"
-          hajimari.io/icon: "shovel"
+          hajimari.io/icon: "mdi:folder-search-outline"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         hosts:
@@ -51,10 +69,7 @@ spec:
       config:
         enabled: true
         existingClaim: prowlarr-config-v1
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
+
     resources:
       requests:
         cpu: "0.04"
