@@ -45,7 +45,7 @@ spec:
       main:
         ports:
           http:
-            port: 6767
+            port: 8989
 
     ingress:
       main:
