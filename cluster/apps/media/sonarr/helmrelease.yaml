@@ -8,12 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: sonarr
-      version: 16.3.2
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts
+      chart: app-template
+      version: 1.5.1
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts-charts
         namespace: flux-system
       interval: 5m
 
@@ -28,6 +28,25 @@ spec:
 
     env:
       TZ: "${TZ}"
+
+    podAnnotations:
+      backup.velero.io/backup-volumes: config
+
+    podSecurityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+
+    service:
+      main:
+        ports:
+          http:
+            port: 6767
+
     ingress:
       main:
         enabled: true
@@ -68,15 +87,10 @@ spec:
         readOnly: false
         existingClaim: nfs-media-pvc
         mountPath: /media
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
+
     resources:
       requests:
-        cpu: "0.04"
-        memory: "256M"
+        cpu: 50m
+        memory: 250Mi
       limits:
-        memory: "512M"
+        memory: 1000Mi
