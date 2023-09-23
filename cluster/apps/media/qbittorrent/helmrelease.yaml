@@ -61,7 +61,6 @@ spec:
             port: *bittorrentPort
             targetPort: *bittorrentPort
 
-
     ingress:
       main:
         enabled: true
@@ -115,15 +114,3 @@ spec:
         cpu: 10m
       limits:
         memory: 2000Mi
-
-    metrics:
-      enabled: true
-      prometheusRule:
-        enabled: true
-      exporter:
-        image:
-          repository: esanchezm/prometheus-qbittorrent-exporter
-          tag: v1.2.0
-        env:
-          user: "${SECRET_QBT_USER}"
-          password: "${SECRET_QBT_PASSWORD}"
