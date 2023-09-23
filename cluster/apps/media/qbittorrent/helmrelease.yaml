@@ -50,7 +50,7 @@ spec:
       bittorrent:
         enabled: true
         type: LoadBalancer
-        loadBalancerIP: ${METALLB_QBIT_ADDR}
+        loadBalancerIP: ["${METALLB_QBIT_ADDR}"]
         annotations:
           metallb.universe.tf/loadBalancerIPs: ${METALLB_QBIT_ADDR}
         externalTrafficPolicy: Local
