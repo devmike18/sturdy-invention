@@ -29,7 +29,7 @@ spec:
 
   dependsOn:
     - name: traefik
-    - namespace: networking
+      namespace: networking
 
   values:
     controller:
