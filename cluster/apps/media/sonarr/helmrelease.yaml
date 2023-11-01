@@ -24,6 +24,8 @@ spec:
   values:
     controllers:
       main:
+        annotations:
+          backup.velero.io/backup-volumes: config
         containers:
           main:
             image:
@@ -44,21 +46,18 @@ spec:
               limits:
                 memory: 1000Mi
 
-    defaultPodOptions:
-      env:
-        TZ: "${TZ}"
+            env:
+              TZ: "${TZ}"
 
-      annotations:
-        backup.velero.io/backup-volumes: config
-
-      securityContext:
-        runAsUser: 568
-        runAsGroup: 568
-        fsGroup: 568
-        supplementalGroups:
-          - 44
-          - 109
-          - 100
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            supplementalGroups:
+              - 44
+              - 109
+              - 100
 
     service:
       main:
@@ -78,16 +77,15 @@ spec:
             networking-sso@kubernetescrd
 
         hosts:
-          - host: "sonarr.${SECRET_DOMAIN}"
+          - host: &host "sonarr.${SECRET_DOMAIN}"
             paths:
               - path: /
-                pathType: Prefix
                 service:
                   name: main
                   port: http
         tls:
           - hosts:
-              - "sonarr.${SECRET_DOMAIN}"
+              - *host
 
     persistence:
       config:
