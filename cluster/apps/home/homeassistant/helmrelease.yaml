@@ -25,6 +25,8 @@ spec:
       main:
         containers:
           main:
+            annotations:
+              backup.velero.io/backup-volumes: config
             image:
               repository: ghcr.io/home-assistant/home-assistant
               pullPolicy: IfNotPresent
@@ -49,10 +51,6 @@ spec:
             envFrom:
               - secretRef:
                   name: home-assistant-secrets
-
-    defaultPodOptions:
-      annotations:
-        backup.velero.io/backup-volumes: config
 
     service:
       main:
