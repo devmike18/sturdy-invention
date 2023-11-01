@@ -70,7 +70,13 @@ spec:
     ingress:
       main:
         enabled: true
-        className: internal
+        className: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "mdi:microsoft-visual-studio-code"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: >-
+            networking-sso@kubernetescrd
         hosts:
           - host: &host "ha-vscode.${SECRET_DOMAIN}"
             paths:
