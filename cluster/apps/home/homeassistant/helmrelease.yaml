@@ -64,11 +64,6 @@ spec:
           http:
             port: 8123
 
-    serviceMonitor:
-      main:
-        enabled: true
-
-
     persistence:
       config:
         existingClaim: home-assistant-config-v1
