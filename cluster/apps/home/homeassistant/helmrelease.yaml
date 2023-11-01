@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -21,10 +21,21 @@ spec:
       namespace: networking
 
   values:
-    image:
-      repository: ghcr.io/home-assistant/home-assistant
-      pullPolicy: IfNotPresent
-      tag: 2023.10.5
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              repository: ghcr.io/home-assistant/home-assistant
+              pullPolicy: IfNotPresent
+              tag: 2023.10.5
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: true
 
     env:
       TZ: "${TZ}"
@@ -43,19 +54,10 @@ spec:
           http:
             port: 8123
 
-    probes:
-      liveness:
-        enabled: false
-      readiness:
-        enabled: false
-      startup:
-        enabled: true
-
     podAnnotations:
       backup.velero.io/backup-volumes: config
     persistence:
       config:
-        enabled: true
         existingClaim: home-assistant-config-v1
 
     ingress:
@@ -72,6 +74,9 @@ spec:
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - "homeassistant.${SECRET_DOMAIN}"
@@ -84,13 +89,13 @@ spec:
       limits:
         memory: 2048Mi
 
-          #    metrics:
-          #      enabled: true
-          #      serviceMonitor:
-          #        interval: 1m
-          #        scrapeTimeout: 30s
-          #      prometheusRule:
-          #        enabled: true
+    # metrics:
+    #   enabled: true
+    #   serviceMonitor:
+    #     interval: 1m
+    #     scrapeTimeout: 30s
+    #   prometheusRule:
+    #     enabled: true
 
     addons:
       codeserver:
@@ -108,7 +113,9 @@ spec:
             traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
             hajimari.io/enable: "true"
             hajimari.io/icon: "microsoft-visual-studio-code"
-            traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+            traefik.ingress.kubernetes.io/router.middlewares: >-
+              networking-sso@kubernetescrd
+
           hosts:
             - host: "ha-vscode.${SECRET_DOMAIN}"
               paths:
