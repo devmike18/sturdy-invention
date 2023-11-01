@@ -45,14 +45,14 @@ spec:
       # PLEX_PREFERENCE_8: "TranscoderH264BackgroundPreset=fast"
 
     podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
+      runAsUser: 568 #plex
+      runAsGroup: 568 #plex
+      fsGroup: 568 #plex
       fsGroupChangePolicy: "OnRootMismatch"
       supplementalGroups:
-        - 44
-        - 109
-        - 100
+        - 44 #video
+        - 109 #plex
+        - 100 #users
 
     service:
       main:
