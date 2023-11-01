@@ -73,8 +73,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "television-box"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: >-
-            networking-sso@kubernetescrd
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
 
         hosts:
           - host: &host "sonarr.${SECRET_DOMAIN}"
