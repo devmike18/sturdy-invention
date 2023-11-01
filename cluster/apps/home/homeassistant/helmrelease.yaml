@@ -23,10 +23,10 @@ spec:
   values:
     controllers:
       main:
+        annotations:
+          backup.velero.io/backup-volumes: config
         containers:
           main:
-            annotations:
-              backup.velero.io/backup-volumes: config
             image:
               repository: ghcr.io/home-assistant/home-assistant
               pullPolicy: IfNotPresent
