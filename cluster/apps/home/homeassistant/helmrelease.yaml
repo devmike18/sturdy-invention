@@ -36,13 +36,23 @@ spec:
                 enabled: false
               startup:
                 enabled: true
+            resources:
+              requests:
+                cpu: 75m
+                memory: 512Mi
+              limits:
+                memory: 2048Mi
 
-    env:
-      TZ: "${TZ}"
+            env:
+              TZ: "${TZ}"
 
-    envFrom:
-      - secretRef:
-          name: home-assistant-secrets
+            envFrom:
+              - secretRef:
+                  name: home-assistant-secrets
+
+    defaultPodOptions:
+      annotations:
+        backup.velero.io/backup-volumes: config
 
     service:
       main:
@@ -54,8 +64,11 @@ spec:
           http:
             port: 8123
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
+    serviceMonitor:
+      main:
+        enabled: true
+
+
     persistence:
       config:
         existingClaim: home-assistant-config-v1
@@ -63,7 +76,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
@@ -81,70 +94,3 @@ spec:
           - hosts:
               - "homeassistant.${SECRET_DOMAIN}"
             secretName: "homeassistant-tls"
-
-    resources:
-      requests:
-        cpu: 75m
-        memory: 512Mi
-      limits:
-        memory: 2048Mi
-
-    # metrics:
-    #   enabled: true
-    #   serviceMonitor:
-    #     interval: 1m
-    #     scrapeTimeout: 30s
-    #   prometheusRule:
-    #     enabled: true
-
-    addons:
-      codeserver:
-        enabled: true
-
-        image:
-          repository: ghcr.io/coder/code-server
-          tag: 4.18.0
-
-        ingress:
-          enabled: true
-          className: "traefik"
-          annotations:
-            cert-manager.io/cluster-issuer: "letsencrypt-production"
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-            hajimari.io/enable: "true"
-            hajimari.io/icon: "microsoft-visual-studio-code"
-            traefik.ingress.kubernetes.io/router.middlewares: >-
-              networking-sso@kubernetescrd
-
-          hosts:
-            - host: "ha-vscode.${SECRET_DOMAIN}"
-              paths:
-                - path: /
-                  pathType: Prefix
-          tls:
-            - hosts:
-                - "ha-vscode.${SECRET_DOMAIN}"
-              secretNamse: "ha-vscode-tls"
-
-        env:
-          TZ: "${TZ}"
-        workingDir: "/config"
-        args:
-          - --auth
-          - "none"
-          - --user-data-dir
-          - "/config/.vscode"
-          - --extensions-dir
-          - "/config/.vscode"
-          - --verbose
-
-        volumeMounts:
-          - name: config
-            mountPath: /config
-
-        resources:
-          requests:
-            cpu: 35m
-            memory: 128Mi
-          limits:
-            memory: 1024Mi
