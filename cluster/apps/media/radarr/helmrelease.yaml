@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -24,48 +24,66 @@ spec:
       namespace: networking
 
   values:
-    image:
-      repository: ghcr.io/onedr0p/radarr
-      tag: 5.0.3.8127
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: config
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/radarr
+              tag: 5.0.3.8127
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 250Mi
+              limits:
+                memory: 1000Mi
+            env:
+              TZ: "${TZ}"
 
-    env:
-      TZ: "${TZ}"
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            supplementalGroups:
+              - 44
+              - 109
+              - 100
     service:
       main:
         ports:
           http:
             port: 7878
+
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-search"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+
         hosts:
-          - host: "radarr.${SECRET_DOMAIN}"
+          - host: &host "radarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "radarr.${SECRET_DOMAIN}"
-    api:
-      enabled: true
-      ingressClassName: "traefik"
-      annotations:
-        traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
-      hosts:
-        - host: "radarr.${SECRET_DOMAIN}"
-          paths:
-            - path: /api
-              pathType: Prefix
-      tls:
-        - hosts:
-            - "radarr.${SECRET_DOMAIN}"
+              - *host
+
     persistence:
       config:
         enabled: true
@@ -74,17 +92,5 @@ spec:
         enabled: true
         readOnly: false
         existingClaim: nfs-media-pvc
-        mountPath: /media
-
-    podSecurityContext:
-      runAsUser: 1001
-      runAsGroup: 1001
-      fsGroup: 1001
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    resources:
-      requests:
-        cpu: "0.04"
-        memory: "256M"
-      limits:
-        memory: "512M"
+        globalMounts:
+          - path: /media

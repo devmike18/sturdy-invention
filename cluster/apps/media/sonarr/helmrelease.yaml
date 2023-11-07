@@ -18,6 +18,8 @@ spec:
       interval: 5m
 
   dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
     - name: traefik
       namespace: networking
 
