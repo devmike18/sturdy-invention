@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -26,33 +26,45 @@ spec:
     keepHistory: false
 
   values:
-    image:
-      repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
-      tag: 1.31.0.6654-02189b09f
-    env:
-      TZ: "${TZ}"
-      ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}:443/"
-      ALLOWED_NETWORKS: "${PLEX_NOAUTH_NETWORKS}"
-      PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
-      # https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
-      PLEX_PREFERENCE_1: "FriendlyName=Hampstead"
-      PLEX_PREFERENCE_2: "BackgroundTranscodeLowPriority=1"
-      PLEX_PREFERENCE_3: "ManualPortMappingMode=1"
-      PLEX_PREFERENCE_4: "ManualPortMappingPort=${PLEX_EXTERNAL_PORT}"
-      PLEX_PREFERENCE_5: "LanNetworksBandwidth=192.168.0.0/16,10.0.0.0/8"
-      PLEX_PREFERENCE_6: "TranscoderTempDirectory=/tmp"
-      PLEX_PREFERENCE_7: "GdmEnabled=1"
-      # PLEX_PREFERENCE_8: "TranscoderH264BackgroundPreset=fast"
-
-    podSecurityContext:
-      runAsUser: 568 #plex
-      runAsGroup: 568 #plex
-      fsGroup: 568 #plex
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 44 #video
-        - 109 #plex
-        - 100 #users
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: config
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
+              tag: 1.31.0.6654-02189b09f
+            env:
+              TZ: "${TZ}"
+              ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}:443/"
+              ALLOWED_NETWORKS: "${PLEX_NOAUTH_NETWORKS}"
+              PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
+              # https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
+              PLEX_PREFERENCE_1: "FriendlyName=Hampstead"
+              PLEX_PREFERENCE_2: "BackgroundTranscodeLowPriority=1"
+              PLEX_PREFERENCE_3: "ManualPortMappingMode=1"
+              PLEX_PREFERENCE_4: "ManualPortMappingPort=${PLEX_EXTERNAL_PORT}"
+              PLEX_PREFERENCE_5: "LanNetworksBandwidth=192.168.0.0/16,10.0.0.0/8"
+              PLEX_PREFERENCE_6: "TranscoderTempDirectory=/tmp"
+              PLEX_PREFERENCE_7: "GdmEnabled=1"
+              # PLEX_PREFERENCE_8: "TranscoderH264BackgroundPreset=fast"
+            resources:
+              requests:
+                cpu: 100m
+                memory: 1500Mi
+              limits:
+                memory: 9000Mi
+        pod:
+          securityContext:
+            runAsUser: 568 #plex
+            runAsGroup: 568 #plex
+            fsGroup: 568 #plex
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44 #video
+              - 109 #plex
+              - 100 #users
 
     service:
       main:
@@ -68,21 +80,26 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "plex"
           hajimari.io/appName: "Plex"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
-          - host: "plex.${SECRET_DOMAIN}"
+          - host: &host "plex.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
-              - "{{ (index .Values.ingress.main.hosts 0).host }}"
-            secretName: "tls.plex"
+              - *host
+            secretName: "plex-tls"
+
     persistence:
       config:
         enabled: true
@@ -103,13 +120,6 @@ spec:
       nfs-media-pvc:
         enabled: true
         existingClaim: nfs-media-pvc
-        mountPath: /Data
-        readOnly: false
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-    resources:
-      requests:
-        cpu: 100m
-        memory: 1500Mi
-      limits:
-        memory: 9000Mi
+        globalMounts:
+          - path: /Data
+            readOnly: false
