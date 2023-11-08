@@ -72,7 +72,7 @@ spec:
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${METALLB_PLEX_ADDR}"
           metallb.universe.tf/allow-shared-ip: plex  #used for UDP, which i don't have on ATM
-          traefik.ingress.kubernetes.io/service.serversscheme: https
+          #traefik.ingress.kubernetes.io/service.serversscheme: https
         ports:
           http:
             port: 32400
