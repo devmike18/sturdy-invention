@@ -21,9 +21,8 @@ spec:
       namespace: cert-manager
   values:
     deployment:
-      kind: StatefulSet
+      kind: Deployment
       replicas: 3
-      strategy: RollingUpdate
     service:
       enabled: true
       type: LoadBalancer
