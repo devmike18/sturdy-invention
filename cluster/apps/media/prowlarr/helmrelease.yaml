@@ -10,36 +10,47 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
 
   dependsOn:
-    - name: traefik
-      namespace: networking
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
 
   values:
-    image:
-      repository: ghcr.io/onedr0p/prowlarr-develop
-      tag: 1.10.1.4059
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: config
+        containers:
+          main:
+            image:
+              repository: ghcr.io/onedr0p/prowlarr-develop
+              tag: 1.10.1.4059
 
-    env:
-      TZ: "${TZ}"
+            env:
+              TZ: "${TZ}"
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
+            resources:
+              requests:
+                cpu: "0.04"
+                memory: "256M"
+              limits:
+                memory: "512M"
 
     service:
       main:
@@ -50,29 +61,25 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: "mdi:folder-search-outline"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+
         hosts:
-          - host: "prowlarr.${SECRET_DOMAIN}"
+          - host: &host "prowlarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
         tls:
           - hosts:
-              - "prowlarr.${SECRET_DOMAIN}"
+              - *host
+            secretName: "prowlarr-tls"
 
     persistence:
       config:
         enabled: true
         existingClaim: prowlarr-config-v1
-
-    resources:
-      requests:
-        cpu: "0.04"
-        memory: "256M"
-      limits:
-        memory: "512M"

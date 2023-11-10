@@ -16,6 +16,16 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
 
   dependsOn:
     - name: rook-ceph-cluster
