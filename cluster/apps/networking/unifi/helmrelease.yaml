@@ -9,13 +9,13 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
-  maxHistory: 3
+  maxHistory: 2
   install:
     createNamespace: true
     remediation:
@@ -27,53 +27,65 @@ spec:
   uninstall:
     keepHistory: false
 
-
   dependsOn:
-    - name: traefik
-      namespace: networking
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
 
   values:
-    controller:
-      type: statefulset
-
-    image:
-      repository: jacobalberty/unifi
-      tag: v7.5.176
-      pullPolicy: IfNotPresent
-
-    env:
-      RUNAS_UID0: "false"
-      UNIFI_UID: "999"
-      UNIFI_GID: "999"
-      UNIFI_STDOUT: "true"
-      JVM_INIT_HEAP_SIZE:
-      JVN_MAX_HEAP_SIZE: 1024M
-      TIMEZONE: "${TZ}"
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: unifi
+        containers:
+          main:
+            image:
+              repository: jacobalberty/unifi
+              tag: v7.5.176
+              pullPolicy: IfNotPresent
+            type: statefulset
+            strategy: RollingUpdate
+            resources:
+              requests:
+                memory: 500M
+                cpu: 15m
+              limits:
+                memory: 1390M
+            env:
+              RUNAS_UID0: "false"
+              UNIFI_UID: "999"
+              UNIFI_GID: "999"
+              UNIFI_STDOUT: "true"
+              JVM_INIT_HEAP_SIZE:
+              JVN_MAX_HEAP_SIZE: 1024M
+              TIMEZONE: "${TZ}"
 
     persistence:
       unifi:
         enabled: true
         existingClaim: unifi-data-v1
 
-    podAnnotations:
-      backup.velero.io/backup-volumes: unifi
-
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           hajimari.io/enable: "true"
           hajimari.io/icon: "lan"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+
         hosts:
           - host: &host "unifi.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
               - *host
+            secretName: "unifi-tls"
 
     service:
       main:
@@ -114,10 +126,3 @@ spec:
             enabled: true
             port: 10001
             protocol: UDP
-
-    resources:
-      requests:
-        memory: 500M
-        cpu: 15m
-      limits:
-        memory: 1390M
