@@ -93,6 +93,8 @@ spec:
           - ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
         ports:
+          http:
+            port: 12345
           https:
             port: 8443
             protocol: HTTPS
