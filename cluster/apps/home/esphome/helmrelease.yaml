@@ -21,13 +21,14 @@ spec:
       main:
         annotations:
           backup.velero.io/backup-volumes: config
-        image:
-          repository: ghcr.io/esphome/esphome
-          tag: 2023.10.6
-        env:
-          ESPHOME_DASHBOARD_USE_PING: "true"
-          TZ: "${TZ}"
-
+        containers:
+          main:
+            image:
+              repository: ghcr.io/esphome/esphome
+              tag: 2023.10.6
+            env:
+              ESPHOME_DASHBOARD_USE_PING: "true"
+              TZ: "${TZ}"
 
     persistence:
       config:
