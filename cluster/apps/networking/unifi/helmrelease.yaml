@@ -79,7 +79,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: portal-https
+                  port: http
         tls:
           - hosts:
               - *host
