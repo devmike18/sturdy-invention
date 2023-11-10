@@ -42,8 +42,6 @@ spec:
               repository: jacobalberty/unifi
               tag: v7.5.176
               pullPolicy: IfNotPresent
-            type: statefulset
-            strategy: RollingUpdate
             resources:
               requests:
                 memory: 500M
