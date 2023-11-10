@@ -109,6 +109,7 @@ spec:
             enabled: true
             port: 8843
             protocol: HTTPS
+            primary: true
           speedtest:
             enabled: true
             port: 6789
