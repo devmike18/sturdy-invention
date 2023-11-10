@@ -80,7 +80,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: portal-https
         tls:
           - hosts:
               - *host
