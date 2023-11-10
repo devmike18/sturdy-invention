@@ -79,7 +79,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: http
+                  port: https
         tls:
           - hosts:
               - *host
@@ -92,10 +92,8 @@ spec:
         externalIPs:
           - ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
-        annotations:
-          traefik.ingress.kubernetes.io/server.serversscheme: https
         ports:
-          http:
+          https:
             port: 8443
             protocol: HTTPS
             primary: true
