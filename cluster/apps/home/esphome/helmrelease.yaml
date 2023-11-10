@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -17,20 +17,24 @@ spec:
       interval: 5m
   # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
   values:
-    image:
-      repository: ghcr.io/esphome/esphome
-      tag: 2023.10.6
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: config
+        image:
+          repository: ghcr.io/esphome/esphome
+          tag: 2023.10.6
+        env:
+          ESPHOME_DASHBOARD_USE_PING: "true"
+          TZ: "${TZ}"
+
 
     persistence:
       config:
         enabled: true
         existingClaim: esphome-config-v1
-
-    podAnnotations:
-      backup.velero.io/backup-volumes: config
-
-    env:
-      ESPHOME_DASHBOARD_USE_PING: "true"
+        globalMounts:
+          - path: /config
 
     service:
       main:
@@ -41,49 +45,23 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: "traefik"
+        className: "traefik"
         annotations:
           hajimari.io/enable: "true"
           hajimari.io/icon: simple-icons:esphome
           hajimari.io/info: Programs esphome devices
           hajimari.io/group: automation
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
-          - host: "esphome.${SECRET_DOMAIN}"
+          - host: &host "esphome.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
+                service:
+                  name: main
+                  port: http
         tls:
           - hosts:
-              - "{{ (index .Values.ingress.main.hosts 0).host }}"
+              - *host
             secretName: "tls.esphome"
-
-    addons:
-      codeserver:
-        image:
-          repository: ghcr.io/coder/code-server
-          tag: 4.18.0@sha256:29267847d68332a28d249bd5235715402b144a3903b921da0a1962173aef10b1
-        enabled: true
-        volumeMounts:
-          - name: config
-            mountPath: /config
-
-        ingress:
-          enabled: true
-          ingressClassName: "traefik"
-          annotations:
-            hajimari.io/enable: "true"
-            hajimari.io/icon: vscode-icons:file-type-vscode
-            hajimari.io/info: Esphome editor
-            hajimari.io/group: automation
-            traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-
-          hosts:
-            - host: esphome-vscode.${SECRET_DOMAIN}
-              paths:
-                - path: /
-                  pathType: Prefix
-
-          tls:
-            - hosts:
-                - esphome-vscode.${SECRET_DOMAIN}
