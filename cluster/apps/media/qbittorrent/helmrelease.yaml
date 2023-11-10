@@ -90,23 +90,6 @@ spec:
           - hosts:
               - *host
             secretName: "qbittorrent-tls"
-      api:
-        enabled: true
-        className: "traefik"
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
-        hosts:
-          - host: "qbittorrent.${SECRET_DOMAIN}"
-            paths:
-              - path: /api
-                pathType: Prefix
-                service:
-                  name: main
-                  port: http
-        tls:
-          - hosts:
-              - "qbittorrent.${SECRET_DOMAIN}"
 
     persistence:
       cache:
