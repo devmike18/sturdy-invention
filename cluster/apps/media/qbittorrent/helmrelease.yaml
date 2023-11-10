@@ -54,6 +54,7 @@ spec:
           http:
             port: *port
       bittorrent:
+        controller: main
         enabled: true
         type: LoadBalancer
         annotations:
