@@ -80,7 +80,7 @@ spec:
                 pathType: Prefix
                 service:
                   name: main
-                  port: portal-https
+                  port: http
         tls:
           - hosts:
               - *host
@@ -97,6 +97,7 @@ spec:
           http:
             port: 8443
             protocol: HTTPS
+            primary: true
           controller:
             enabled: true
             port: 8080
@@ -109,7 +110,6 @@ spec:
             enabled: true
             port: 8843
             protocol: HTTPS
-            primary: true
           speedtest:
             enabled: true
             port: 6789
