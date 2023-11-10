@@ -9,46 +9,62 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 1.5.1
+      version: 2.0.3
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
         namespace: flux-system
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
   dependsOn:
     - name: traefik
       namespace: networking
   values:
-    image:
-      repository: ghcr.io/tarampampam/error-pages
-      tag: 2.25.0
-    controller:
-      enabled: true
-      type: deployment
-      strategy: RollingUpdate
-      replicas: 3
-    nameOverride: error-pages
-    env:
-      TEMPLATE_NAME: i-said-random
+    controllers:
+      main:
+        type: statefulset
+        replicas: 3
+        strategy: RollingUpdate
+        containers:
+          main:
+            image:
+              repository: ghcr.io/tarampampam/error-pages
+              tag: 2.25.0
+            nameOverride: error-pages
+            env:
+              TEMPLATE_NAME: i-said-random
+            resources:
+              requests:
+                memory: 100Mi
+                cpu: 100m
+              limits:
+                memory: 500Mi
+
+        defaultPodOptions:
+          affinity:
+            podAntiAffinity:
+              preferredDuringSchedulingIgnoredDuringExecution:
+                - weight: 100
+                  podAffinityTerm:
+                    labelSelector:
+                      matchExpressions:
+                        - key: app.kubernetes.io/name
+                          operator: In
+                          values:
+                            - error-pages
+                    topologyKey: kubernetes.io/hostname
+
     service:
       main:
         ports:
           http:
             port: 8080
-    affinity:
-      podAntiAffinity:
-        preferredDuringSchedulingIgnoredDuringExecution:
-          - weight: 100
-            podAffinityTerm:
-              labelSelector:
-                matchExpressions:
-                  - key: app.kubernetes.io/name
-                    operator: In
-                    values:
-                      - error-pages
-              topologyKey: kubernetes.io/hostname
-    resources:
-      requests:
-        memory: 100Mi
-        cpu: 100m
-      limits:
-        memory: 500Mi
