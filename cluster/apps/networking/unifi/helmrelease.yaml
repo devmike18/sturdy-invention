@@ -71,6 +71,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "lan"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
+          traefik.ingress.kubernetes.io/service.serversscheme: https
 
         hosts:
           - host: &host "unifi.${SECRET_DOMAIN}"
