@@ -93,7 +93,7 @@ spec:
           - ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
         annotations:
-          traefik.ingress.kubernetes.io/server.serverscheme: https
+          traefik.ingress.kubernetes.io/server.serversscheme: https
         ports:
           http:
             port: 8443
