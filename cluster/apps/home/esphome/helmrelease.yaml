@@ -15,7 +15,17 @@ spec:
         name: bjw-s-charts
         namespace: flux-system
       interval: 5m
-  # See https://github.com/bjw-s/helm-charts/blob/main/charts/library/common/values.yaml
+  maxHistory: 2
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+
   values:
     controllers:
       main:
@@ -30,6 +40,24 @@ spec:
               ESPHOME_DASHBOARD_USE_PING: "true"
               TZ: "${TZ}"
 
+          codeserver:
+            image:
+              repository: ghcr.io/cdr/code-server
+              tag: 4.18.0
+            env:
+              TZ: ${TIMEZONE}
+            args:
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+            volumeMounts:
+              - name: config
+                mountPath: /config
+
     persistence:
       config:
         enabled: true
@@ -42,6 +70,13 @@ spec:
         ports:
           http:
             port: 6052
+      codeserver:
+        type: ClusterIP
+        controller: main
+        ports:
+          http:
+            enabled: true
+            port: 8080
 
     ingress:
       main:
@@ -66,3 +101,25 @@ spec:
           - hosts:
               - *host
             secretName: "tls.esphome"
+      codeserver:
+        enabled: true
+        className: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: simple-icons:vs-code
+          hajimari.io/info: Programs esphome devices
+          hajimari.io/group: automation
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: &host esphome-vscode.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: codeserver
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "tls.esphome-vscode"
