@@ -42,7 +42,7 @@ spec:
 
           codeserver:
             image:
-              repository: ghcr.io/cdr/code-server
+              repository: codercom/code-server
               pullPolicy: IfNotPresent
               tag: 4.18.0
             env:
