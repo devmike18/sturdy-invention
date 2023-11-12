@@ -112,7 +112,7 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
-          - host: &host esphome-vscode.${SECRET_DOMAIN}
+          - host: &codehost esphome-vscode.${SECRET_DOMAIN}
             paths:
               - path: /
                 pathType: Prefix
@@ -121,5 +121,5 @@ spec:
                   port: http
         tls:
           - hosts:
-              - *host
+              - *codehost
             secretName: "tls.esphome-vscode"
