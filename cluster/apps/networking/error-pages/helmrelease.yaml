@@ -38,7 +38,7 @@ spec:
           main:
             image:
               repository: ghcr.io/tarampampam/error-pages
-              tag: 2.25.0
+              tag: 2.26.0
             nameOverride: error-pages
             env:
               TEMPLATE_NAME: i-said-random
