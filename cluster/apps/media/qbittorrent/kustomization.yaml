@@ -4,5 +4,12 @@ kind: Kustomization
 resources:
   - config-pvc.yaml
   - helmrelease.yaml
+  - secret.sops.yaml
   - dashboard
     #  - network-policy.yaml
+configMapGenerator:
+  - name: qbittorrent-dnsdist
+    files:
+      - ./config/dnsdist.conf
+generatorOptions:
+  disableNameSuffixHash: true

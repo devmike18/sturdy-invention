@@ -32,8 +32,6 @@ spec:
       main:
         annotations:
           backup.velero.io/backup-volumes: config
-          configmap.reloader.stakater.com/reload: qbittorrent-scripts,qbittorrent-dnsdist
-          secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
           main:
             image:
@@ -49,49 +47,6 @@ spec:
                 cpu: 10m
               limits:
                 memory: 2000Mi
-
-          dnsdist:
-            image:
-              repository: docker.io/powerdns/dnsdist-18
-              tag: 1.8.2
-
-          # Configure the gluetun sidecar
-          gluetun:
-            dependsOn: main
-            image:
-              repository: ghcr.io/qdm12/gluetun
-              tag: v3.36.0
-            # -- environment variables.
-            # See [image docs](https://github.com/qdm12/gluetun-wiki) for more details on how to configure your VPN and how to set up port-forwarding.
-            env:
-              - VPN_TYPE: wireguard
-              - VPN_INTERFACE: wg0
-              - FIREWALL_INPUT_PORTS: *bittorrentPort
-              - FIREWALL_OUTBOUND_SUBNETS: "${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_CLUSTER_CIDR}"
-              - SHADOWSOCKS: "on"
-              - DOT: "off"
-              - DNS_PLAINTEXT_ADDRESS: "127.0.0.2"
-
-            envFrom:
-              - secretRef:
-                  name: wireguard
-                  namespace: media
-
-            # Configure the container-specific securityContext
-            securityContext:
-              capabilities:
-                add:
-                  - NET_ADMIN
-
-          port-forward:
-            dependsOn: gluetun
-            image:
-              repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
-              tag: "1.0"
-            env:
-              - QBITTORRENT_SERVER: localhost
-              - QBITTORRENT_PORT: *port
-              - PORT_FORWARDED: "/tmp/gluetun/forwarded_port"
 
     service:
       main:
@@ -152,21 +107,3 @@ spec:
           - path: /nfs-media
             readOnly: false
         existingClaim: nfs-media-pvc
-      dnsdist-config:
-        type: configMap
-        name: qbittorrent-dnsdist
-        advancedMounts:
-          main:
-            dnsdist:
-              - path: /etc/dnsdist/dnsdist.conf
-                subPath: dnsdist.conf
-                readOnly: true
-      gluetun-data:
-        type: emptyDir
-        advancedMounts:
-          main:
-            gluetun:
-              - path: /tmp/gluetun
-            port-forward:
-              - path: /tmp/gluetun
-                readOnly: true
