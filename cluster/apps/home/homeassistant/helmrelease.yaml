@@ -63,11 +63,37 @@ spec:
               - secretRef:
                   name: home-assistant-secrets
 
+          codeserver:
+            image:
+              repository: codercom/code-server
+              pullPolicy: IfNotPresent
+              tag: 4.18.0
+            env:
+              TZ: ${TZ}
+            args:
+              - "/config"
+              - --auth
+              - "none"
+              - --user-data-dir
+              - "/config/.vscode"
+              - --extensions-dir
+              - "/config/.vscode"
+            volumeMounts:
+              - name: config
+                mountPath: /config
+
     service:
       main:
         ports:
           http:
             port: 8123
+      codeserver:
+        type: ClusterIP
+        controller: main
+        ports:
+          http:
+            enabled: true
+            port: 8080
 
     persistence:
       config:
@@ -84,7 +110,7 @@ spec:
           hajimari.io/icon: "home-assistant"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
-          - host: "homeassistant.${SECRET_DOMAIN}"
+          - host: &host "homeassistant.${SECRET_DOMAIN}"
             paths:
               - path: /
                 pathType: Prefix
@@ -93,5 +119,27 @@ spec:
                   port: http
         tls:
           - hosts:
-              - "homeassistant.${SECRET_DOMAIN}"
+              - *host
             secretName: "homeassistant-tls"
+      codeserver:
+        enabled: true
+        className: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: simple-icons:vs-code
+          hajimari.io/info: Programs esphome devices
+          hajimari.io/group: automation
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: &codehost ha-vscode.${SECRET_DOMAIN}
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: codeserver
+                  port: http
+        tls:
+          - hosts:
+              - *codehost
+            secretName: "tls.ha-vscode"
