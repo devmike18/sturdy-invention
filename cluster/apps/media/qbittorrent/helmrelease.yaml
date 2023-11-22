@@ -84,7 +84,7 @@ spec:
               FIREWALL_OUTBOUND_SUBNETS: "${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_CLUSTER_CIDR}"
               SHADOWSOCKS: "on"
               DOT: "off"
-              DNS_ADDRESS: "127.0.0.2"
+              DNS_ADDRESS: "127.0.0.16"
 
             envFrom:
               - secretRef:
