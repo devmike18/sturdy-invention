@@ -75,7 +75,6 @@ spec:
             envFrom:
               - secretRef:
                   name: wireguard
-                  namespace: media
 
             # Configure the container-specific securityContext
             securityContext:
