@@ -30,6 +30,12 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 65539
         annotations:
           backup.velero.io/backup-volumes: config
           configmap.reloader.stakater.com/reload: qbittorrent-scripts,qbittorrent-dnsdist
@@ -49,6 +55,9 @@ spec:
                 cpu: 10m
               limits:
                 memory: 2000Mi
+            securityContext:
+              runAsUser: 568
+              runAsGroup: 568
 
           dnsdist:
             image:
@@ -97,19 +106,6 @@ spec:
         ports:
           http:
             port: *port
-      bittorrent:
-        controller: main
-        enabled: true
-        type: LoadBalancer
-        annotations:
-          metallb.universe.tf/loadBalancerIPs: ${METALLB_QBIT_ADDR}
-        externalTrafficPolicy: Local
-        ports:
-          bittorrent:
-            enabled: true
-            protocol: TCP
-            port: *bittorrentPort
-            targetPort: *bittorrentPort
 
     ingress:
       main:
