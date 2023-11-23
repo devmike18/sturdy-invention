@@ -49,6 +49,13 @@ spec:
               TZ: ${TZ}
               QBITTORRENT__PORT: &port 8080
               QBITTORRENT__BT_PORT: &bittorrentPort 6881
+            probes:
+              liveness:
+                enabled: false
+              readiness:
+                enabled: false
+              startup:
+                enabled: true
             resources:
               requests:
                 memory: 250Mi
