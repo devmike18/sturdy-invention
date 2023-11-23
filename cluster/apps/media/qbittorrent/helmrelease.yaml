@@ -80,6 +80,7 @@ spec:
               VPN_TYPE: wireguard
               VPN_INTERFACE: wg0
               FIREWALL_INPUT_PORTS: *port
+              FIREWALL_VPN_INPUT_PORTS: *bittorrentPort
               FIREWALL_OUTBOUND_SUBNETS: "${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_CLUSTER_CIDR}"
               SHADOWSOCKS: "on"
               DOT: "off"
