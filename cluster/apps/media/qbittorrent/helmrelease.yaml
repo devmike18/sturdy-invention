@@ -42,6 +42,7 @@ spec:
           secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
           main:
+            nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
               tag: 4.6.1
