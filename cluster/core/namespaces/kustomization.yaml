@@ -12,4 +12,3 @@ resources:
   - velero.yaml
   - utility.yaml
   - stable-diffusion-webui.yaml
-  - system-upgrade.yaml
