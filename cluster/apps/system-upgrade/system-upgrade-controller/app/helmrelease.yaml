@@ -1,6 +1,6 @@
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.devbu.io/helm.toolkit.fluxcd.io/helmrelease_v2beta2.json
-apiVersion: helm.toolkit.fluxcd.io/v2beta1
+apiVersion: helm.toolkit.fluxcd.io/v2beta2
 kind: HelmRelease
 metadata:
   name: &app system-upgrade-controller
@@ -33,8 +33,6 @@ spec:
             image:
               repository: docker.io/rancher/system-upgrade-controller
               tag: v0.13.2@sha256:c3d120c265c3d1167f077bf79a88d0a401dd3a54ce6933e4cb98b2e51a1ed49b
-            securityContext:
-              allowPrivilegeEscalation: false
             env:
               SYSTEM_UPGRADE_CONTROLLER_DEBUG: false
               SYSTEM_UPGRADE_CONTROLLER_THREADS: 2
@@ -55,6 +53,7 @@ spec:
             runAsNonRoot: true
             runAsUser: 65534
             runAsGroup: 65534
+            allowPrivilegeEscalation: false
             seccompProfile:
               type: RuntimeDefault
             capabilities:
