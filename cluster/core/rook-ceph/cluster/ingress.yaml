@@ -14,9 +14,9 @@ metadata:
 spec:
   tls:
     - hosts:
-        - "rook.${SECRET_DOMAIN}"
+        - "rook.vanniejenhuis.ca"
   rules:
-    - host: "rook.${SECRET_DOMAIN}"
+    - host: "rook.vanniejenhuis.ca"
       http:
         paths:
           - path: /
