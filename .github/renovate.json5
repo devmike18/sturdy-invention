@@ -1,7 +1,10 @@
 {
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    ":enableRenovate",
-    "config:base",
+    "config:recommended",
+    "docker:enableMajor",
+    "helpers:pinGitHubActionDigests",
+    "replacements:k8s-registry-move",
     ":semanticCommits",
     ":dependencyDashboard",
     ":enablePreCommit",
@@ -11,23 +14,26 @@
     ":rebaseStalePrs",
     ":automergePatch",
     ":gomod",
-    "docker:enableMajor",
     "github>devmike18/sturdy-invention//.github/renovate/allowedVersions.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/commitMessage",
+    "github>devmike18/sturdy-invention//.github/renovate/commitMessage.json",
     "github>devmike18/sturdy-invention//.github/renovate/autoMerge.json5",
     "github>devmike18/sturdy-invention//.github/renovate/labels.json5",
     "github>devmike18/sturdy-invention//.github/renovate/groups.json5",
     "github>devmike18/sturdy-invention//.github/renovate/disabledDatasources.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/semanticCommits"
+    "github>devmike18/sturdy-invention//.github/renovate/packageRules.json5",
+    "github>devmike18/sturdy-invention//.github/renovate/semanticCommits.json"
   ],
 
   "timezone": "Canada/Eastern",
   "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
+  "suppressNotifications": ["prEditedNotification","prIgnoreNotification"],
   "rebaseWhen": "conflicted",
 
+  "assigneesFromCodeOwners": true,
+  "reviewersFromCodeOwners": true,
+
   "platform": "github",
-  "username": "renovate[bot]",
+  "username": "renovate",
   "repositories": ["devmike18/sturdy-invention"],
   "onboarding": false,
   "requireConfig": false,
