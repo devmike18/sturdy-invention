@@ -63,7 +63,7 @@ spec:
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
-              tag: 1.8.2
+              tag: 1.8.3
             # Configure the container-specific securityContext
             securityContext:
               runAsUser: 0
