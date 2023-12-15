@@ -24,10 +24,10 @@ jobs:
       security-events: write
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Run kubesec scanner
-        uses: controlplaneio/kubesec-action@v0.0.2
+        uses: controlplaneio/kubesec-action@43d0ddff5ffee89a6bb9f29b64cd865411137b14 # v0.0.2
         with:
           input: ./cluster/kustomization.yaml
           format: template
@@ -36,13 +36,13 @@ jobs:
           exit-code: "0"
           
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@a8a3f3ad30e3422c9c7b888a15615d19a852ae32 # v3
         with:
           name: KubeSec-results
           path: kubesec-results.sarif
           retention-days: 5          
 
       - name: Upload Kubesec scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@03e7845b7bfcd5e7fb63d1ae8c61b0e791134fab # v2
         with:
           sarif_file: kubesec-results.sarif
