@@ -18,7 +18,7 @@ jobs:
     name: Detect File Changes
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - uses: dorny/paths-filter@v2
         id: filter
         with:
@@ -41,7 +41,7 @@ jobs:
         file: ${{ fromJSON(needs.detect-file-changes.outputs.yaml_files) }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Install Jo
         run: |
           sudo apt-get install jo
@@ -64,9 +64,9 @@ jobs:
       fail-fast: false
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
       - name: Scan Container
-        uses: aquasecurity/trivy-action@0.16.0
+        uses: aquasecurity/trivy-action@91713af97dc80187565512baba96e4364e983601 # 0.16.0
         with:
           image-ref: ${{ matrix.containers }}
           vuln-type: os,library
@@ -75,6 +75,6 @@ jobs:
           template: "@/contrib/sarif.tpl"
           output: trivy-results.sarif
       - name: Upload Trivy scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@v2
+        uses: github/codeql-action/upload-sarif@03e7845b7bfcd5e7fb63d1ae8c61b0e791134fab # v2
         with:
           sarif_file: trivy-results.sarif
