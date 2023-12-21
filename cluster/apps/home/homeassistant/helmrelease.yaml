@@ -67,7 +67,7 @@ spec:
             image:
               repository: codercom/code-server
               pullPolicy: IfNotPresent
-              tag: 4.19.1
+              tag: 4.20.0
             env:
               TZ: ${TZ}
             args:
