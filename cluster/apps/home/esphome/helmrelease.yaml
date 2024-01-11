@@ -122,6 +122,7 @@ spec:
           hajimari.io/info: Programs esphome devices
           hajimari.io/group: automation
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
           - host: &codehost esphome-vscode.${SECRET_DOMAIN}
