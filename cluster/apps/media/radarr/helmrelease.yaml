@@ -48,6 +48,8 @@ spec:
                 memory: 1000Mi
             env:
               TZ: "${TZ}"
+              RADARR__AUTHENTICATION_METHOD: "External"
+              RADARR__API_KEY: "${SECRET_RADARR_APIKEY}"
 
         pod:
           securityContext:
