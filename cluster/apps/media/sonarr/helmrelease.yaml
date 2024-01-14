@@ -58,6 +58,7 @@ spec:
 
             env:
               TZ: "${TZ}"
+              SONARR__AUTHENTICATION_METHOD: "External"
 
         pod:
           securityContext:
