@@ -3,7 +3,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: mesosphere.github.io-charts-stable
-  namespace: kommander-flux
+  namespace: flux-system
 spec:
   interval: 10m
   timeout: 1m
@@ -13,7 +13,7 @@ apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: mesosphere.github.io-charts-staging
-  namespace: kommander-flux
+  namespace: flux-system
 spec:
   interval: 10m
   timeout: 1m
