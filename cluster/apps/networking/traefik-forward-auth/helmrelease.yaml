@@ -47,10 +47,10 @@ spec:
               - "id.${SECRET_DOMAIN}"
 
     env:
-      TZ: "${TZ}"
-      LOG_LEVEL: "debug"
-      PROVIDER_URI: "https://accounts.google.com"
-      SCOPE: "openid https://www.googleapis.com/auth/userinfo.email"
+      TZ: ${TZ}
+      LOG_LEVEL: debug
+      PROVIDER_URI: https://accounts.google.com
+      SCOPE: openid https://www.googleapis.com/auth/userinfo.email
       CLIENT_ID:
         valueFrom:
           secretKeyRef:
