@@ -7,7 +7,7 @@ metadata:
 spec:
   interval: 10m
   timeout: 1m
-  url: "https://mesosphere.github.io/charts/stable}"
+  url: "https://mesosphere.github.io/charts/stable"
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
@@ -17,4 +17,4 @@ metadata:
 spec:
   interval: 10m
   timeout: 1m
-  url: "https://mesosphere.github.io/charts/staging}"
+  url: "https://mesosphere.github.io/charts/staging"
