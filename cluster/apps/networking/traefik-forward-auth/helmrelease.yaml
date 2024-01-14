@@ -8,12 +8,12 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: registryUrl=https://mesosphere.github.io/charts/staging
+      # renovate: registryUrl=https://k8s-at-home.com/charts/
       chart: traefik-forward-auth
-      version: 0.3.10
+      version: 2.2.2
       sourceRef:
         kind: HelmRepository
-        name: mesosphere.github.io-charts-staging
+        name: k8s-at-home-charts
         namespace: flux-system
       interval: 5m
 
@@ -23,8 +23,8 @@ spec:
 
   values:
     image:
-      repository: mesosphere/traefik-forward-auth
-      tag: 3.1.0
+      repository: thomseddon/traefik-forward-auth
+      tag: v2.2.0
       pullPolicy: IfNotPresent
     podAnnotations:
       secret.reloader.stakater.com/reload: traefik-forward-auth-secrets
@@ -32,8 +32,8 @@ spec:
     ingress:
       main:
         enabled: true
+        ingressClassName: "traefik"
         annotations:
-          kubernetes.io/ingress.class: "traefik"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         hosts:
@@ -46,19 +46,48 @@ spec:
               - "id.${SECRET_DOMAIN}"
 
     env:
-      TZ: "${TZ}"
-      LOG_LEVEL: "debug"
-      PROVIDER_URI: "https://accounts.google.com"
-      SCOPE: "openid https://www.googleapis.com/auth/userinfo.email"
-      CLIENT_ID: "${SECRET_TFA_CLIENT_ID}"
-      CLIENT_SECRET: "${SECRET_TFA_CLIENT_SECRET}"
-      AUTH_HOST: "${SECRET_TFA_AUTH_HOST}"
-      COOKIE_DOMAIN: "${SECRET_TFA_COOKIE_DOMAIN}"
-      DOMAIN: "${SECRET_TFA_DOMAIN}"
-      WHITELIST: "${SECRET_TFA_WHITELIST}"
-      ENCRYPTION_KEY: "${SECRET_TFA_ENCRYPTION_KEY}"
+      TZ: ${TZ}
+      LOG_LEVEL: debug
+      PROVIDERS_GOOGLE_CLIENT_ID:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: CLIENT_ID
+      PROVIDERS_GOOGLE_CLIENT_SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: CLIENT_SECRET
+      AUTH_HOST:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: AUTH_HOST
+      COOKIE_DOMAIN:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: COOKIE_DOMAIN
+      DOMAIN:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: DOMAIN
+      WHITELIST:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: WHITELIST
+      SECRET:
+        valueFrom:
+          secretKeyRef:
+            name: traefik-forward-auth-secrets
+            key: secret
 
     service:
       main:
         type: ClusterIP
-        port: 4181
+        ports:
+          http:
+            port:
+              4181

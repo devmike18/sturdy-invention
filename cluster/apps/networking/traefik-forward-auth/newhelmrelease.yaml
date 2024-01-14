@@ -1,0 +1,64 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: traefik-forward-auth
+  namespace: networking
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://mesosphere.github.io/charts/staging
+      chart: traefik-forward-auth
+      version: 0.3.10
+      sourceRef:
+        kind: HelmRepository
+        name: mesosphere.github.io-charts-staging
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: traefik
+      namespace: networking
+
+  values:
+    image:
+      repository: mesosphere/traefik-forward-auth
+      tag: 3.1.0
+      pullPolicy: IfNotPresent
+    podAnnotations:
+      secret.reloader.stakater.com/reload: traefik-forward-auth-secrets
+
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: "traefik"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+        hosts:
+          - host: "id.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+        tls:
+          - hosts:
+              - "id.${SECRET_DOMAIN}"
+
+    env:
+      TZ: "${TZ}"
+      LOG_LEVEL: "debug"
+      PROVIDER_URI: "https://accounts.google.com"
+      SCOPE: "openid https://www.googleapis.com/auth/userinfo.email"
+      CLIENT_ID: "${SECRET_TFA_CLIENT_ID}"
+      CLIENT_SECRET: "${SECRET_TFA_CLIENT_SECRET}"
+      AUTH_HOST: "${SECRET_TFA_AUTH_HOST}"
+      COOKIE_DOMAIN: "${SECRET_TFA_COOKIE_DOMAIN}"
+      DOMAIN: "${SECRET_TFA_DOMAIN}"
+      WHITELIST: "${SECRET_TFA_WHITELIST}"
+      ENCRYPTION_KEY: "${SECRET_TFA_ENCRYPTION_KEY}"
+
+    service:
+      main:
+        type: ClusterIP
+        port: 4181
