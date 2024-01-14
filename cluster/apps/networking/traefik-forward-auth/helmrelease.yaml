@@ -23,7 +23,6 @@ spec:
 
   values:
     image:
-    # renovate: registryUrl=https://mesosphere.github.io/charts/staging
       repository: mesosphere/traefik-forward-auth
       tag: 3.1.0
       pullPolicy: IfNotPresent
@@ -51,41 +50,13 @@ spec:
       LOG_LEVEL: debug
       PROVIDER_URI: https://accounts.google.com
       SCOPE: openid https://www.googleapis.com/auth/userinfo.email
-      CLIENT_ID:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_ID
-      CLIENT_SECRET:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_SECRET
-      AUTH_HOST:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: AUTH_HOST
-      COOKIE_DOMAIN:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: COOKIE_DOMAIN
-      DOMAIN:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: DOMAIN
-      WHITELIST:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: WHITELIST
-      ENCRYPTION_KEY:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: ENCRYPTION_KEY
+      CLIENT_ID: ${SECRET_TFA_CLIENT_ID}
+      CLIENT_SECRET: ${SECRET_TFA_CLIENT_SECRET}
+      AUTH_HOST: ${SECRET_TFA_AUTH_HOST}
+      COOKIE_DOMAIN: ${SECRET_TFA_COOKIE_DOMAIN}
+      DOMAIN: ${SECRET_TFA_DOMAIN}
+      WHITELIST: ${SECRET_TFA_WHITELIST}
+      ENCRYPTION_KEY: ${SECRET_TFA_ENCRYPTION_KEY}
 
     service:
       main:
