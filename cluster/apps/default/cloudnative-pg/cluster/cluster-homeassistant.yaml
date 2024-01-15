@@ -6,7 +6,8 @@ metadata:
   namespace: default
 spec:
   instances: 3
-  imageName: ghcr.io/cloudnative-pg/postgresql:14.8-6
+  #imageName: ghcr.io/cloudnative-pg/postgresql:14.8-6
+  imageName: ghcr.io/imusmanmalik/timescaledb-postgis:14-3.4
   inheritedMetadata:
     labels:
       kube-image-keeper.enix.io/image-caching-policy: ignore
@@ -28,6 +29,12 @@ spec:
 #     source: &previous-cluster postgres-v2
   bootstrap:
     initdb:
+      postInitTemplateSQL: # REmove this section if not using timescale.
+        - CREATE EXTENSION timescaledb;
+        - CREATE EXTENSION postgis;
+        - CREATE EXTENSION postgis_topology;
+        - CREATE EXTENSION fuzzystrmatch;
+        - CREATE EXTENSION postgis_tiger_geocoder;
       database: homeassistant
       owner: homeassistant
       secret:
@@ -36,6 +43,8 @@ spec:
     parameters:
       max_connections: "600"
       shared_buffers: 512MB
+    shared_preload_libraries: # remove this if not using timescale.
+      - timescaledb
   monitoring:
     enablePodMonitor: true
   backup:
