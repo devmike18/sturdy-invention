@@ -33,3 +33,4 @@ spec:
     storageClass:
       name: "nfs-client"
       defaultClass: false
+      onDelete: "delete"
