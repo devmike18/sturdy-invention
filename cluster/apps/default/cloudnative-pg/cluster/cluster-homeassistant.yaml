@@ -5,8 +5,8 @@ metadata:
   name: cluster-homeassistant
   namespace: default
 spec:
-  instances: 3
-  #imageName: ghcr.io/cloudnative-pg/postgresql:14.8-6
+  instances: 2
+  # REmove this commennted image if not using timescale. imageName: ghcr.io/cloudnative-pg/postgresql:14.8-6
   imageName: ghcr.io/imusmanmalik/timescaledb-postgis:14-3.4
   inheritedMetadata:
     labels:
@@ -20,7 +20,7 @@ spec:
       volumeMode: Filesystem
       resources:
         requests:
-          storage: 1Mi
+          storage: 1Gi
   enableSuperuserAccess: true
   superuserSecret:
     name: cluster-homeassistant-superuser
@@ -40,9 +40,6 @@ spec:
       secret:
         name: cluster-homeassistant-app-user
   postgresql:
-    parameters:
-      max_connections: "600"
-      shared_buffers: 512MB
     shared_preload_libraries: # remove this if not using timescale.
       - timescaledb
   monitoring:
@@ -53,7 +50,7 @@ spec:
       wal:
         compression: bzip2
         maxParallel: 8
-      destinationPath: s3://pgbackup/
+      destinationPath: s3://pgbackup/homeassistant
       endpointURL: "http://${NFS_SERVER}:9000"
       serverName: postgres-v3
       s3Credentials:
