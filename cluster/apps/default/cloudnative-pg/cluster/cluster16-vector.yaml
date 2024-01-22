@@ -26,6 +26,10 @@ spec:
     limits:
       memory: 2Gi
 
+  bootstrap:
+    initdb:
+      postInitTemplateSQL:
+        - CREATE EXTENSION IF NOT EXISTS vectors;
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
