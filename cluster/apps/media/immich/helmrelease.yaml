@@ -5,22 +5,27 @@ metadata:
   name: immich
   namespace: media
 spec:
-  interval: 15m
+  interval: 5m
   chart:
     spec:
       chart: app-template
       version: 2.5.0
       sourceRef:
         kind: HelmRepository
-        name: bjw-s
+        name: bjw-s-charts
         namespace: flux-system
+      interval: 5m
+
+  maxHistory: 2
   install:
-    createNamespace: true
     remediation:
       retries: 3
   upgrade:
+    cleanupOnFail: true
     remediation:
       retries: 3
+  uninstall:
+    keepHistory: false
   values:
     defaultPodOptions:
       automountServiceAccountToken: false
