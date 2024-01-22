@@ -45,7 +45,7 @@ spec:
               pullPolicy: IfNotPresent
             envFrom:
               - secretRef:
-                  name: immich-secret
+                  name: secret-immich
 
         containers:
           main:
