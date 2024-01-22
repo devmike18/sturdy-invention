@@ -55,6 +55,15 @@ spec:
         mode: console
       grafana_net:
         url: https://grafana.net
+      users:
+        allow_sign_up: false
+        auto_assign_org: true
+        auto_assign_org_role: Editor
+      auth.proxy:
+        enabled: true
+        header_name: X-Forwarded-User
+        header_property: username
+        auto_sign_up: true
       # auth:
       #   signout_redirect_url: https://id.${SECRET_DOMAIN}/application/o/grafana/end-session/
       #   # Optionally enable auto-login
