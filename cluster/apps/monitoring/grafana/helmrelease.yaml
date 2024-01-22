@@ -98,17 +98,13 @@ spec:
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
         traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
         cert-manager.io/cluster-issuer: "letsencrypt-production"
-        hosts:
-          - host: &host "grafana.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                service:
-                  name: main
-                  port: http
-        tls:
-          - hosts:
-              - *host
-            secretName: "grafana-tls"
+
+      hosts:
+        - &host "grafana.${SECRET_DOMAIN}"
+      tls:
+        - hosts:
+            - *host
+          secretName: "grafana-tls"
 
     persistence:
       enabled: true
