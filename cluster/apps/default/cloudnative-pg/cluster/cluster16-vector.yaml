@@ -1,0 +1,55 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster16-vector
+  namespace: databases
+spec:
+  instances: 2
+  imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16.1-v0.1.11
+  primaryUpdateStrategy: unsupervised
+  storage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: nfs-client
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 1Gi
+  superuserSecret:
+    name: secret-cloudnative-pg-admin
+  enableSuperuserAccess: true
+  resources:
+    requests:
+      memory: 1Gi
+    limits:
+      memory: 2Gi
+
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
+  monitoring:
+    enablePodMonitor: true
+    # https://github.com/cloudnative-pg/cloudnative-pg/issues/2501
+    podMonitorMetricRelabelings:
+      - { sourceLabels: ["cluster"], targetLabel: cnpg_cluster, action: replace }
+      - { regex: cluster, action: labeldrop }
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://pgbackup/immich
+      endpointURL: "http://${NFS_SERVER}:9000"
+      s3Credentials:
+        accessKeyId:
+          name: secret-cloudnative-pg-admin
+          key: aws-access-key-id
+        secretAccessKey:
+          name: secret-cloudnative-pg-admin
+          key: aws-secret-access-key
