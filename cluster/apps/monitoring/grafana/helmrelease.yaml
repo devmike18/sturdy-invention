@@ -96,11 +96,19 @@ spec:
         hajimari.io/enable: "true"
         hajimari.io/icon: "chart-areaspline"
         traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-      hosts:
-        - "grafana.${SECRET_DOMAIN}"
-      tls:
-        - hosts:
-            - "grafana.${SECRET_DOMAIN}"
+        traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+        cert-manager.io/cluster-issuer: "letsencrypt-production"
+        hosts:
+          - host: &host "grafana.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "grafana-tls"
 
     persistence:
       enabled: true
