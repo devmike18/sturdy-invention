@@ -5,4 +5,4 @@ resources:
   - helmrelease.yaml
   - immich-pv.yaml
   - configmap.yaml
-  - secret-immich.yaml
+  - secret-immich.sops.yaml
