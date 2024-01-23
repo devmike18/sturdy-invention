@@ -25,7 +25,14 @@ spec:
       memory: 1Gi
     limits:
       memory: 2Gi
-
+  bootstrap:
+    initdb:
+      database: immich
+      postInitApplicationSQL:
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+      owner: immich
+      dataChecksums: true
+      encoding: 'UTF8'
   postgresql:
     shared_preload_libraries:
       - "vectors.so"
