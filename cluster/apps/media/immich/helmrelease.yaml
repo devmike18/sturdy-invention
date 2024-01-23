@@ -166,5 +166,10 @@ spec:
         existingClaim: nfs-immich-pvc
         globalMounts:
           - path: /usr/src/app/upload
+      externaldata:
+        enabled: true
+        existingClaim: nfs-legacyphotos-pvc
+        globalMounts:
+          - path: /externaldata
       config:
         enabled: false

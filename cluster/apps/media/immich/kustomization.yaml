@@ -4,5 +4,6 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - immich-pv.yaml
+  - legacyphotos-pv.yaml
   - configmap.yaml
   - secret-immich.sops.yaml
