@@ -42,7 +42,7 @@ jobs:
           exit-code: "0"
           
       - name: 'Upload Artifact'
-        uses: actions/upload-artifact@1eb3cb2b3e0f29609092a73eb033bb759a334595 # v4
+        uses: actions/upload-artifact@26f96dfa697d77e81fd5907df203aa23a56210a8 # v4
         with:
           name: KubeSec-results
           path: kubesec-results.sarif
