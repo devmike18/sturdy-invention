@@ -237,15 +237,14 @@ spec:
               secret_key: "${SECRET_MINIO_THANOS_SECRETKEY}"
 
         additionalScrapeConfigs:
-          - job_name: 'homeassistant'
-            scrape_interval: 60s
-            metrics_path: /api/prometheus
-            bearer_token: ${SECRET_HOMEASSISTANT_PROMETHEUS_TOKEN}
-            static_configs:
-              - targets:
-                  - "home-assistant.home.svc.cluster.local:8123"
+          # - job_name: 'homeassistant'
+          #   scrape_interval: 60s
+          #   metrics_path: /api/prometheus
+          #   bearer_token: ${SECRET_HOMEASSISTANT_PROMETHEUS_TOKEN}
+          #   static_configs:
+          #     - targets:
+          #         - "home-assistant.home.svc.cluster.local:8123"
           - job_name: "gw-exporter"
-            scrape_interval: 60s
             metrics_path: /metrics
             static_configs:
               - targets:
