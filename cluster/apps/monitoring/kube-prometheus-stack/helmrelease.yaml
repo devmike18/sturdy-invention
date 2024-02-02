@@ -210,9 +210,13 @@ spec:
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
+        enableFeatures:
+          - memory-snapshot-on-shutdown
+          - new-service-discovery-manager
         retention: 6h
         enableAdminAPI: true
         walCompression: true
+        disableCompaction: true
         storageSpec:
           volumeClaimTemplate:
             spec:
@@ -226,8 +230,9 @@ spec:
           # renovate: depName=quay.io/thanos/thanos datasource=docker
           version: "0.34.0"
           objectStorageConfig:
-            name: thanos-objstore-secret
-            key: objstore.yml
+            existingSecret:
+              name: thanos-objstore-secret
+              key: objstore.yml
             #TODO  This secret exists but isn't part of the repo. Sops this up.
           # objectStorageConfig: |
           #   type: S3
