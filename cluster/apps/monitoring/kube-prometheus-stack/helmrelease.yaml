@@ -223,10 +223,12 @@ spec:
 
         thanos:
           image: quay.io/thanos/thanos:v0.34.0
-          version: v0.22.0
+          # renovate: depName=quay.io/thanos/thanos datasource=docker
+          version: "0.34.0"
           objectStorageConfig:
             name: thanos-objstore-secret
             key: objstore.yml
+            #TODO  This secret exists but isn't part of the repo. Sops this up.
           # objectStorageConfig: |
           #   type: S3
           #   config:
@@ -249,3 +251,6 @@ spec:
             static_configs:
               - targets:
                   - "gw.${SECRET_DOMAIN}:9100"
+
+      thanosServiceMonitor:
+        enabled: true

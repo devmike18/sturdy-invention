@@ -22,18 +22,12 @@ spec:
       namespace: monitoring
 
   values:
-    image:
-      registry: docker.io
-      repository: bitnami/thanos
-      tag: 0.31.0-scratch-r1
-
     query:
       enabled: true
-      replicaCount: 2
       replicaLabels:
         - replica
       dnsDiscovery:
-        sidecarsService: prometheus-thanos-discovery
+        sidecarsService: kube-prometheus-stack-thanos-discovery
         sidecarsNamespace: monitoring
       ingress:
         enabled: true
