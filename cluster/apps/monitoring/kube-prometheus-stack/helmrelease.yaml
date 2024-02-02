@@ -243,4 +243,10 @@ spec:
             bearer_token: ${SECRET_HOMEASSISTANT_PROMETHEUS_TOKEN}
             static_configs:
               - targets:
-                  - "homeassistant.${SECRET_DOMAIN}"
+                  - "home-assistant.home.svc.cluster.local:8123"
+          - job_name: "gw-exporter"
+            scrape_interval: 60s
+            metrics_path: /metrics
+            static_configs:
+              - targets:
+                  - "gw.${SECRET_DOMAIN}:9100"
