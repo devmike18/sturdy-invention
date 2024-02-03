@@ -1,0 +1,9 @@
+---
+apiVersion: metallb.io/v1beta2
+kind: BGPPeer
+metadata:
+  name: main
+spec:
+  myASN: 65000
+  peerASN: 65001
+  peerAddress: ${METALLB_BGP_PEER}
