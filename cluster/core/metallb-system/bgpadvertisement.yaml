@@ -3,6 +3,7 @@ apiVersion: metallb.io/v1beta1
 kind: BGPAdvertisement
 metadata:
   name: main
+  namespace: metallb-system
 spec:
   ipAddressPools:
     - default
