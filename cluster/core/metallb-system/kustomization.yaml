@@ -5,5 +5,5 @@ resources:
   - helm-release.yaml
   - ipaddresspool.yaml
 #  - l2advertisement.yaml
-  - bgpadvertisement.yaml
-  - bgppeer.yaml
+#  - bgpadvertisement.yaml
+#  - bgppeer.yaml
