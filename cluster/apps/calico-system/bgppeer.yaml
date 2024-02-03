@@ -6,3 +6,4 @@ metadata:
 spec:
   peerIP: "${METALLB_BGP_PEER}"
   asNumber: 65000
+  keepOriginalNextHop: true
