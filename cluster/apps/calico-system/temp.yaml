@@ -1,0 +1,91 @@
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode1
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode1
+  updatePeriodSeconds: 10
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode2
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode2
+  updatePeriodSeconds: 10
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode3
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode3
+  updatePeriodSeconds: 10
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode4
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode4
+  updatePeriodSeconds: 10
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode5
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode5
+  updatePeriodSeconds: 10
+---
+apiVersion: crd.projectcalico.org/v1
+kind: CalicoNodeStatus
+metadata:
+  name: caliconodestatus-knode6
+spec:
+  classes:
+    - Agent
+    - BGP
+    - Routes
+  node: knode6
+  updatePeriodSeconds: 10
+# ---
+# apiVersion: projectcalico.org/v3
+# kind: BGPConfiguration
+# metadata:
+#   name: default
+# spec:
+#   serviceClusterIPs:
+#     - cidr: "10.43.0.0/16"
+#     - cidr: "10.42.0.0/16"
+#   serviceLoadBalancerIps:
+#     - cidr: "192.168.8.230/32"
+#     - cidr: "192.168.8.231/32"
+#     - cidr: "192.168.8.232/32"
+#     - cidr: "192.168.8.233/32"
+#     - cidr: "192.168.8.234/32"
+#     - cidr: "192.168.8.235/32"
+#     - cidr: "192.168.8.236/32"
+#     - cidr: "192.168.8.237/32"
+#   asNumber: 65001

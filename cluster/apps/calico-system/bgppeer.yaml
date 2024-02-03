@@ -1,8 +1,8 @@
 ---
-apiVersion: projectcalico.org/v3
+apiVersion: crd.projectcalico.org/v1   #TO ANYONE WHO THINKS TO STEAL THIS DON'T.  THis approach is basically whomping the operator, which should do this for us.  I'm lazy and don't feel ike kustomizing it right now.
 kind: BGPPeer
 metadata:
   name: bgppeer-gw
 spec:
   peerIP: "${METALLB_BGP_PEER}"
-  asNumber: 65001
+  asNumber: 65000

@@ -34,6 +34,9 @@ spec:
       prometheusRule:
         enabled: true
 
+    speaker:
+      enabled: false #We are using calico for this, which is configured outside the helm repo  TODO: Add it formally via kustomize
+
     crds:
       enabled:
         true
