@@ -1,0 +1,8 @@
+---
+apiVersion: projectcalico.org/v3
+kind: BGPPeer
+metadata:
+  name: bgppeer-gw
+spec:
+  peerIP: "${METALLB_BGP_PEER}"
+  asNumber: 65001
