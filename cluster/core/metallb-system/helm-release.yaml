@@ -34,8 +34,9 @@ spec:
       prometheusRule:
         enabled: true
 
-    speaker:
-      enabled: false #We are using calico for this, which is configured outside the helm repo  TODO: Add it formally via kustomize
+#    NVM:  update the arch to reflect....metallb BGPs cause i want the cluster addresses to be (relatively) private.  Real traffic from the LB only.
+#    speaker:
+#      enabled: false #We are using calico for this, which is configured outside the helm repo  TODO: Add it formally via kustomize
 
     crds:
       enabled:
