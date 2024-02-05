@@ -30,7 +30,7 @@
   "panels": [
     {
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -100,7 +100,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "qbittorrent_up",
           "format": "time_series",
@@ -116,7 +116,7 @@
     },
     {
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -180,7 +180,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "qbittorrent_connected - qbittorrent_firewalled",
           "format": "time_series",
@@ -196,7 +196,7 @@
     },
     {
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -257,7 +257,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "qbittorrent_dht_nodes",
           "instant": true,
@@ -273,7 +273,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -315,7 +315,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "editorMode": "code",
           "expr": "sum(increase(qbittorrent_dl_info_data_total[100y])) by (job)",
@@ -331,7 +331,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -373,7 +373,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "editorMode": "code",
           "expr": "sum(increase(qbittorrent_up_info_data_total[100y])) by (job)",
@@ -389,7 +389,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -431,7 +431,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "editorMode": "code",
           "expr": "sum(increase(qbittorrent_up_info_data_total[100y])) by (job) / sum(increase(qbittorrent_dl_info_data_total[100y])) by (job)",
@@ -446,7 +446,7 @@
     },
     {
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -493,7 +493,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "rate(qbittorrent_dl_info_data_total[1m])",
           "instant": false,
@@ -507,7 +507,7 @@
     },
     {
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fieldConfig": {
         "defaults": {
@@ -554,7 +554,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "rate(qbittorrent_up_info_data_total[1m])",
           "hide": false,
@@ -573,7 +573,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -612,7 +612,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "rate(qbittorrent_dl_info_data_total[1m])",
           "interval": "",
@@ -621,7 +621,7 @@
         },
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "rate(qbittorrent_up_info_data_total[1m])",
           "interval": "",
@@ -667,7 +667,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fill": 1,
       "fillGradient": 0,
@@ -709,7 +709,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "sum(qbittorrent_torrents_count{category=~\"${categories}\", status!=\"complete\"}) by (status)",
           "interval": "",
@@ -757,7 +757,7 @@
         "threshold": 0
       },
       "datasource": {
-        "uid": "${DS_PROMETHEUS}"
+        "uid": "${data_source}"
       },
       "fontSize": "80%",
       "format": "short",
@@ -782,7 +782,7 @@
       "targets": [
         {
           "datasource": {
-            "uid": "${DS_PROMETHEUS}"
+            "uid": "${data_source}"
           },
           "expr": "sum(qbittorrent_torrents_count{category=~\"${categories}\",status!=\"complete\"}) by (category)",
           "interval": "",
@@ -810,7 +810,7 @@
           "value": "$__all"
         },
         "datasource": {
-          "uid": "${DS_PROMETHEUS}"
+          "uid": "${data_source}"
         },
         "definition": "label_values(qbittorrent_torrents_count, category)",
         "hide": 0,
@@ -821,7 +821,7 @@
         "options": [],
         "query": {
           "query": "label_values(qbittorrent_torrents_count, category)",
-          "refId": "DS_PROMETHEUS-categories-Variable-Query"
+          "refId": "data_source-categories-Variable-Query"
         },
         "refresh": 1,
         "regex": "",
@@ -841,7 +841,7 @@
         "hide": 0,
         "includeAll": false,
         "multi": false,
-        "name": "DS_PROMETHEUS",
+        "name": "data_source",
         "options": [],
         "query": "prometheus",
         "queryValue": "",
