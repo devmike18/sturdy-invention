@@ -9,5 +9,8 @@ configMapGenerator:
       - qbittorrent-dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
-  # labels:
-  #   grafana_dashboard: "1"
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: media
+  labels:
+    grafana_dashboard: "true"
