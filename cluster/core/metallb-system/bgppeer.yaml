@@ -5,6 +5,6 @@ metadata:
   name: main
   namespace: metallb-system
 spec:
-  myASN: 65000
-  peerASN: 65001
+  myASN: 65001
+  peerASN: 65000
   peerAddress: ${METALLB_BGP_PEER}
