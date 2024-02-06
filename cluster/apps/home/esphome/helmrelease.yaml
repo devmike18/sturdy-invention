@@ -76,6 +76,10 @@ spec:
         existingClaim: esphome-config-v1
         globalMounts:
           - path: /config
+      esphome-cache: #Build location for ESP firmwares
+        type: emptyDir
+        globalMounts:
+          - path: /config/.esphome
 
     service:
       main:
