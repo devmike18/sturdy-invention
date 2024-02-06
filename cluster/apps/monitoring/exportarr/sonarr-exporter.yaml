@@ -75,7 +75,10 @@ spec:
             - name: URL
               value: "http://sonarr.media.svc.cluster.local:7878"
             - name: APIKEY
-              value: $(SECRET_SONARR_APIKEY)
+              valueFrom:
+                secretKeyRef:
+                  name: arr-secrets
+                  key: RADARR__API_KEY
           ports:
             - name: monitoring
               containerPort: 9707

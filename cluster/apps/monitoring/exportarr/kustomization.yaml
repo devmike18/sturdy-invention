@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - sonarr-exporter.yaml
   - radarr-exporter.yaml
+  - arr-secrets.sops.yaml
