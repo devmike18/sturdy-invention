@@ -4,5 +4,3 @@ kind: Kustomization
 resources:
   - felix-metrics
   - typha-metrics
-#  - bgppeer.yaml
-#  - bgpconfiguration.yaml
