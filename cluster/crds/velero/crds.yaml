@@ -14,7 +14,7 @@ spec:
     # exclude all
     /*
     # path to crds
-    !/charts/velero/
+    !/charts/velero/crds/
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
