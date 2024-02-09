@@ -15,6 +15,7 @@ apiVersion: notification.toolkit.fluxcd.io/v1beta1
 kind: Alert
 metadata:
   name: flux-notification-discord
+  namespace: flux-system
 spec:
   summary: "sturdy-invention"
   providerRef:
