@@ -148,10 +148,14 @@ spec:
             enabled: true
             port: 8080
       whisper:
+        type: ClusterIP
+        controller: main
         ports:
           whisper:
             port: 10300
       piper:
+        type: ClusterIP
+        controller: main
         ports:
           piper:
             port: 10200
