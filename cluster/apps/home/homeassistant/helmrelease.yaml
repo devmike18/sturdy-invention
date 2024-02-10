@@ -126,6 +126,9 @@ spec:
             args:
               - --voice
               - "en-us-libritts-high"
+            volumesMounts:
+              - name: piper-data
+                mountPath: /data
             resources:
               requests:
                 cpu: 10m
@@ -165,6 +168,9 @@ spec:
         enabled: true
         existingClaim: home-assistant-config-v1
       whisper-data:
+        enabled: true
+        type: emptyDir
+      piper-data:
         enabled: true
         type: emptyDir
 
