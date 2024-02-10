@@ -87,9 +87,6 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
-            volumeMounts:
-              - name: config
-                mountPath: /config
 
           whisper: # Speech to Text
             image:
@@ -105,9 +102,6 @@ spec:
               - "en"
               - --beam-size
               - "1"
-            volumeMounts:
-              - name: whisper-data
-                mountPath: /data
             resources:
               requests:
                 cpu: 10m
@@ -126,9 +120,6 @@ spec:
             args:
               - --voice
               - "en-us-libritts-high"
-            volumeMounts:
-              - name: piper-data
-                mountPath: /data
             resources:
               requests:
                 cpu: 10m
@@ -170,9 +161,19 @@ spec:
       whisper-data:
         enabled: true
         type: emptyDir
+        advancedMounts:
+          main:
+            piper:
+              - path: /data
+                readOnly: false
       piper-data:
         enabled: true
         type: emptyDir
+        advancedMounts:
+          main:
+            whisper:
+              - path: /data
+                readOnly: false
 
     ingress:
       main:

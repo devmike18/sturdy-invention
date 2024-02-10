@@ -66,9 +66,6 @@ spec:
               - "/config/.vscode"
               - --extensions-dir
               - "/config/.vscode"
-            volumeMounts:
-              - name: config
-                mountPath: /config
 
     persistence:
       config:
