@@ -11,7 +11,14 @@ tasks:
     desc: Adds all current changes into a commit, commits to production repo (careful!!!!), and syncs changes to github and thus production kubernetes.
     cmds:
       - git add -A
-      - git commit -m "task:quickcommit" && git push && flux reconcile source git -n flux-system flux-system && flux reconcile kustomization core && sleep 2 && flux reconcile kustomization apps && flux get all -A
+      - git commit -m "task:quickcommit"
+      - git push
+      - flux reconcile source git -n flux-system flux-system
+      - sleep 2
+      - flux reconcile kustomization core
+      - sleep 3
+      - flux reconcile kustomization apps
+      - flux get hr -A
   deepsync:
     desc: Sync flux-system hard and heavy
     cmds:

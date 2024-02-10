@@ -100,11 +100,11 @@ spec:
               TZ: ${TZ}
             args:
               - --model
-              - small
+              - "small"
               - --language
-              - en
+              - "en"
               - --beam-size
-              - '1'
+              - "1"
             volumesMounts:
               - name: whisper-data
                 mountPath: /data
@@ -125,7 +125,7 @@ spec:
               TZ: ${TZ}
             args:
               - --voice
-              - en-us-libritts-high
+              - "en-us-libritts-high"
             resources:
               requests:
                 cpu: 10m
