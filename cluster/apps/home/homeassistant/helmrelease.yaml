@@ -104,7 +104,7 @@ spec:
               - --language
               - en
               - --beam-size
-              - 1
+              - '1'
             volumesMounts:
               - name: whisper-data
                 mountPath: /data
