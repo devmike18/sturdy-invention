@@ -105,7 +105,7 @@ spec:
               - "en"
               - --beam-size
               - "1"
-            volumesMounts:
+            volumeMounts:
               - name: whisper-data
                 mountPath: /data
             resources:
@@ -126,7 +126,7 @@ spec:
             args:
               - --voice
               - "en-us-libritts-high"
-            volumesMounts:
+            volumeMounts:
               - name: piper-data
                 mountPath: /data
             resources:
