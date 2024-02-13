@@ -161,7 +161,7 @@ spec:
               memory: 1Gi
             limits:
               cpu: 2000m
-              memory: 20Gi
+              memory: 30Gi
       volumes:
         - name: shared-embeddings
           persistentVolumeClaim:
