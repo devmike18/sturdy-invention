@@ -30,3 +30,4 @@ spec:
     customRequestHeaders:
       Connection: keep-alive, Upgrade
       Upgrade: WebSocket
+      X-Forwarded-Proto: https
