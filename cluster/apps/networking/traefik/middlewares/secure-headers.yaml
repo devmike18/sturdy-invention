@@ -29,4 +29,5 @@ spec:
       X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
     customRequestHeaders:
       Connection: keep-alive, Upgrade
+      Upgrade: WebSocket
       X-Forwarded-Proto: https
