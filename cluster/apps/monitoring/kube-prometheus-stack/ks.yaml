@@ -46,8 +46,8 @@ spec:
     kind: GitRepository
     name: flux-system
   wait: true
-  # dependsOn:
-  #   - name: kube-prometheus-stack
+  dependsOn:
+    - name: kube-prometheus-stack
   postBuild:
     substituteFrom:
       - kind: ConfigMap
