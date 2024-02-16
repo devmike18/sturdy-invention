@@ -30,7 +30,7 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   interval: 10m
-  path: "./kubernetes/main/apps/monitoring/kube-prometheus-stack/addons"
+  path: "./cluster/apps/monitoring/kube-prometheus-stack/addons"
   prune: true
   sourceRef:
     kind: GitRepository
