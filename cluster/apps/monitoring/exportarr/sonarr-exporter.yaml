@@ -78,7 +78,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: arr-secrets
-                  key: RADARR__API_KEY
+                  key: SONARR__API_KEY
           ports:
             - name: monitoring
               containerPort: 9707
