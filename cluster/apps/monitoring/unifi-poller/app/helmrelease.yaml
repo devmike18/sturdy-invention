@@ -35,7 +35,6 @@ spec:
               TZ: "${TZ}"
               UP_UNIFI_DEFAULT_URL: "https://unifi.networking.svc.cluster.local:8443/"
               UP_UNIFI_DEFAULT_VERIFY_SSL: false
-              UP_UNIFI_DEFAULT_USER: "unifipoller"
               UP_UNIFI_DEFAULT_SAVE_SITES: true
               UP_UNIFI_DEFAULT_SAVE_DPI: false
               UP_UNIFI_DEFAULT_SAVE_EVENTS: false
