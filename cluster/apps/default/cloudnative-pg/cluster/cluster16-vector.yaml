@@ -6,7 +6,7 @@ metadata:
   namespace: default
 spec:
   instances: 2
-  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16.2-v0.2.0
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.0
   #imageName: ghcr.io/bo0tzz/cnpgvecto.rs:16.1-v0.1.11 # https://github.com/immich-app/immich/issues/5813
   primaryUpdateStrategy: unsupervised
   storage:
