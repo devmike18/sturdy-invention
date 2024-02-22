@@ -9,4 +9,4 @@ spec:
     customRequestHeaders:
       Upgrade: WebSocket
       Connection: Upgrade
-      X-Forwarded-Proto: https
+      X-Forwarded-Proto: https,wss
