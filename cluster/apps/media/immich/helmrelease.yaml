@@ -125,6 +125,9 @@ spec:
 
     service:
       main:
+        annotations:
+          traefik.ingress.kubernetes.io/service.sticky.cookie.httponly: "true"
+          traefik.ingress.kubernetes.io/service.sticky.cookie.name: "server_id"
         ports:
           http:
             port: 3001
