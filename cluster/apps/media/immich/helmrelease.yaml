@@ -63,8 +63,7 @@ spec:
               requests:
                 cpu: 100m
                 memory: 512M
-              limits:
-                memory: 1Gi
+
       redis:
         type: deployment
         containers:
