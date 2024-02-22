@@ -120,8 +120,6 @@ spec:
             resources:
               requests:
                 memory: 512M
-              limits:
-                memory: 2048M
 
     service:
       main:
