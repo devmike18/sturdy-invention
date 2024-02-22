@@ -29,4 +29,3 @@ spec:
       X-Robots-Tag: "none,noarchive,nosnippet,notranslate,noimageindex,"
     customRequestHeaders:
       Connection: keep-alive
-      X-Forwarded-Proto: https

@@ -1,0 +1,13 @@
+---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: chain-immich
+  namespace: networking
+spec:
+  chain:
+    middlewares:
+      - name: networking-rate-limit@kubernetescrd
+      - name: networking-secure-headers@kubernetescrd
+      - name: networking-websocket-headers@kubernetescrd
+      - name: networking-error-pages@kubernetescrd
