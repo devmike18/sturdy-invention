@@ -10,4 +10,5 @@ resources:
   - rate-limit.yaml
   - chain-no-auth.yaml
   - chain-sso.yaml
+  - chain-immich.yaml
   - error-pages.yaml
