@@ -7,6 +7,4 @@ metadata:
 spec:
   headers:
     customRequestHeaders:
-      Upgrade: WebSocket
-      Connection: Upgrade
-      X-Forwarded-Proto: https,wss
+      X-Forwarded-Proto: https,wss,ws,http
