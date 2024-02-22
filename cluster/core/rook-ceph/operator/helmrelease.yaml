@@ -23,6 +23,7 @@ spec:
   values:
     crds:
       enabled: true
+    enableDiscoveryDaemon: true
     csi:
       enableCephfsDriver: false
       enableCephfsSnapshotter: false
