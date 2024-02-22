@@ -146,7 +146,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "movie-play"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-no-auth@kubernetescrd"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-chain-immich@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
         hosts:
           - host: &host "immich.${SECRET_DOMAIN}"
