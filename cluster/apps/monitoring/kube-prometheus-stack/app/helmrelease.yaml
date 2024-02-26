@@ -119,8 +119,6 @@ spec:
       enabled: true
 
     kube-state-metrics:
-      extraArgs:
-        - --custom-resource-state-only=true
       prometheus:
         monitor:
           enabled: true
