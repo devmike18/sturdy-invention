@@ -52,6 +52,9 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        dashboard:
+          prometheusEndpoint: http://thanos-query:9090
+          prometheusEndpointSSLVerify: false
       storage:
         useAllNodes: false
         useAllDevices: false

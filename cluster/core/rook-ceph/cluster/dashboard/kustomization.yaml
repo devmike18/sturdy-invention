@@ -1,0 +1,40 @@
+---
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: rook-ceph
+configMapGenerator:
+  - name: ceph-cluster-advanced-dashboard
+    files:
+      - ceph-cluster-advanced.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/ceph-cluster-advanced.json
+  - name: ceph-cluster-dashboard
+    files:
+      - ceph-cluster-advanced.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/ceph-cluster.json
+  - name: ceph-cephfs-overview-dashboard
+    files:
+      - ceph-cephfs-overview.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/cephfs-overview.json
+  - name: ceph-host-details-dashboard
+    files:
+      - ceph-host-details.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/host-details.json
+  - name: ceph-hosts-overview-dashboard
+    files:
+      - ceph-hosts-overview.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/hosts-overview.json
+  - name: ceph-osd-device-details-dashboard
+    files:
+      - ceph-osd-device-details.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/osd-device-details.json
+  - name: ceph-osds-overview-dashboard
+    files:
+      - ceph-osds-overview.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/osds-overview.json
+  - name: ceph-pool-detail-dashboard
+    files:
+      - ceph-pool-detail.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/pool-detail.json
+  - name: ceph-pool-overview-dashboard
+    files:
+      - ceph-pool-overview.json=https://github.com/ceph/ceph/blob/main/monitoring/ceph-mixin/dashboards_out/pool-overview.json
+
+generatorOptions:
+  disableNameSuffixHash: true
+  annotations:
+    kustomize.toolkit.fluxcd.io/substitute: disabled
+    grafana_folder: storage
+  labels:
+    grafana_dashboard: "true"
