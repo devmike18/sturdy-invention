@@ -124,91 +124,91 @@ spec:
       - farski-blendstat-panel
       - clarity89-finnhub-datasource
 
-    dashboardProviders:
-      dashboardproviders.yaml:
-        apiVersion: 1
-        providers:
-          - name: "default"
-            orgId: 1
-            folder: ""
-            type: file
-            disableDeletion: false
-            editable: true
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/default
-          - name: "flux"
-            orgId: 1
-            folder: "flux"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/flux
-          - name: "loki"
-            orgId: 1
-            folder: "loki"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/loki
-          - name: "media"
-            orgId: 1
-            folder: "media"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/media
-          - name: "networking"
-            orgId: 1
-            folder: "networking"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/networking
-          - name: "power"
-            orgId: 1
-            folder: "power"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/power
-          - name: "storage"
-            orgId: 1
-            folder: "storage"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/storage
-          - name: "thanos"
-            orgId: 1
-            folder: "thanos"
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/thanos
-          - name: users
-            orgId: 1
-            folder: users
-            type: file
-            updateIntervalSeconds: 10
-            disableDeletion: false
-            allowUiUpdates: true
-            options:
-              path: /var/lib/grafana/dashboards/users
+    # dashboardProviders:
+    #   dashboardproviders.yaml:
+    #     apiVersion: 1
+    #     providers:
+    #       - name: "default"
+    #         orgId: 1
+    #         folder: ""
+    #         type: file
+    #         disableDeletion: false
+    #         editable: true
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/default
+    #       - name: "flux"
+    #         orgId: 1
+    #         folder: "flux"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/flux
+    #       - name: "loki"
+    #         orgId: 1
+    #         folder: "loki"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/loki
+    #       - name: "media"
+    #         orgId: 1
+    #         folder: "media"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/media
+    #       - name: "networking"
+    #         orgId: 1
+    #         folder: "networking"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/networking
+    #       - name: "power"
+    #         orgId: 1
+    #         folder: "power"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/power
+    #       - name: "storage"
+    #         orgId: 1
+    #         folder: "storage"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/storage
+    #       - name: "thanos"
+    #         orgId: 1
+    #         folder: "thanos"
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/thanos
+    #       - name: users
+    #         orgId: 1
+    #         folder: users
+    #         type: file
+    #         updateIntervalSeconds: 10
+    #         disableDeletion: false
+    #         allowUiUpdates: true
+    #         options:
+    #           path: /var/lib/grafana/dashboards/users
 
     datasources:
       datasources.yaml:
@@ -228,54 +228,54 @@ spec:
             access: proxy
             url: http://prometheus-prometheus.monitoring.svc.cluster.local:9090
 
-    dashboards:
-      default:
-        calico-felix:
-          gnetId: 12175
-          revision: 5
-          datasource: Prometheus
-        k8s-deployments:
-          gnetId: 8588
-          revision: 1
-          datassource: Prometheus
-      storage:
-        ceph-cluster:
-          gnetId: 2842
-          revision: 14
-          datasource: Prometheus
-        ceph-osd:
-          gnetId: 5336
-          revision: 5
-          datasource: Prometheus
-        ceph-pools:
-          gnetId: 5342
-          revision: 5
-          datasource: Prometheus
-        velero-better:
-          gnetId: 15469
-          revision: 1
-          datasource: Prometheus
-      networking:
-        snmp-stats:
-          gnetId: 11169
-          revision: 1
-          datasource: Prometheus
-        speedtest:
-          gnetId: 13665
-          revision: 1
-          datasource: Prometheus
-        unifi-sites:
-          gnetId: 11311
-          revision: 4
-          datasource: Prometheus
-        unifi-uap:
-          gnetId: 11314
-          revision: 9
-          datasource: Prometheus
-        unifi-clients:
-          gnetId: 11315
-          revision: 8
-          datasource: Prometheus
+    # dashboards:
+    #   default:
+    #     calico-felix:
+    #       gnetId: 12175
+    #       revision: 5
+    #       datasource: Prometheus
+    #     k8s-deployments:
+    #       gnetId: 8588
+    #       revision: 1
+    #       datassource: Prometheus
+    #   storage:
+    #     ceph-cluster:
+    #       gnetId: 2842
+    #       revision: 14
+    #       datasource: Prometheus
+    #     ceph-osd:
+    #       gnetId: 5336
+    #       revision: 5
+    #       datasource: Prometheus
+    #     ceph-pools:
+    #       gnetId: 5342
+    #       revision: 5
+    #       datasource: Prometheus
+    #     velero-better:
+    #       gnetId: 15469
+    #       revision: 1
+    #       datasource: Prometheus
+    #   networking:
+    #     snmp-stats:
+    #       gnetId: 11169
+    #       revision: 1
+    #       datasource: Prometheus
+    #     speedtest:
+    #       gnetId: 13665
+    #       revision: 1
+    #       datasource: Prometheus
+    #     unifi-sites:
+    #       gnetId: 11311
+    #       revision: 4
+    #       datasource: Prometheus
+    #     unifi-uap:
+    #       gnetId: 11314
+    #       revision: 9
+    #       datasource: Prometheus
+    #     unifi-clients:
+    #       gnetId: 11315
+    #       revision: 8
+    #       datasource: Prometheus
 
     podAnnotations:
       configmap.reloader.stakater.com/reload: "grafana"
@@ -285,16 +285,16 @@ spec:
       dashboards:
         enabled: true
         searchNamespace: ALL
+        label: grafana_dashboard
         folderAnnotation: grafana_folder
+        defaultFolderName: default
         multicluster: true
         provider:
           foldersFromFilesStructure: true
           allowUiUpdates: true
           disableDelete: false
       datasources:
-        enabled: true
-        searchNamespace: ALL
-        label: grafana_datasource
+        enabled: false
 
     resources:
       requests:
