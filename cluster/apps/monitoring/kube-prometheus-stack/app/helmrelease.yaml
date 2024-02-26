@@ -410,6 +410,10 @@ spec:
       enabled: false
       forceDeployDashboards: true
       defaultDashboardsTimezone: browser
+      sidecar:
+        dashboards:
+          annotations:
+            grafana_folder: core
 
     kubelet:
       enabled: true

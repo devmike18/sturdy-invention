@@ -137,6 +137,15 @@ spec:
             allowUiUpdates: true
             options:
               path: /var/lib/grafana/dashboards/default
+          - name: "core"
+            orgId: 1
+            folder: "core"
+            type: file
+            updateIntervalSeconds: 10
+            disableDeletion: false
+            allowUiUpdates: true
+            options:
+              path: /var/lib/grafana/dashboards/core
           - name: "flux"
             orgId: 1
             folder: "flux"
