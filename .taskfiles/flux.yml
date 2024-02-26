@@ -12,9 +12,9 @@ tasks:
     cmds:
       - git add -A
       - git commit -m "task:quickcommit"
-      - git push
+      - git push && sleep 1
       - flux reconcile source git -n flux-system flux-system
-      - sleep 2
+      - sleep 3
       - flux reconcile kustomization core
       - sleep 3
       - flux reconcile kustomization apps
