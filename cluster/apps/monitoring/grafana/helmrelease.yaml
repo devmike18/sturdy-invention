@@ -255,13 +255,6 @@ spec:
           gnetId: 15469
           revision: 1
           datasource: Prometheus
-      flux:
-        # flux-cluster:
-        #   url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/cluster.json
-        #   datasource: Prometheus
-        # flux-control-plane:
-        #   url: https://raw.githubusercontent.com/fluxcd/flux2/main/manifests/monitoring/grafana/dashboards/control-plane.json
-        #   datasource: Prometheus
       networking:
         snmp-stats:
           gnetId: 11169
