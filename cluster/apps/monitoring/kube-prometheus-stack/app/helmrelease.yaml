@@ -119,8 +119,8 @@ spec:
       enabled: true
 
     kube-state-metrics:
-      metricLabelsAllowlist:
-        - "persistentvolumeclaims=[*]"
+      extraArgs:
+        - --custom-resource-state-only=true
       prometheus:
         monitor:
           enabled: true
