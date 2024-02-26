@@ -27,7 +27,7 @@ jobs:
         uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11 # v4
 
       - name: Install kustomize
-        uses: imranismail/setup-kustomize@a76db1c6419124d51470b1e388c4b29476f495f1 # v2
+        uses: imranismail/setup-kustomize@2ba527d4d055ab63514ba50a99456fc35684947f # v2
 
       - name: Build full config from kustomizations
         run: kustomize build ./cluster -o fullcluster.yaml
