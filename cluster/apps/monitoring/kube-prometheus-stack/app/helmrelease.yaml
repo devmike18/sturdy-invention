@@ -493,7 +493,9 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
-        scrapeConfigSelectorNilUsesHelmValues: false
+        scrapeConfigSelector:
+          matchLabels:
+            scrape: prometheus
         probeSelectorNilUsesHelmValues: false
         enableFeatures:
           - memory-snapshot-on-shutdown

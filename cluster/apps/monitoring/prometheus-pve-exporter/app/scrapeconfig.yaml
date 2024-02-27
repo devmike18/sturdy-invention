@@ -4,6 +4,8 @@ kind: ScrapeConfig
 metadata:
   name: prometheus-pve-exporter
   namespace: monitoring
+  labels:
+    scrape: prometheus
 spec:
   staticConfigs:
     - targets:
