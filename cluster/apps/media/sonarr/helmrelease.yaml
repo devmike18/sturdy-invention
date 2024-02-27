@@ -41,7 +41,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/sonarr
               pullPolicy: IfNotPresent
-              tag: 4.0.1.929
+              tag: 4.0.2.1183
             probes:
               liveness:
                 enabled: false
