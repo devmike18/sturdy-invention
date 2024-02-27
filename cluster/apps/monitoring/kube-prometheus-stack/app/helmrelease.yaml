@@ -493,6 +493,7 @@ spec:
         ruleSelectorNilUsesHelmValues: false
         serviceMonitorSelectorNilUsesHelmValues: false
         podMonitorSelectorNilUsesHelmValues: false
+        scrapeConfigSelectorNilUsesHelmValues: false
         probeSelectorNilUsesHelmValues: false
         enableFeatures:
           - memory-snapshot-on-shutdown
