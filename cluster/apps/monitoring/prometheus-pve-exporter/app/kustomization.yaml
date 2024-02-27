@@ -4,3 +4,4 @@ kind: Kustomization
 resources:
   - helmrelease.yaml
   - secret-pve-exporter.sops.yaml
+  - scrapeconfig.yaml

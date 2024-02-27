@@ -1,0 +1,23 @@
+---
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: ScrapeConfig
+metadata:
+  name: prometheus-pve-exporter
+  namespace: monitoring
+spec:
+  staticConfigs:
+    - targets:
+        - ${SECRET_PVE_NODE1}  # Proxmox VE node.
+        - ${SECRET_PVE_NODE2}  # Proxmox VE node.
+  metricsPath: /pve
+  params:
+    module: ["default"]
+    cluster: ["1"]
+    node: ["1"]
+  relabelings:
+    - sourceLabels: [__address__]
+      targetLabel: __param_target
+    - sourceLabels: [__param_target]
+      targetLabel: instance
+    - targetLabel: __address__
+      replacement: prometheus-pve-exporter.monitoring:9221  # PVE exporter.
