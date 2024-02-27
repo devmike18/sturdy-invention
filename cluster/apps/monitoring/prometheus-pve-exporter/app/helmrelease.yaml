@@ -47,24 +47,24 @@ spec:
           http:
             port: 9221
 
-    # serviceMonitor:
-    #   enabled: true
-    #   namespace: monitoring
-    #   params:
-    #     - name: pve
-    #       module:
-    #         - default
-    #       cluster: 1
-    #       node: 1
-    #       targets:
-    #         - {{ PVE1_NODE_IP}}  # Proxmox VE node.
-    #         - {{ PVE2_NODE_IP}}  # Proxmox VE node.
-    #   path: /pve
-    #   scrapeTimeout: 10s
-    #   relabelings:
-    #     - source_labels: [__address__]
-    #       target_label: __param_target
-    #     - source_labels: [__param_target]
-    #       target_label: instance
-    #     - target_label: __address__
-    #       replacement: 127.0.0.1:9221  # PVE exporter.
+    serviceMonitor:
+      enabled: true
+      namespace: monitoring
+      params:
+        - name: pve
+          module:
+            - default
+          cluster: 1
+          node: 1
+          targets:
+            - "{{SECRET_PVE_NODE1}}" # Proxmox VE node.
+            - "{{SECRET_PVE_NODE2}}"  # Proxmox VE node.
+      path: /pve
+      scrapeTimeout: 10s
+      relabelings:
+        - source_labels: [__address__]
+          target_label: __param_target
+        - source_labels: [__param_target]
+          target_label: instance
+        - target_label: __address__
+          replacement: 127.0.0.1:9221  # PVE exporter.
