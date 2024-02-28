@@ -28,6 +28,11 @@ spec:
   values:
     crds:
       create: true
+    image:
+      repository: ghcr.io/cloudnative-pg/cloudnative-pg
+      pullPolicy: IfNotPresent
+      tag: v1.22.1
+
     config:
       data:
         INHERITED_ANNOTATIONS: kyverno.io/ignore
