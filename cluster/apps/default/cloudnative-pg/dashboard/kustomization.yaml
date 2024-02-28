@@ -5,8 +5,7 @@ namespace: default
 configMapGenerator:
   - name: cloudnative-pg-dashboard
     files:
-      - cloudnative-pg.json=https://raw.githubusercontent.com/cloudnative-pg/cloudnative-pg/main/docs/src/samples/monitoring/grafana-configmap.yaml
-
+      - cloudnative-pg-dashboard.json
 generatorOptions:
   disableNameSuffixHash: true
   annotations:
