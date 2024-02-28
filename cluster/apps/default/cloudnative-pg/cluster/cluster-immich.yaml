@@ -32,6 +32,8 @@ spec:
       postInitApplicationSQL:
         - CREATE EXTENSION IF NOT EXISTS "vectors";
       owner: immich
+      secret:
+        name: secret-cloudnative-pg-user
       dataChecksums: true
       encoding: 'UTF8'
   postgresql:
