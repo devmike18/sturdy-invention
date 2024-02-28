@@ -3,13 +3,3 @@ kind: Kustomization
 namespace: default
 resources:
   - helmrelease.yaml
-configMapGenerator:
-  - name: cloudnative-pg-dashboard
-    files:
-      - cloudnative-pg-dashboard.json=https://github.com/cloudnative-pg/charts/blob/main/charts/cloudnative-pg/monitoring/grafana-dashboard.json
-generatorOptions:
-  disableNameSuffixHash: true
-  annotations:
-    kustomize.toolkit.fluxcd.io/substitute: disabled
-  labels:
-    grafana_dashboard: "true"
