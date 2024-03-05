@@ -60,35 +60,35 @@ spec:
             port: 17443
 
     persistence:
-      config:
+      data:
         enabled: true
         existingClaim: youtubedl-material-config-v1
         globalMounts:
-          - path: /appdata
+          - path: /app/appdata
       audio:
         enabled: true
         existingClaim: nfs-youtubedl-audio-pvc
         readOnly: false
         globalMounts:
-          - path: /audio
+          - path: /app/audio
       subscriptions:
         enabled: true
         existingClaim: nfs-youtubedl-subscriptions-pvc
         readOnly: false
         globalMounts:
-          - path: /subscriptions
+          - path: /app/subscriptions
       users:
         enabled: true
         existingClaim: nfs-youtubedl-users-pvc
         readOnly: false
         globalMounts:
-          - path: /users
+          - path: /app/users
       video:
         enabled: true
         existingClaim: nfs-youtubedl-video-pvc
         readOnly: false
         globalMounts:
-          - path: /video
+          - path: /app/video
 
     ingress:
       main:
