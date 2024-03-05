@@ -41,6 +41,8 @@ spec:
                 memory: "512M"
             env:
               TZ: "${TZ}"
+              UID: 568
+              GID: 568
 
         pod:
           securityContext:
