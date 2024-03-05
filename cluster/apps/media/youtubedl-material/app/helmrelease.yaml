@@ -32,7 +32,7 @@ spec:
               - 65539
         annotations:
           backup.velero.io/backup-volumes: data
-          configmap.reloader.stakater.com/reload: youtubedl-material-scripts,youtubedl-material-dnsdist
+          configmap.reloader.stakater.com/reload: youtubedl-material-dnsdist
           secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
           main:
@@ -77,6 +77,14 @@ spec:
               capabilities:
                 add:
                   - NET_ADMIN
+          dnsdist:
+            image:
+              repository: docker.io/powerdns/dnsdist-18
+              tag: 1.8.3
+            # Configure the container-specific securityContext
+            securityContext:
+              runAsUser: 0
+              runAsGroup: 0
 
     service:
       main:
@@ -120,6 +128,15 @@ spec:
           main:
             gluetun:
               - path: /tmp/gluetun
+      dnsdist-config:
+        type: configMap
+        name: qbittorrent-dnsdist
+        advancedMounts:
+          main:
+            dnsdist:
+              - path: /etc/dnsdist/dnsdist.conf
+                subPath: dnsdist.conf
+                readOnly: true
 
     ingress:
       main:
