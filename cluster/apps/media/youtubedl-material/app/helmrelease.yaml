@@ -41,13 +41,13 @@ spec:
                 memory: "512M"
             env:
               TZ: "${TZ}"
-    #This container needs some love to do non-1000 UID/GID FYI TODO
+    # This container needs some love to do non-1000 UID/GID FYI TODO
 
     service:
       main:
         ports:
           http:
-            port: 17443
+            port: 17442
 
     persistence:
       data:
