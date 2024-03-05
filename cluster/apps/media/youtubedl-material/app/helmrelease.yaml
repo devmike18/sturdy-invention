@@ -1,0 +1,113 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: youtubedl-material
+  namespace: media
+spec:
+  interval: 5m
+  chart:
+    spec:
+      # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
+      chart: app-template
+      version: 2.6.0
+      sourceRef:
+        kind: HelmRepository
+        name: bjw-s-charts
+        namespace: flux-system
+      interval: 5m
+
+  dependsOn:
+    - name: rook-ceph-cluster
+      namespace: rook-ceph
+
+  values:
+    controllers:
+      main:
+        annotations:
+          backup.velero.io/backup-volumes: config
+        containers:
+          main:
+            image:
+              # renovate: depName=docker.com/tzahi12345/youtubedl-material datasource=docker
+              repository: tzahi12345/youtubedl-material
+              # tag: "4.2"
+              tag: nightly # I ALSO like to live dangerously
+              pullPolicy: IfNotPresent
+            resources:
+              requests:
+                memory: "128M"
+              limits:
+                memory: "512M"
+            env:
+              TZ: "${TZ}"
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            fsGroup: 568
+            supplementalGroups:
+              - 44
+              - 109
+              - 100
+    service:
+      main:
+        ports:
+          http:
+            port: 17443
+
+    persistence:
+      config:
+        enabled: true
+        existingClaim: youtubedl-material-config-v1
+        globalMounts:
+          - path: /appdata
+      audio:
+        enabled: true
+        existingClaim: nfs-youtubedl-audio-pvc
+        readOnly: false
+        globalMounts:
+          - path: /audio
+      subscriptions:
+        enabled: true
+        existingClaim: nfs-youtubedl-subscriptions-pvc
+        readOnly: false
+        globalMounts:
+          - path: /subscriptions
+      users:
+        enabled: true
+        existingClaim: nfs-youtubedl-users-pvc
+        readOnly: false
+        globalMounts:
+          - path: /users
+      video:
+        enabled: true
+        existingClaim: nfs-youtubedl-video-pvc
+        readOnly: false
+        globalMounts:
+          - path: /video
+
+    ingress:
+      main:
+        enabled: true
+        className: "traefik"
+        annotations:
+          hajimari.io/enable: "true"
+          hajimari.io/icon: "interrobang"
+          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+          cert-manager.io/cluster-issuer: "letsencrypt-production"
+
+        hosts:
+          - host: &host "youtube-dl.${SECRET_DOMAIN}"
+            paths:
+              - path: /
+                pathType: Prefix
+                service:
+                  name: main
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "youtube-dl-tls"
