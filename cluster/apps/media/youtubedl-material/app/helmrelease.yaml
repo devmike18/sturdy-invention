@@ -24,8 +24,16 @@ spec:
   values:
     controllers:
       main:
+        pod:
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 65539
         annotations:
-          backup.velero.io/backup-volumes: config
+          backup.velero.io/backup-volumes: data
+          configmap.reloader.stakater.com/reload: youtubedl-material-scripts,youtubedl-material-dnsdist
+          secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
           main:
             image:
@@ -41,7 +49,34 @@ spec:
                 memory: "512M"
             env:
               TZ: "${TZ}"
-    # This container needs some love to do non-1000 UID/GID FYI TODO
+
+          # Configure the gluetun sidecar
+          gluetun:
+            dependsOn: main
+            image:
+              repository: ghcr.io/qdm12/gluetun
+              tag: v3.37.0
+            # -- environment variables.
+            # See [image docs](https://github.com/qdm12/gluetun-wiki) for more details on how to configure your VPN and how to set up port-forwarding.
+            env:
+              VPN_TYPE: wireguard
+              VPN_INTERFACE: wg0
+              FIREWALL_OUTBOUND_SUBNETS: "${NETWORK_K8S_SERVICE_CIDR},${NETWORK_K8S_CLUSTER_CIDR}"
+              SHADOWSOCKS: "on"
+              HTTPPROXY: "on"
+              HTTPPROXY_LOG: "on"
+              DOT: "off"
+              DNS_ADDRESS: "127.0.0.16"  #Note this is a cross dependency to qbittorrent.  Meh.
+
+            envFrom:
+              - secretRef:
+                  name: wireguard
+
+            # Configure the container-specific securityContext
+            securityContext:
+              capabilities:
+                add:
+                  - NET_ADMIN
 
     service:
       main:
@@ -79,6 +114,12 @@ spec:
         readOnly: false
         globalMounts:
           - path: /app/video
+      gluetun-data:
+        type: emptyDir
+        advancedMounts:
+          main:
+            gluetun:
+              - path: /tmp/gluetun
 
     ingress:
       main:
