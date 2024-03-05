@@ -32,7 +32,7 @@ spec:
               # renovate: depName=docker.com/tzahi12345/youtubedl-material datasource=docker
               repository: tzahi12345/youtubedl-material
               # tag: "4.2"
-              tag: nightly # I ALSO like to live dangerously
+              tag: latest # I ALSO like to live dangerously
               pullPolicy: IfNotPresent
             resources:
               requests:
@@ -41,18 +41,8 @@ spec:
                 memory: "512M"
             env:
               TZ: "${TZ}"
-              UID: 568
-              GID: 568
+    #This container needs some love to do non-1000 UID/GID FYI TODO
 
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            supplementalGroups:
-              - 44
-              - 109
-              - 100
     service:
       main:
         ports:
@@ -100,7 +90,6 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-
         hosts:
           - host: &host "youtube-dl.${SECRET_DOMAIN}"
             paths:
