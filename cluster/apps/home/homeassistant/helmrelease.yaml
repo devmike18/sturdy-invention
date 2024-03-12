@@ -128,6 +128,25 @@ spec:
                 cpu: 500m
                 memory: 256Gi
 
+          openwakeword: # Text to Speech
+            image:
+              repository: rhasspy/wyoming-openwakeword
+              pullPolicy: IfNotPresent
+              tag: 1.8.1
+            env:
+              TZ: ${TZ}
+            args:
+              - --preload-model
+              - ok_nabu
+              - --custom-model-dir
+              - /custom
+            resources:
+              requests:
+                cpu: 10m
+                memory: 64Mi
+              limits:
+                cpu: 500m
+                memory: 256Gi
 
     service:
       main:
@@ -153,6 +172,12 @@ spec:
         ports:
           piper:
             port: 10200
+      openwakeword:
+        type: ClusterIP
+        controller: main
+        ports:
+          openwakeword:
+            port: 10400
 
     persistence:
       config:
@@ -174,7 +199,16 @@ spec:
             whisper:
               - path: /data
                 readOnly: false
-
+      openwakeword:
+        enabled: true
+        existingClaim: openwakeword-data-v1
+        advancedMounts:
+          main:
+            openwakeword:
+              - path: /data
+                subPath: data
+              - path: /custom
+                subPath: custom
     ingress:
       main:
         enabled: true
