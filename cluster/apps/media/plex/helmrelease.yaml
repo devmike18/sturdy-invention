@@ -35,7 +35,7 @@ spec:
           main:
             image:
               repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
-              tag: 1.40.0.7998-c29d4c0c8
+              tag: 1.40.1.8227-c0dd5a73e
             env:
               TZ: "${TZ}"
               ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}:443/"
