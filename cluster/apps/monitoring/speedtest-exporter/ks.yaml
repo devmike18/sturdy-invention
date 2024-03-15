@@ -10,6 +10,7 @@ spec:
     labels:
       app.kubernetes.io/name: *appname
   path: ./cluster/apps/monitoring/speedtest-exporter/app
+  interval: 10m
   prune: true
   wait: true
   sourceRef:
