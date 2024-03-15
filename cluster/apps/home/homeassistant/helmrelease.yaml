@@ -132,7 +132,7 @@ spec:
             image:
               repository: rhasspy/wyoming-openwakeword
               pullPolicy: IfNotPresent
-              tag: 1.8.1
+              tag: 1.10.0
             env:
               TZ: ${TZ}
             args:
