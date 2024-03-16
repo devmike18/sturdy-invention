@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: snmp-exporter-idrac
+  name: &app snmp-exporter-idrac
   namespace: monitoring
 spec:
   interval: 5m
@@ -17,12 +17,12 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    fullnameOverride: snmp-exporter-idrac
-    nameOverride: snmp-exporter-idrac
+    fullnameOverride: *app
+    nameOverride: *app
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
-      - name: snmp-exporter-idrac
+      - name: *app
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
         configMap: snmp-exporter-idrac
@@ -31,14 +31,11 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      module: dell_idrac
       params:
-        - module:
-            - dell_idrac
-          name: idrac0
+        - name: idrac0
           target: 10.0.0.88
-        - module:
-            - dell_idrac
-          name: idrac1
+        - name: idrac1
           target: 10.0.0.89
       path: /snmp
       scrapeTimeout: 30s
