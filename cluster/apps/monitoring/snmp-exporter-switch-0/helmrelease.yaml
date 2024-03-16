@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: snmp-exporter-switch-0
+  name: &app snmp-exporter-switch-0
   namespace: monitoring
 spec:
   interval: 5m
@@ -17,12 +17,12 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    fullnameOverride: snmp-exporter-switch-0
-    nameOverride: snmp-exporter-switch-0
+    fullnameOverride: *app
+    nameOverride: *app
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
-      - name: snmp-exporter-switch-0
+      - name: *app
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
         configMap: snmp-exporter-switch-0
@@ -31,10 +31,10 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      module:
+        - if_mib
       params:
-        - module:
-            - if_mib
-          name: switch-0
+        - name: switch-0
           target: 10.0.0.253
       path: /snmp
       scrapeTimeout: 30s

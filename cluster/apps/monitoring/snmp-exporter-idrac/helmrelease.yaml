@@ -31,7 +31,8 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
-      module: dell_idrac
+      module:
+        - dell_idrac
       params:
         - name: idrac0
           target: 10.0.0.88
