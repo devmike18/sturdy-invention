@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: synology-exporter-nas02
+  name: &app synology-exporter-nas02
   namespace: monitoring
 spec:
   interval: 5m
@@ -17,12 +17,12 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    fullnameOverride: synology-exporter-nas02
-    nameOverride: synology-exporter-nas02
+    fullnameOverride: *app
+    nameOverride: *app
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
-      - name: synology-exporter-nas02
+      - name: *app
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
         configMap: synology-exporter-nas02
@@ -31,10 +31,10 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      module:
+        - synology
       params:
-        - module:
-            - synology
-          name: nas02
+        - name: nas02
           target: "${NFS_SERVER}"
           interval: 30s
           scrapeTimeout: 30s
