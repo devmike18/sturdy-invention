@@ -33,6 +33,8 @@ spec:
       namespace: monitoring
       module:
         - synology
+      auth:
+        - public_v3
       params:
         - name: nas02
           target: "${NFS_SERVER}"
