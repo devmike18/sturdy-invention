@@ -2,7 +2,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2beta1
 kind: HelmRelease
 metadata:
-  name: snmp-exporter-gw-0
+  name: &app snmp-exporter-gw-0
   namespace: monitoring
 spec:
   interval: 5m
@@ -17,12 +17,12 @@ spec:
         namespace: flux-system
       interval: 5m
   values:
-    fullnameOverride: snmp-exporter-gw-0
-    nameOverride: snmp-exporter-gw-0
+    fullnameOverride: *app
+    nameOverride: *app
     extraArgs:
       - "--config.file=/config/snmp.yaml"
     extraConfigmapMounts:
-      - name: snmp-exporter-gw-0
+      - name: *app
         mountPath: /config/snmp.yaml
         subPath: snmp.yaml
         configMap: snmp-exporter-gw-0
@@ -31,10 +31,10 @@ spec:
     serviceMonitor:
       enabled: true
       namespace: monitoring
+      module:
+        - pfsense
       params:
-        - module:
-            - pfsense
-          name: gw-0
+        - name: gw-0
           target: 192.168.8.1
       path: /snmp
       scrapeTimeout: 30s
