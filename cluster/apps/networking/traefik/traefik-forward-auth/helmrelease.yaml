@@ -5,89 +5,98 @@ metadata:
   name: traefik-forward-auth
   namespace: networking
 spec:
-  interval: 5m
+  interval: 15m
   chart:
     spec:
-      # renovate: registryUrl=https://k8s-at-home.com/charts/
-      chart: traefik-forward-auth
-      version: 2.2.2
+      chart: app-template
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
-        name: k8s-at-home-charts
+        name: bjw-s-charts
         namespace: flux-system
-      interval: 5m
-
+  maxHistory: 15
+  install:
+    timeout: 5m
+    replace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      remediateLastFailure: true
+      retries: 3
+      strategy: rollback
+  uninstall:
+    keepHistory: false
+  rollback:
+    recreate: true
+    force: true
+    cleanupOnFail: true
   dependsOn:
     - name: traefik
       namespace: networking
 
+
   values:
-    image:
-      repository: thomseddon/traefik-forward-auth
-      tag: v2.2.0
-      pullPolicy: IfNotPresent
-    podAnnotations:
-      secret.reloader.stakater.com/reload: traefik-forward-auth-secrets
-
-    ingress:
-      main:
-        enabled: true
-        ingressClassName: "traefik"
+    controllers:
+      traefik-forward-auth:
         annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
-        hosts:
-          - host: "id.${SECRET_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
-        tls:
-          - hosts:
-              - "id.${SECRET_DOMAIN}"
-
-    env:
-      TZ: ${TZ}
-      LOG_LEVEL: debug
-      PROVIDERS_GOOGLE_CLIENT_ID:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_ID
-      PROVIDERS_GOOGLE_CLIENT_SECRET:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: CLIENT_SECRET
-      AUTH_HOST:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: AUTH_HOST
-      COOKIE_DOMAIN:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: COOKIE_DOMAIN
-      DOMAIN:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: DOMAIN
-      WHITELIST:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: WHITELIST
-      SECRET:
-        valueFrom:
-          secretKeyRef:
-            name: traefik-forward-auth-secrets
-            key: secret
+          reloader.stakater.com/auto: "true"
+        strategy: RollingUpdate
+        containers:
+          app:
+            image:
+              repository: thomseddon/traefik-forward-auth
+              tag: v2.2.0@sha256:882e6c07e137ea23dac85afee30676d3bf676418d471bfa4df7c16da1567d45e
+            env:
+              TZ: ${TZ}
+              AUTH_HOST: &host id.${SECRET_DOMAIN}
+              DOMAIN: ${SECRET_DOMAIN}
+              COOKIE_DOMAIN: ${SECRET_DOMAIN}
+              INSECURE_COOKIE: "false"
+              URL_PATH: /_oauth
+              LOG_LEVEL: info
+              # 1 week
+              LIFETIME: "604800"
+            envFrom:
+              - secretRef:
+                  name: &secret traefik-forward-auth-secrets
+            resources:
+              requests:
+                cpu: 5m
+                memory: 10Mi
+              limits:
+                memory: 50Mi
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
 
     service:
-      main:
-        type: ClusterIP
+      app:
+        controller: traefik-forward-auth
         ports:
           http:
-            port:
-              4181
+            port: 4181
+
+    ingress:
+      app:
+        className: traefik
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-production
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.middlewares: networking-sso@kubernetescrd
+        hosts:
+          - host: *host
+            paths:
+              - path: /
+                service:
+                  identifier: app
+                  port: http
+        tls:
+          - hosts:
+              - *host
+            secretName: "{{ .Release.Name }}-tls"
