@@ -2,7 +2,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: Middleware
 metadata:
-  name: sso
+  name: traefik-forward-auth
   labels:
     app.kubernetes.io/name: traefik-forward-auth
     app.kubernetes.io/instance: traefik-forward-auth
