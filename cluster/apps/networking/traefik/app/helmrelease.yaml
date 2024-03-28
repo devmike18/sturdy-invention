@@ -29,8 +29,9 @@ spec:
   dependsOn:
     - name: cert-manager
       namespace: cert-manager
+    - name: metallb
+      namespace: metallb-system
   values:
-
     service:
       enabled: true
       type: LoadBalancer

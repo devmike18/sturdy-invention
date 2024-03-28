@@ -3,8 +3,9 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 namespace: networking
 resources:
-  - traefik
+  # Pre-flux kustomizations (todo)
   - unifi
   - wildcard-certificate
-  - traefik-forward-auth
   - error-pages
+  # flux kustomizations
+  - ./traefik/ks.yaml
