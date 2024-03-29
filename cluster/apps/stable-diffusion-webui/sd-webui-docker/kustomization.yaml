@@ -5,7 +5,7 @@ kind: Kustomization
 images:
   - name: sd-webui
     newName: ghcr.io/ebiiim/sd-webui
-    newTag: 1.2.0
+    newTag: 1.2.0@sha256:d59a17a3c83ac1ded53eb9e6f18be3a9001289ee6c1ee81611860dfde35b8fe9
 
 namespace: stable-diffusion-webui
 
