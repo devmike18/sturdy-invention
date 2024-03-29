@@ -1,38 +1,16 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": [
-    "config:recommended",
-    "docker:enableMajor",
-    "helpers:pinGitHubActionDigests",
-    "replacements:k8s-registry-move",
-    ":semanticCommits",
-    ":dependencyDashboard",
-    ":enablePreCommit",
-    ":disableRateLimiting",
-    ":separatePatchReleases",
-    ":rebaseStalePrs",
-    ":automergePatch",
-    ":gomod",
+    "github>devmike18/renovate-config",
+    "github>devmike18/renovate-config:automerge-github-actions",
     "github>devmike18/sturdy-invention//.github/renovate/allowedVersions.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/commitMessage.json",
-    "github>devmike18/sturdy-invention//.github/renovate/autoMerge.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/labels.json5",
     "github>devmike18/sturdy-invention//.github/renovate/groups.json5",
     "github>devmike18/sturdy-invention//.github/renovate/disabledDatasources.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/packageRules.json5",
-    "github>devmike18/sturdy-invention//.github/renovate/semanticCommits.json"
+    "github>devmike18/sturdy-invention//.github/renovate/packageRules.json5"
   ],
-  "timezone": "Canada/Eastern",
-  "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prEditedNotification", "prIgnoreNotification"],
-  "rebaseWhen": "conflicted",
-  "assigneesFromCodeOwners": true,
-  "reviewersFromCodeOwners": true,
   "platform": "github",
   "username": "renovate",
   "repositories": ["devmike18/sturdy-invention"],
-  "onboarding": false,
-  "requireConfig": "optional",
   "gitAuthor": "renovate <devmike18@users.noreply.github.com>",
   // set up ignored deps
   "ignoreDeps": [
@@ -55,62 +33,26 @@
       "provision/ansible/playbooks/templates/.+\\.ya?ml.j2$"
     ]
   },
-  "customManagers": [
+  "regexManagers": [
     {
-      "customType": "regex",
+      "description": ["Process CRD dependencies - Chart and Github Release are the same version"],
+      "fileMatch": ["cluster/.+\\.ya?ml$"],
+      "matchStrings": [
+        "# renovate: registryUrl=(?<registryUrl>\\S+) chart=(?<depName>\\S+)\n.*?(?<currentValue>[^-\\s]*)\n",
+      ],
+      "datasourceTemplate": "helm"
+    },
+    {
+      "description": ["Raw GitHub URL Regex manager"],
       "fileMatch": [
-        "cluster/.+\\.ya?ml$",
-        "ansible/.+\\.ya?ml$",
-        "hacks/.+\\.sh$"
+        "provision/ansible/playbooks/templates/.+\\.ya?ml.j2$",
+        "cluster/.+\\.ya?ml$"
       ],
       "matchStrings": [
-        "datasource=(?<datasource>.*?)( versioning=(?<versioning>.*?))?\n *url: https://github\\.com/(?<depName>.*?)\\.git\n *ref:\n *tag: (?<currentValue>.*)\n",
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_version: \"(?<currentValue>.*)\"\n",
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)( versioning=(?<versioning>.*?))?\n.*?_VERSION=\"(?<currentValue>.*)\"\n"
+        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*",
       ],
-      "datasourceTemplate": "{{#if datasource}}{{{datasource}}}{{else}}github-releases{{/if}}",
-      "versioningTemplate": "{{#if versioning}}{{{versioning}}}{{else}}semver{{/if}}"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["cluster/.+\\.ya?ml$"],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *chart: (?<depName>.*?)\n *version: (?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["cluster/.+\\.ya?ml$"],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?)\n *tag: (?<depName>[a-zA-Z-]+)-(?<currentValue>.*)\n",
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["cluster/.+\\.ya?ml$"],
-      "matchStrings": [
-        "datasource=(?<datasource>.*?) depName=(?<depName>.*?)\n .*: (?<currentValue>.*=?)"
-      ],
-      "datasourceTemplate": "docker"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["cluster/crds/cert-manager/.+\\.ya?ml$"],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n.*\\/(?<currentValue>.*?)\\/"
-      ],
-      "datasourceTemplate": "helm"
-    },
-    {
-      "customType": "regex",
-      "fileMatch": ["cluster/crds/traefik/.+\\.ya?ml$"],
-      "matchStrings": [
-        "registryUrl=(?<registryUrl>.*?) chart=(?<depName>.*?)\n *tag: v(?<currentValue>.*)\n"
-      ],
-      "datasourceTemplate": "helm"
+      "datasourceTemplate": "github-releases",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
@@ -120,44 +62,18 @@
       "separateMinorPatch": true,
       "ignoreDeprecated": true
     },
-    // global docker datasource settings
+    // Version strategies and schemes
     {
+      "description": "Loose versioning for non-semver packages",
       "matchDatasources": ["docker"],
-      "enabled": true,
-      "commitMessageTopic": "container image {{depName}}",
-      "commitMessageExtra": "to {{#if isSingleVersion}}v{{{newVersion}}}{{else}}{{{newValue}}}{{/if}}",
-      "matchUpdateTypes": ["major", "minor", "patch"]
-    },
-    // add labels according to package and update types
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/image", "dep/major"]
+      "versioning": "loose",
+      "matchPackagePatterns": ["plex", "qbittorrent"]
     },
     {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/image", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["docker"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/image", "dep/patch"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["major"],
-      "labels": ["renovate/helm", "dep/major"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["minor"],
-      "labels": ["renovate/helm", "dep/minor"]
-    },
-    {
-      "matchDatasources": ["helm"],
-      "matchUpdateTypes": ["patch"],
-      "labels": ["renovate/helm", "dep/patch"]
+      "description": "Custom versioning for k3s",
+      "matchDatasources": ["github-releases"],
+      "versioning": "regex:^v(?<major>\\d+)\\.(?<minor>\\d+)\\.(?<patch>\\d+)(?<compatibility>\\+k3s)(?<build>\\d+)$",
+      "matchPackagePatterns": ["k3s"]
     }
   ]
 }

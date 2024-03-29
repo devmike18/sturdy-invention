@@ -50,6 +50,20 @@
       "groupName": "system-upgrade-controller-suite",
       "additionalBranchPrefix": "",
       "separateMinorPatch": true
-    }
+    },
+    {
+      "description": "Immich images",
+      "groupName": "Immich",
+      "matchPackageNames": [
+        "ghcr.io/immich-app/immich-server",
+        "ghcr.io/immich-app/immich-web",
+        "ghcr.io/immich-app/immich-machine-learning",
+      ],
+      "matchDatasources": ["docker"],
+      "group": {
+        "commitMessageTopic": "{{{groupName}}} group"
+      },
+      "separateMinorPatch": true
+    },
   ],
 }
