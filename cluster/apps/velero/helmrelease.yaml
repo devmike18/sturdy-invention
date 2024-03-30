@@ -59,26 +59,20 @@ spec:
         enabled: true
     backupsEnabled: true
     snapshotsEnabled: true
-    upgradeCRDs: false
+    upgradeCRDs: false  # This is handled in flux CRD yaml.
 
     deployNodeAgent: true
     nodeAgent:
-      podVolumePath: /var/lib/kubelet/pods
-      privileged: false
       tolerations:
         - key: "node-role.kubernetes.io/master"
           operator: "Exists"
-        - key: "arch"
-          operator: "Equal"
-          value: "arm64"
-          effect: "NoSchedule"
       resources:
         requests:
           memory: 200Mi
           cpu: 15m
         limits:
           memory: 3000Mi
-          cpu: null
+          cpu: 1000m
 
     schedules:
       daily-backup:
