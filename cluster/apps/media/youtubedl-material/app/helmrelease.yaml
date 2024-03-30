@@ -40,7 +40,7 @@ spec:
               # renovate: depName=docker.com/tzahi12345/youtubedl-material datasource=docker
               repository: tzahi12345/youtubedl-material
               # tag: "4.2"
-              tag: latest # I ALSO like to live dangerously
+              tag: latest@sha256:2f943d584711cb07c3535b518939fabb2ab90fdd7452d9a9938cd05378468ed9 # I ALSO like to live dangerously
               pullPolicy: IfNotPresent
             resources:
               requests:
@@ -55,7 +55,7 @@ spec:
             dependsOn: main
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.37.0
+              tag: v3.37.0@sha256:ba9688ff9abaf73bbc0b257be547b51a097ca74324fedddeeb709732c2692eef
             # -- environment variables.
             # See [image docs](https://github.com/qdm12/gluetun-wiki) for more details on how to configure your VPN and how to set up port-forwarding.
             env:
@@ -81,7 +81,7 @@ spec:
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
-              tag: 1.8.3
+              tag: 1.8.3@sha256:5f2e92f6363db2bd5bd40319ac2fb10e3a583f6ff5fb5d96a948d9c8b93299b3
             # Configure the container-specific securityContext
             securityContext:
               runAsUser: 0

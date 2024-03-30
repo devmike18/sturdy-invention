@@ -45,7 +45,7 @@ spec:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
-              tag: 4.6.4
+              tag: 4.6.4@sha256:85f185207a81ec03e84b8302db06f1694c533c99e0efdb2acf0316d554d332e3
             env:
               TZ: ${TZ}
               QBITTORRENT__PORT: &port 8080
@@ -63,7 +63,7 @@ spec:
           dnsdist:
             image:
               repository: docker.io/powerdns/dnsdist-18
-              tag: 1.8.3
+              tag: 1.8.3@sha256:5f2e92f6363db2bd5bd40319ac2fb10e3a583f6ff5fb5d96a948d9c8b93299b3
             # Configure the container-specific securityContext
             securityContext:
               runAsUser: 0
@@ -74,7 +74,7 @@ spec:
             dependsOn: main
             image:
               repository: ghcr.io/qdm12/gluetun
-              tag: v3.37.0
+              tag: v3.37.0@sha256:ba9688ff9abaf73bbc0b257be547b51a097ca74324fedddeeb709732c2692eef
             # -- environment variables.
             # See [image docs](https://github.com/qdm12/gluetun-wiki) for more details on how to configure your VPN and how to set up port-forwarding.
             env:
@@ -103,7 +103,7 @@ spec:
             dependsOn: gluetun
             image:
               repository: docker.io/snoringdragon/gluetun-qbittorrent-port-manager
-              tag: "1.3"
+              tag: "1.3@sha256:679b7a92c494f93b78ad37ef24f3a261e73d0a1a52505ad4f1e39580eedfa14f"
             env:
               QBITTORRENT_SERVER: localhost
               QBITTORRENT_PORT: *port

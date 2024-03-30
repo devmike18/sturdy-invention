@@ -44,7 +44,7 @@ spec:
           main:
             image:
               repository: ghcr.io/esphome/esphome
-              tag: 2024.3.1
+              tag: 2024.3.1@sha256:8e2c9f78dd689971eafa7178466cdd517937eef0da2bcdd9a3269175040c8d98
             env:
               ESPHOME_DASHBOARD_USE_PING: "true"
               PLATFORMIO_CORE_DIR: .plattformio  # Running as non-root, so we need to change the default location
@@ -55,7 +55,7 @@ spec:
             image:
               repository: codercom/code-server
               pullPolicy: IfNotPresent
-              tag: 4.22.1
+              tag: 4.22.1@sha256:62e1d2596d564f2f44c0ca710c8790cf4267fdfb183c9c761d272778ad51b217
             env:
               TZ: ${TZ}
             args:
