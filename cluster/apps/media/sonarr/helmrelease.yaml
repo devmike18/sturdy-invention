@@ -114,9 +114,8 @@ spec:
         enabled: true
         existingClaim: sonarr-config-v1
         globalMounts:
-          - path: /config
+          - path: /config  # This is already true by default, just being thorough and pedantic.  (Note to self)
       media:
-        readOnly: false
         existingClaim: nfs-media-pvc
         globalMounts:
-          - path: /media
+          - path: /media  # This is already true by default, just being thorough and pedantic.  (Note to self)
