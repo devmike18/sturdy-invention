@@ -100,7 +100,7 @@ spec:
         existingClaim: radarr-config-v1
       media:
         enabled: true
-        readOnly: false
         existingClaim: nfs-media-pvc
         globalMounts:
           - path: /media
+            readOnly: false
