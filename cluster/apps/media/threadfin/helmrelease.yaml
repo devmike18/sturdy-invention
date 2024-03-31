@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -32,11 +32,11 @@ spec:
 
   values:
     controllers:
-      main:
+      threadfin:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: fyb3roptik/threadfin
               tag: 1.0.26@sha256:73becf8f4e4d511810b8481883edb7b35a1fb1cc7e47cfe028a1bc504001511b
@@ -50,16 +50,26 @@ spec:
               limits:
                 cpu: 2
                 memory: 12Gi
-
+            probes:
+              liveness:
+                enabled: true
+              readiness:
+                enabled: true
+              startup:
+                enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
 
     service:
-      main:
+      app:
+        controller: threadfin
         ports:
           http:
             port: 34400
 
     ingress:
-      main:
+      threadfin:
         enabled: true
         className: "traefik"
         annotations:
@@ -73,7 +83,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
