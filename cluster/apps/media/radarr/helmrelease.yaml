@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -25,21 +25,24 @@ spec:
 
   values:
     controllers:
-      main:
+      radarr:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/radarr
               tag: 5.3.6.8612@sha256:431f4d8da415645cd18359d0b704d4191f400eb57137ed3e5749774f3915c0a8
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
               startup:
                 enabled: true
+                spec:
+                  failureThreshold: 30
+                  periodSeconds: 5
             resources:
               requests:
                 cpu: 50m
@@ -61,13 +64,14 @@ spec:
               - 109
               - 100
     service:
-      main:
+      app:
+        controller: radarr
         ports:
           http:
             port: 7878
 
     ingress:
-      main:
+      radarr:
         enabled: true
         className: "traefik"
         annotations:
@@ -83,7 +87,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
