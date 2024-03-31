@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -33,20 +33,37 @@ spec:
 
   values:
     controllers:
-      main:
+      sonarr:
         annotations:
           backup.velero.io/backup-volumes: config
+
+        pod:
+          securityContext:
+            runAsUser: 568
+            runAsGroup: 568
+            runAsNonRoot: true
+            fsGroup: 568
+            fsGroupChangePolicy: "OnRootMismatch"
+            supplementalGroups:
+              - 44
+              - 109
+              - 100
+
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/sonarr
               pullPolicy: IfNotPresent
               tag: 4.0.2.1183@sha256:bbfcda0754272515ce12972924652699934074b46b11d27bc515c8ea5fb870f5
+            env:
+              TZ: "${TZ}"
+              SONARR__AUTHENTICATION_METHOD: "External"
+              SONARR__API_KEY: "${SECRET_SONARR_APIKEY}"
             probes:
               liveness:
-                enabled: false
+                enabled: true
               readiness:
-                enabled: false
+                enabled: true
               startup:
                 enabled: true
             resources:
@@ -55,31 +72,22 @@ spec:
                 memory: 250Mi
               limits:
                 memory: 1000Mi
-
-            env:
-              TZ: "${TZ}"
-              SONARR__AUTHENTICATION_METHOD: "External"
-              SONARR__API_KEY: "${SECRET_SONARR_APIKEY}"
-
-
-        pod:
-          securityContext:
-            runAsUser: 568
-            runAsGroup: 568
-            fsGroup: 568
-            supplementalGroups:
-              - 44
-              - 109
-              - 100
+            securityContext:
+              allowPrivilegeEscalation: false
+              readOnlyRootFilesystem: true
+              capabilities:
+                drop:
+                  - ALL
 
     service:
-      main:
+      app:
+        controller: sonarr
         ports:
           http:
             port: 8989
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -88,13 +96,12 @@ spec:
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
           traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
-
         hosts:
           - host: &host "sonarr.${SECRET_DOMAIN}"
             paths:
               - path: /
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -105,6 +112,8 @@ spec:
       config:
         enabled: true
         existingClaim: sonarr-config-v1
+        globalMounts:
+          - path: /config
       media:
         readOnly: false
         existingClaim: nfs-media-pvc
