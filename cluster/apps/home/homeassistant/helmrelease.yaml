@@ -169,7 +169,7 @@ spec:
             port: 10300
       piper:
         type: ClusterIP
-        controller: homeasssistant
+        controller: homeassistant
         ports:
           piper:
             port: 10200
