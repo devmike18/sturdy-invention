@@ -10,9 +10,10 @@ resources:
   - sonarr
   - qbittorrent
   - prowlarr
-  - bazarr
+  # - bazarr
   - overseerr
   - threadfin
   - immich
   # flux kustomizations
   - ./youtubedl-material/ks.yaml
+  - ./bazarr/ks.yaml
