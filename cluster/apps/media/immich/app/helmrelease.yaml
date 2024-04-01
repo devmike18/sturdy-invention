@@ -49,7 +49,7 @@ spec:
 
         containers:
           app:
-            order: 2
+            dependsOn: redis
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.100.0@sha256:d603fd34d587cbf0c99442bb44da395450157d5eb7dec40d2d1d16f2cfdb988b
@@ -68,7 +68,6 @@ spec:
         type: deployment
         containers:
           app:
-            order: 1
             image:
               repository: public.ecr.aws/docker/library/redis
               tag: 7.2.4@sha256:3134997edb04277814aa51a4175a588d45eb4299272f8eff2307bbf8b39e4d43
@@ -173,5 +172,3 @@ spec:
         existingClaim: nfs-legacyphotos-pvc
         globalMounts:
           - path: /externaldata
-      config:
-        enabled: false
