@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -31,7 +31,7 @@ spec:
       automountServiceAccountToken: false
 
     controllers:
-      main:
+      immich:
         type: deployment
         replicas: 2
         annotations:
@@ -48,7 +48,7 @@ spec:
                   name: secret-immich
 
         containers:
-          main:
+          app:
             order: 2
             image:
               repository: ghcr.io/immich-app/immich-server
@@ -67,7 +67,7 @@ spec:
       redis:
         type: deployment
         containers:
-          main:
+          app:
             order: 1
             image:
               repository: public.ecr.aws/docker/library/redis
@@ -84,7 +84,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/immich-app/immich-machine-learning
               tag: v1.100.0@sha256:612e8856ad92f5915ececd5a67b76b7218f0fe4e41c72fcf1675bee76802294b
@@ -106,7 +106,7 @@ spec:
           reloader.stakater.com/auto: "true"
 
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/immich-app/immich-server
               tag: v1.100.0@sha256:d603fd34d587cbf0c99442bb44da395450157d5eb7dec40d2d1d16f2cfdb988b
@@ -121,10 +121,11 @@ spec:
                 memory: 512M
 
     service:
-      main:
+      app:
         annotations:
           traefik.ingress.kubernetes.io/service.sticky.cookie.httponly: "true"
           traefik.ingress.kubernetes.io/service.sticky.cookie.name: "server_id"
+        controller: immich
         ports:
           http:
             port: 3001
@@ -139,7 +140,7 @@ spec:
           http:
             port: 6379
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -154,7 +155,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
