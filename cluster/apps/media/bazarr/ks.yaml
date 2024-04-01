@@ -6,17 +6,17 @@ metadata:
   name: &appname bazarr
   namespace: flux-system
 spec:
-  targetNamespace: &namespacename media
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 10m
   path: "./cluster/apps/media/bazarr/app"
   prune: true
+  interval: 10m
+  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
-  wait: true
   decryption:
     provider: sops
     secretRef:

@@ -6,7 +6,7 @@ metadata:
   name: &appname youtubedl-material
   namespace: flux-system
 spec:
-  targetNamespace: &namespacename media
+  targetNamespace: media
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
