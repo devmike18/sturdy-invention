@@ -109,14 +109,13 @@ spec:
         storageClass: ceph-block
         accessMode: ReadWriteOnce
         size: 20Gi
+        retain: true
         globalMounts:
           - path: /config
       transcode:
         enabled: true
         type: emptyDir
-        emptyDir:
-          enabled: true
-          sizeLimit: 10Gi
+        size: 10Gi
       nfs-media-pvc:
         enabled: true
         existingClaim: nfs-media-pvc
