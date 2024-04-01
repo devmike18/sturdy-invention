@@ -66,8 +66,8 @@ spec:
           http:
             port: 9130
     serviceMonitor:
-      main:
-        enabled: true
+      app:
+        serviceName: unifi-poller
         endpoints:
           - port: http
             scheme: http
