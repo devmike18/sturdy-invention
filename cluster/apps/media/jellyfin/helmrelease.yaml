@@ -72,7 +72,7 @@ spec:
             port: 8096
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
