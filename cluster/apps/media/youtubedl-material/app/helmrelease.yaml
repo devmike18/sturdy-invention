@@ -127,14 +127,14 @@ spec:
       gluetun-data:
         type: emptyDir
         advancedMounts:
-          main:
+          app:
             gluetun:
               - path: /tmp/gluetun
       dnsdist-config:
         type: configMap
         name: qbittorrent-dnsdist
         advancedMounts:
-          main:
+          app:
             dnsdist:
               - path: /etc/dnsdist/dnsdist.conf
                 subPath: dnsdist.conf
