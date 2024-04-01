@@ -37,11 +37,11 @@ spec:
           - 65539
 
     controllers:
-      main:
+      esphome:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/esphome/esphome
               tag: 2024.3.1@sha256:8e2c9f78dd689971eafa7178466cdd517937eef0da2bcdd9a3269175040c8d98
@@ -79,20 +79,21 @@ spec:
           - path: /config/.esphome
 
     service:
-      main:
+      app:
+        controller: esphome
         ports:
           http:
             port: 6052
       codeserver:
         type: ClusterIP
-        controller: main
+        controller: esphome
         ports:
           http:
             enabled: true
             port: 8080
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -108,7 +109,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -131,7 +132,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: codeserver
+                  identifier: codeserver
                   port: http
         tls:
           - hosts:
