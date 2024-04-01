@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts/
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -23,7 +23,7 @@ spec:
 
   values:
     controllers:
-      main:
+      youtubedl-material:
         pod:
           securityContext:
             fsGroup: 568
@@ -35,7 +35,7 @@ spec:
           configmap.reloader.stakater.com/reload: youtubedl-material-dnsdist
           secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
-          main:
+          app:
             image:
               # renovate: depName=docker.com/tzahi12345/youtubedl-material datasource=docker
               repository: tzahi12345/youtubedl-material
@@ -52,7 +52,7 @@ spec:
 
           # Configure the gluetun sidecar
           gluetun:
-            dependsOn: main
+            dependsOn: app
             image:
               repository: ghcr.io/qdm12/gluetun
               tag: v3.38.0@sha256:5522794f5cce6d84bc7f06b1e3a3b836ede9100c64aec94543cb503bb2ecb72f
@@ -88,7 +88,8 @@ spec:
               runAsGroup: 0
 
     service:
-      main:
+      app:
+        controller: youtubedl-material
         ports:
           http:
             port: 17442
@@ -102,27 +103,27 @@ spec:
       audio:
         enabled: true
         existingClaim: nfs-youtubedl-audio-pvc
-        readOnly: false
         globalMounts:
           - path: /app/audio
+            readOnly: false
       subscriptions:
         enabled: true
         existingClaim: nfs-youtubedl-subscriptions-pvc
-        readOnly: false
         globalMounts:
           - path: /app/subscriptions
+            readOnly: false
       users:
         enabled: true
         existingClaim: nfs-youtubedl-users-pvc
-        readOnly: false
         globalMounts:
           - path: /app/users
+            readOnly: false
       video:
         enabled: true
         existingClaim: nfs-youtubedl-video-pvc
-        readOnly: false
         globalMounts:
           - path: /app/video
+            readOnly: false
       gluetun-data:
         type: emptyDir
         advancedMounts:
@@ -155,7 +156,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
