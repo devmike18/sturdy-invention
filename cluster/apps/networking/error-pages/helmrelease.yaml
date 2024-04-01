@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -30,12 +30,12 @@ spec:
       namespace: networking
   values:
     controllers:
-      main:
+      error-pages:
         type: statefulset
         replicas: 3
         strategy: RollingUpdate
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/tarampampam/error-pages
               tag: 2.27.0@sha256:40e2631173b1a407c18fe7d1ba8104d995cf9e4780d123eeadfa1d57c68eaf4f
@@ -64,7 +64,8 @@ spec:
                     topologyKey: kubernetes.io/hostname
 
     service:
-      main:
+      app:
+        controller: error-pages
         ports:
           http:
             port: 8080
