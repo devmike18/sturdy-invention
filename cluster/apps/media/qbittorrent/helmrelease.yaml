@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -29,7 +29,7 @@ spec:
 
   values:
     controllers:
-      main:
+      qbittorrent:
         pod:
           securityContext:
             fsGroup: 568
@@ -41,7 +41,7 @@ spec:
           configmap.reloader.stakater.com/reload: qbittorrent-scripts,qbittorrent-dnsdist
           secret.reloader.stakater.com/reload: qbittorrent-secret
         containers:
-          main:
+          app:
             nameOverride: qbittorrent
             image:
               repository: ghcr.io/onedr0p/qbittorrent
@@ -110,13 +110,14 @@ spec:
               PORT_FORWARDED: "/tmp/gluetun/forwarded_port"
 
     service:
-      main:
+      app:
+        controller: qbittorrent
         ports:
           http:
             port: *port
 
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -133,7 +134,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -150,8 +151,8 @@ spec:
         enabled: true
         existingClaim: qbittorrent-config-v1
         advancedMounts:
-          main:
-            main:
+          qbittorrent:
+            app:
               - path: /config
       media:
         enabled: true
@@ -163,7 +164,7 @@ spec:
         type: configMap
         name: qbittorrent-dnsdist
         advancedMounts:
-          main:
+          qbittorrent:
             dnsdist:
               - path: /etc/dnsdist/dnsdist.conf
                 subPath: dnsdist.conf
@@ -171,7 +172,7 @@ spec:
       gluetun-data:
         type: emptyDir
         advancedMounts:
-          main:
+          qbittorrent:
             gluetun:
               - path: /tmp/gluetun
             port-forward:
