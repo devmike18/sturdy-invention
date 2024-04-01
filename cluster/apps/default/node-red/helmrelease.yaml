@@ -99,7 +99,7 @@ spec:
         enabled: true
         existingClaim: node-red-config-v1
         advancedMounts:
-          main:
-            main:
+          node-red:
+            app:
               - path: /data
                 readOnly: false
