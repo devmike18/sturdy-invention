@@ -10,7 +10,7 @@ spec:
   commonMetadata:
     labels:
       app.kubernetes.io/name: *appname
-  interval: 1m
+  interval: 10m
   path: "./cluster/apps/media/youtubedl-material/app"
   prune: true
   sourceRef:
