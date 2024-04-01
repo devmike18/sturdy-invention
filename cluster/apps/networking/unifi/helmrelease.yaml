@@ -86,7 +86,7 @@ spec:
             secretName: "unifi-tls"
 
     service:
-      main:
+      app:
         enabled: true
         type: LoadBalancer
         externalIPs:
