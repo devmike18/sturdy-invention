@@ -113,9 +113,11 @@ spec:
         globalMounts:
           - path: /config
       transcode:
-        enabled: true
         type: emptyDir
-        accessMode: ReadWriteOnce
+        advancedMounts:
+          plex:
+            app:
+              - path: /transcode
       nfs-media-pvc:
         enabled: true
         existingClaim: nfs-media-pvc
