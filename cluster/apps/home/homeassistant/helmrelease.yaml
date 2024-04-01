@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -42,11 +42,11 @@ spec:
           - 65539
 
     controllers:
-      main:
+      homeassistant:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/home-assistant/home-assistant
               pullPolicy: IfNotPresent
@@ -149,32 +149,33 @@ spec:
                 memory: 256Gi
 
     service:
-      main:
+      app:
+        controller: homeassistant
         ports:
           http:
             port: 8123
       codeserver:
         type: ClusterIP
-        controller: main
+        controller: homeassistant
         ports:
           http:
             enabled: true
             port: 8080
       whisper:
         type: ClusterIP
-        controller: main
+        controller: homeassistant
         ports:
           whisper:
             port: 10300
       piper:
         type: ClusterIP
-        controller: main
+        controller: homeasssistant
         ports:
           piper:
             port: 10200
       openwakeword:
         type: ClusterIP
-        controller: main
+        controller: homeassistant
         ports:
           openwakeword:
             port: 10400
@@ -187,7 +188,7 @@ spec:
         enabled: true
         type: emptyDir
         advancedMounts:
-          main:
+          homeassistant:
             piper:
               - path: /data
                 readOnly: false
@@ -195,7 +196,7 @@ spec:
         enabled: true
         type: emptyDir
         advancedMounts:
-          main:
+          homeassistant:
             whisper:
               - path: /data
                 readOnly: false
@@ -203,14 +204,14 @@ spec:
         enabled: true
         existingClaim: openwakeword-data-v1
         advancedMounts:
-          main:
+          homeassistant:
             openwakeword:
               - path: /data
                 subPath: data
               - path: /custom
                 subPath: custom
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -224,7 +225,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
@@ -247,7 +248,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: codeserver
+                  identifier: codeserver
                   port: http
         tls:
           - hosts:
