@@ -85,11 +85,9 @@ spec:
           http:
             port: 6052
       codeserver:
-        type: ClusterIP
         controller: esphome
         ports:
           http:
-            enabled: true
             port: 8080
 
     ingress:
