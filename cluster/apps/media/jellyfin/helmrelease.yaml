@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -34,11 +34,11 @@ spec:
 
   values:
     controllers:
-      main:
+      jellyfin:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/jellyfin
               tag: 10.8.11@sha256:926e2a9f6677a0c7b12feba29f36c954154869318d6a52df72f72ff9c74cf494
@@ -65,7 +65,8 @@ spec:
               - 100
 
     service:
-      main:
+      app:
+        controller: jellyfin
         ports:
           http:
             port: 8096
@@ -85,7 +86,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
