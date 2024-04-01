@@ -115,7 +115,7 @@ spec:
       transcode:
         enabled: true
         type: emptyDir
-        size: 10Gi
+        accessMode: ReadWriteOnce
       nfs-media-pvc:
         enabled: true
         existingClaim: nfs-media-pvc
