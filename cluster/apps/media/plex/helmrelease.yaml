@@ -9,7 +9,7 @@ spec:
     spec:
       # renovate: registryUrl=https://bjw-s.github.io/helm-charts
       chart: app-template
-      version: 2.6.0
+      version: 3.0.4
       sourceRef:
         kind: HelmRepository
         name: bjw-s-charts
@@ -28,11 +28,11 @@ spec:
 
   values:
     controllers:
-      main:
+      plex:
         annotations:
           backup.velero.io/backup-volumes: config
         containers:
-          main:
+          app:
             image:
               repository: ghcr.io/onedr0p/plex # {"$imagepolicy": "flux-system:plex:name"}
               tag: 1.40.1.8227-c0dd5a73e@sha256:4ca8db0ffa1bee5a2976a0385cc43368112e81a2485b80d0fff3b04c9d5bd1ca
@@ -68,18 +68,20 @@ spec:
               - 100 #users
 
     service:
-      main:
+      app:
         type: LoadBalancer
         externalTrafficPolicy: Local
         annotations:
           metallb.universe.tf/loadBalancerIPs: "${METALLB_PLEX_ADDR}"
           metallb.universe.tf/allow-shared-ip: plex  #used for UDP, which i don't have on ATM
           #traefik.ingress.kubernetes.io/service.serversscheme: https
+        controller: plex
         ports:
           http:
             port: 32400
+
     ingress:
-      main:
+      app:
         enabled: true
         className: "traefik"
         annotations:
@@ -94,7 +96,7 @@ spec:
               - path: /
                 pathType: Prefix
                 service:
-                  name: main
+                  identifier: app
                   port: http
         tls:
           - hosts:
