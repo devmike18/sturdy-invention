@@ -59,9 +59,18 @@ spec:
       isDefaultClass: true
       fallbackApiVersion: v1
       name: traefik
+
+    # ICK, I really don't like crossing my config with my deploy like this Traefik!!!!!!!
     ingressRoute:
       dashboard:
-        enabled: false
+        enabled: true
+        matchRule: Host(`traefik.${SECRET_DOMAIN}`)
+        entryPoints: ["websecure"]
+        middlewares:
+          - name: rfc1918
+        tls:
+          secretName: "${SECRET_DOMAIN/./-}-tls"
+
 
     metrics:
       prometheus:
