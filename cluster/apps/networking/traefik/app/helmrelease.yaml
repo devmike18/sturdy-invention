@@ -56,7 +56,7 @@ spec:
         format: json
     ingressClass:
       enabled: true
-      isDefaultClass: false
+      isDefaultClass: true
       fallbackApiVersion: v1
       name: traefik
     ingressRoute:
