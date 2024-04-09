@@ -102,7 +102,9 @@ spec:
           options: "default"
       metrics:
         port: 8082
-        expose: true
+        expose:
+          default: false
+          internal: true
         exposedPort: 8082
     tlsOptions:
       default:
