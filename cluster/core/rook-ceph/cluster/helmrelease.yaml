@@ -52,8 +52,9 @@ spec:
       dashboard:
         enabled: true
         urlPrefix: /
+        ssl: false
         dashboard:
-          prometheusEndpoint: http://thanos-query:9090
+          prometheusEndpoint: http://thanos-query.monitoring.svc.cluster.local:9090
           prometheusEndpointSSLVerify: false
       storage:
         useAllNodes: false

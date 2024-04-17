@@ -12,4 +12,4 @@ k3s_agent:
     # Enables the kubelet to gracefully evict pods during a node shutdown
     - "feature-gates=GracefulNodeShutdown=true"
     # Allow k8s services to contain TCP and UDP on the same port
-    - "feature-gates=MixedProtocolLBService=true"
+    # - "feature-gates=MixedProtocolLBService=true"
