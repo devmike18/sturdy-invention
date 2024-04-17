@@ -21,31 +21,33 @@ spec:
     monitoring:
       enabled: true
       createPrometheusRules: true
-
     toolbox:
       enabled: true
-        #    ingress:
-        #      dashboard:
-        #        annotations:
-        #          kubernetes.io/ingress.class: "traefik"
-        #          hajimari.io/enable: "true"
-        #          hajimari.io/icon: "harddisk"
-        #          hajimari.io/appName: "rook-ceph"
-        #          traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-        #          traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
-        #        host:
-        #          name: "rook.${SECRET_DOMAIN}"
-        #          path: "/"
-        #        tls:
-        #          - hosts:
-        #              - "rook.${SECRET_DOMAIN}"
+    # ingress:
+    #   dashboard:
+    #     ingressClassName: "traefik"
+    #     annotations:
+    #       cert-manager.io/cluster-issuer: "letsencrypt-production"
+    #       hajimari.io/enable: "true"
+    #       hajimari.io/icon: "harddisk"
+    #       hajimari.io/appName: "rook-ceph"
+    #       traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
+    #       traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
+    #     host:
+    #       name: "rook.${SECRET_DOMAIN}"
+    #       path: "/"
+    #     tls:
+    #       - hosts:
+    #           - "rook.${SECRET_DOMAIN}"
+    #         secretName: "rook-tls"
+
     cephClusterSpec:
       crashCollector:
         disable: false
       mgr:
         count: 2
         modules:
-          - name: pg_autoscaler # This is already enabled by default, but needs to be here so that we don't override the default behavior.
+          - name: pg_autoscaler # This is already enabled by default, but needs to be here so that we don't override the default behavior by enabling the rook module.
             enabled: true
           - name: rook # This enables the rook module.
             enabled: true
