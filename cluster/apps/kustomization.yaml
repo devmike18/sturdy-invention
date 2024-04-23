@@ -13,5 +13,4 @@ resources:
   - calico-system
   - cert-manager
   - velero
-  - utility
   #- stable-diffusion-webui
