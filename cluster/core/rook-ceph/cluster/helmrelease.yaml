@@ -46,11 +46,11 @@ spec:
         disable: false
       mgr:
         count: 2
-        modules:
-          - name: pg_autoscaler # This is already enabled by default, but needs to be here so that we don't override the default behavior by enabling the rook module.
-            enabled: true
-          - name: rook # This enables the rook module.
-            enabled: true
+        # modules:
+        #   - name: pg_autoscaler # This is already enabled by default, but needs to be here so that we don't override the default behavior by enabling the rook module.
+        #     enabled: true
+        #   - name: rook # This enables the rook module.  Disabled this entirely.  GNDN https://github.com/rook/rook/issues/10444#issuecomment-1167644826
+        #     enabled: true
       dashboard:
         enabled: true
         urlPrefix: /
