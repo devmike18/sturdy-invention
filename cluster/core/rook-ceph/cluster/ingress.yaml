@@ -8,21 +8,23 @@ metadata:
     kubernetes.io/ingress.class: "traefik"
     hajimari.io/icon: "harddisk"
     hajimari.io/appName: "rook-ceph"
-    hajimari.io/enable: "true"
+    hajimari.io/enable: true
+    cert-manager.io/cluster-issuer: "letsencrypt-production"
     traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
     traefik.ingress.kubernetes.io/router.middlewares: "networking-rfc1918@kubernetescrd"
 spec:
   tls:
     - hosts:
         - "rook.${SECRET_DOMAIN}"
+      secretName: rook-ceph-dashboard-tls
   rules:
     - host: "rook.${SECRET_DOMAIN}"
       http:
         paths:
-          - path: /
-            pathType: Prefix
-            backend:
+          - backend:
               service:
                 name: rook-ceph-mgr-dashboard
                 port:
                   number: 7000
+            path: /
+            pathType: Prefix
