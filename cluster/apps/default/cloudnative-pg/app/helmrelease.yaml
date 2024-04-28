@@ -31,7 +31,7 @@ spec:
     image:
       repository: ghcr.io/cloudnative-pg/cloudnative-pg
       pullPolicy: IfNotPresent
-      tag: 1.22.2@sha256:7c01b11497e044e5f8be0f1168def37dfebc203eadddd18179a6eeda6b9cf1ad
+      tag: 1.23.0@sha256:14241bd7a986d19e1335b66b33ff471d5526cc55087586fa278dc9f64a3322c4
 
     config:
       data:
