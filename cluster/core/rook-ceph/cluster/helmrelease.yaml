@@ -73,7 +73,7 @@ spec:
           - name: "knode6"
             devices:
               - name: "sdb"
-          - name: "kcluster-worker1"
+          - name: "kcluster1-worker1"
             devices:
               - name: "sdb"
     cephBlockPools:
