@@ -64,9 +64,6 @@ spec:
         config:
           osdsPerDevice: "1"
         nodes:
-          - name: "knode4"
-            devices:
-              - name: "sdb"
           - name: "knode5"
             devices:
               - name: "sdb"
