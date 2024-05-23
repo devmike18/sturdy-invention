@@ -1,0 +1,64 @@
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: cluster-immich
+spec:
+  instances: 3
+  # imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:14.11-v0.2.1
+  imageName: ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.2.1
+  primaryUpdateStrategy: unsupervised
+  bootstrap:
+    initdb:
+      database: immich
+      postInitApplicationSQL:
+        - CREATE EXTENSION IF NOT EXISTS cube WITH SCHEMA pg_catalog;
+        - CREATE EXTENSION IF NOT EXISTS earthdistance WITH SCHEMA pg_catalog;
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+        # - GRANT ALL ON SCHEMA vectors TO immich;
+        - ALTER SCHEMA vectors OWNER to immich;
+      owner: immich
+      secret:
+        name: secret-cloudnative-pg-user
+      dataChecksums: true
+      encoding: 'UTF8'
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+    parameters:
+      max_connections: "600"
+      shared_buffers: 512MB
+  superuserSecret:
+    name: secret-cloudnative-pg-admin
+  resources:
+    requests:
+      cpu: 50m
+      memory: 120Mi
+    limits:
+      memory: 2Gi
+  monitoring:
+    enablePodMonitor: true
+  backup:
+    retentionPolicy: 30d
+    barmanObjectStore:
+      wal:
+        compression: bzip2
+        maxParallel: 8
+      destinationPath: s3://pgbackup/immich
+      endpointURL: "http://${NFS_SERVER}:9000"
+      s3Credentials:
+        accessKeyId:
+          name: secret-cloudnative-pg-admin
+          key: aws-access-key-id
+        secretAccessKey:
+          name: secret-cloudnative-pg-admin
+          key: aws-secret-access-key
+  storage:
+    pvcTemplate:
+      accessModes:
+        - ReadWriteOnce
+      storageClassName: nfs-client
+      volumeMode: Filesystem
+      resources:
+        requests:
+          storage: 1Gi

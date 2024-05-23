@@ -2,9 +2,9 @@
 apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
-  name: spegel
+  name: immich
   namespace: flux-system
 spec:
-  type: oci
-  interval: 5m
-  url: oci://ghcr.io/spegel-org/helm-charts
+  interval: 6h
+  url: https://immich-app.github.io/immich-charts
+  timeout: 5m
