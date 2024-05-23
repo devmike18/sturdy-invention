@@ -31,7 +31,6 @@ spec:
       DB_HOSTNAME: "cluster-immich-rw"
       DB_PORT: "5432"
       DB_DATABASE_NAME: "immich"
-      REDIS_HOSTNAME: "immich-redis"
       TZ: "${TZ}"
       LOG_LEVEL: "debug"
 
