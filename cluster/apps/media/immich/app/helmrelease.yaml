@@ -39,6 +39,7 @@ spec:
       LOG_LEVEL: "debug"
 
     image:
+      # renovate: datasource=github-releases depName=immich-app/immich
       tag: v1.105.0
 
     immich:
