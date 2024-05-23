@@ -34,9 +34,6 @@ spec:
       REDIS_HOSTNAME: "immich-redis"
       TZ: "${TZ}"
       LOG_LEVEL: "debug"
-    envFrom:
-      - secretRef:
-          name: secret-immich
 
     image:
       tag: v1.105.0
@@ -74,6 +71,9 @@ spec:
           existingClaim: nfs-legacyphotos-pvc
           globalMounts:
             - path: /externaldata
+      envFrom:
+        - secretRef:
+            name: secret-immich
       ingress:
         main:
           enabled: true
@@ -97,6 +97,9 @@ spec:
       enabled: true
       controller:
         replicas: 2
+      envFrom:
+        - secretRef:
+            name: secret-immich
       persistence:
         externaldata:
           enabled: true
