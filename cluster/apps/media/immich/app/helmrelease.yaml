@@ -36,7 +36,7 @@ spec:
       LOG_LEVEL: "debug"
     envFrom:
       - secretRef:
-        name: secret-immich
+          name: secret-immich
 
     image:
       tag: v1.105.0
