@@ -58,7 +58,7 @@ spec:
     sources:
       crds:
         displayName: CRDS
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
           namespaces:
             include:
@@ -75,10 +75,10 @@ spec:
             - name: monitoring.coreos.com/v1/podmonitors
             - name: monitoring.coreos.com/v1/servicemonitors
       k8s-recommendation-events:
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
       k8s-all-events:
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
           # event:
           #   message:
@@ -101,7 +101,7 @@ spec:
             - type: apps/v1/deployments
             - type: apps/v1/statefulsets
       k8s-create-events:
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
           resources:
             - type: v1/pods
@@ -114,7 +114,7 @@ spec:
             - type: apps/v1/statefulsets
             - type: apps/v1/daemonsets
       k8s-err-events:
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
           # event:
           #   message:
@@ -124,7 +124,7 @@ spec:
           #       - ".*volsync.*" # ...except those containing 'volsync'
 
       k8s-err-with-logs-events:
-        kubernetes:
+        botkube/kubernetes:
           enabled: true
           # event:
           #   message:
