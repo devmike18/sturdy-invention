@@ -8,9 +8,8 @@ spec:
   interval: 5m
   chart:
     spec:
-      # renovate: datasource=github-releases depName=kubeshop/botkube
       chart: botkube
-      version: v0.12.4
+      version: v1.11.0
       sourceRef:
         kind: HelmRepository
         name: infracloudio-charts
@@ -18,191 +17,122 @@ spec:
       interval: 5m
   values:
     image:
+      # renovate: datasource=github-releases depName=kubeshop/botkube
       repository: kubeshop/botkube
       tag: v1.11.0
     serviceMonitor:
       enabled: true
     logLevel: debug
-    communications:
-      discord:
-        enabled: true
-        token: ${SECRET_BOTKUBE_DISCORD_TOKEN}
-        botid: "941498306876555395"
-        channel: "650761898463330357"
-    config:
-      recommendations: true
-      ssl:
-        enabled: false
-      settings:
-        kubectl:
-          enabled: true
-          restrictAccess: false
-      resources:
-        - name: velero.io/v1/backups
-          namespaces:
-            include:
-              - all
-          events:
-            - all
-          updateSetting:
-            includeDiff: true
-            fields:
-              - status.phase
-        - name: velero.io/v1/restores
-          namespaces:
-            include:
-              - all
-          events:
-            - all
-          updateSetting:
-            includeDiff: true
-            fields:
-              - status.phase
 
-        - name: v1/services
+    settings:
+      clusterName: sturdy-invention
+      configWatcher: true
+
+    communications:
+      default-group:
+        discord:
+          enabled: true
+          channels:
+            default:
+              bindings:
+                executors:
+                  - kubectl-read-only
+                channelid: "650761898463330357"
+                sources:
+                  - crds
+                  - k8s-recommendation-events
+          token: ${SECRET_BOTKUBE_DISCORD_TOKEN}
+          botID: "941498306876555395"
+
+    executors:
+      kubectl-read-only:
+        botkube/kubectl:
+          enabled: true
+
+    actions:
+      'describe-created-resource':
+        enabled: false
+      'show-logs-on-error':
+        enabled: true
+
+    sources:
+      crds:
+        displayName: CRDS
+        kubernetes:
+          enabled: true
           namespaces:
             include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
+              - all
           events:
             - create
             - delete
             - error
-        - name: apps/v1/deployments
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - update
-            - delete
-            - error
-        - name: apps/v1/statefulsets
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - update
-            - delete
-            - error
-        - name: network.k8s.io/v1beta1/ingresses
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/nodes
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/namespaces
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/persistentvolumes
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/persistentvolumeclaims
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: v1/configmaps
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: apps/v1/daemonsets
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - create
-            - delete
-            - error
-        - name: batch/v1/jobs
-          namespaces:
-            include:
-              - default
-              - home
-              - kube-system
-              - media
-              - monitoring
-              - networking
-          events:
-            - update
-            - error
+          resources:
+            - name: helm.toolkit.fluxcd.io/v2beta1/helmreleases
+            - name: source.toolkit.fluxcd.io/v1beta2/helmcharts
+            - name: kustomize.toolkit.fluxcd.io/v1beta2/kustomizations
+            - name: notification.toolkit.fluxcd.io/v1beta1/alerts
+            - name: monitoring.coreos.com/v1/podmonitors
+            - name: monitoring.coreos.com/v1/servicemonitors
+      k8s-recommendation-events:
+        kubernetes:
+          enabled: true
+      k8s-all-events:
+        kubernetes:
+          enabled: true
+          # event:
+          #   message:
+          #     include:
+          #       - ".*" # match all event messages...
+          #     exclude:
+          #       - ".*volsync.*" # ...except those containing 'volsync'
+          resources:
+            - type: v1/pods
+            - type: v1/services
+            - type: networking.k8s.io/v1/ingresses
+            - type: v1/nodes
+            - type: v1/namespaces
+            - type: v1/configmaps
+            - type: rbac.authorization.k8s.io/v1/roles
+            - type: rbac.authorization.k8s.io/v1/rolebindings
+            - type: rbac.authorization.k8s.io/v1/clusterrolebindings
+            - type: rbac.authorization.k8s.io/v1/clusterroles
+            - type: apps/v1/daemonsets
+            - type: apps/v1/deployments
+            - type: apps/v1/statefulsets
+      k8s-create-events:
+        kubernetes:
+          enabled: true
+          resources:
+            - type: v1/pods
+            - type: v1/services
+            - type: networking.k8s.io/v1/ingresses
+            - type: v1/nodes
+            - type: v1/namespaces
+            - type: v1/configmaps
+            - type: apps/v1/deployments
+            - type: apps/v1/statefulsets
+            - type: apps/v1/daemonsets
+      k8s-err-events:
+        kubernetes:
+          enabled: true
+          # event:
+          #   message:
+          #     include:
+          #       - ".*" # match all event messages...
+          #     exclude:
+          #       - ".*volsync.*" # ...except those containing 'volsync'
+
+      k8s-err-with-logs-events:
+        kubernetes:
+          enabled: true
+          # event:
+          #   message:
+          #     include:
+          #       - ".*" # match all event messages...
+          #     exclude:
+          #       - ".*volsync.*" # ...except those containing 'volsync'
+
 
     resources:
       requests:
