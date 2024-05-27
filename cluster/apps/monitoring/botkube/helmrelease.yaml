@@ -84,6 +84,13 @@ spec:
       k8s-recommendation-events:
         botkube/kubernetes:
           enabled: true
+          context:
+            rbac:
+              # no user mapping defined
+              group:
+                type: Static
+                static:
+                  value: botkube-plugins-default
       k8s-all-events:
         botkube/kubernetes:
           enabled: true
