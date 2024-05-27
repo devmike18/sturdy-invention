@@ -12,7 +12,7 @@ spec:
       version: v1.11.0
       sourceRef:
         kind: HelmRepository
-        name: infracloudio-charts
+        name: botkube-charts
         namespace: flux-system
       interval: 5m
   values:
