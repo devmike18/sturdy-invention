@@ -60,6 +60,13 @@ spec:
         displayName: CRDS
         botkube/kubernetes:
           enabled: true
+          context:
+            rbac:
+              # no user mapping defined
+              group:
+                type: Static
+                static:
+                  value: botkube-plugins-default
           namespaces:
             include:
               - all
