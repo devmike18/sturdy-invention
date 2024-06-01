@@ -40,7 +40,7 @@ spec:
               TZ: "${TZ}"
               ADVERTISE_IP: "http://${METALLB_PLEX_ADDR}:32400/,https://plex.${SECRET_DOMAIN}:443/"
               ALLOWED_NETWORKS: "${PLEX_NOAUTH_NETWORKS}"
-              #PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
+              PLEX_CLAIM: "${SECRET_PLEX_CLAIM}"
               # https://support.plex.tv/articles/201105343-advanced-hidden-server-settings/
               PLEX_PREFERENCE_1: "FriendlyName=Hampstead"
               PLEX_PREFERENCE_2: "BackgroundTranscodeLowPriority=1"
