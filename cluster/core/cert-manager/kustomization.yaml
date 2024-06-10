@@ -5,4 +5,5 @@ resources:
   - prometheus-rule.yaml
   - letsencrypt-production.yaml
   - letsencrypt-staging.yaml
-  - secret.sops.yaml
+  - secret-cloudflareapi.sops.yaml
+  - secret-pkcs12.sops.yaml
