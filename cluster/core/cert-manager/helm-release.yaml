@@ -10,7 +10,7 @@ spec:
     spec:
       # renovate: registryUrl=https://charts.jetstack.io/
       chart: cert-manager
-      version: v1.14.5
+      version: v1.15.0
       sourceRef:
         kind: HelmRepository
         name: jetstack-charts
@@ -24,17 +24,17 @@ spec:
     installCRDs: true
     webhook:
       enabled: true
-    extraArgs:
-      - --dns01-recursive-nameservers=1.1.1.1:53,9.9.9.9:53
-      - --dns01-recursive-nameservers-only
-    replicaCount: 1
-    podDnsPolicy: "None"
-    podDnsConfig:
-      nameservers:
-        - "1.1.1.1"
-        - "9.9.9.9"
+    dns01RecursiveNameservers: https://1.1.1.1:443/dns-query,https://1.0.0.1:443/dns-query
+    dns01RecursiveNameserversOnly: true
+
     prometheus:
       enabled: true
       servicemonitor:
         enabled: true
         prometheusInstance: monitoring
+
+    config:
+      apiVersion: controller.config.cert-manager.io/v1alpha1
+      kind: ControllerConfiguration
+      featureGates:
+        AdditionalCertificateOutputFormats: true
