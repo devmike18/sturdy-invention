@@ -47,7 +47,7 @@ spec:
                 memory: 500M
                 cpu: 15m
               limits:
-                memory: 1390M
+                memory: 1250M
             env:
               RUNAS_UID0: "false"
               UNIFI_UID: "999"
@@ -94,11 +94,9 @@ spec:
         externalTrafficPolicy: Local
         controller: unifi
         ports:
-          http:
-            port: 12345
           https:
             port: 8443
-            protocol: HTTPS
+            protocol: TCP
             primary: true
           controller:
             enabled: true
@@ -107,11 +105,11 @@ spec:
           portal-http:
             enabled: true
             port: 8880
-            protocol: HTTP
+            protocol: TCP
           portal-https:
             enabled: true
             port: 8843
-            protocol: HTTPS
+            protocol: TCP
           speedtest:
             enabled: true
             port: 6789
