@@ -95,6 +95,8 @@ spec:
         externalTrafficPolicy: Local
         controller: unifi
         ports:
+          http:
+            port: 12345        
           https:
             port: 8443
             protocol: TCP
