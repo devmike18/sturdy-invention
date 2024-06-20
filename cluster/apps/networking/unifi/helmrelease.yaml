@@ -106,11 +106,11 @@ spec:
           portal-http:
             enabled: true
             port: 8880
-            protocol: TCP
+            protocol: HTTP
           portal-https:
             enabled: true
             port: 8843
-            protocol: TCP
+            protocol: HTTPS
           speedtest:
             enabled: true
             port: 6789
