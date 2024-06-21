@@ -90,21 +90,19 @@ spec:
       app:
         enabled: true
         type: LoadBalancer
-        externalIPs:
-          - ${METALLB_UNIFI_ADDR}
+        loadBalancerIP: ${METALLB_UNIFI_ADDR}
         externalTrafficPolicy: Local
         controller: unifi
         ports:
           http:
-            port: 12345        
-          https:
-            port: 8443
-            protocol: TCP
-            primary: true
-          controller:
             enabled: true
             port: 8080
             protocol: TCP
+          https:
+            enabled: true
+            port: 8443
+            protocol: HTTPS
+            primary: true
           portal-http:
             enabled: true
             port: 8880
