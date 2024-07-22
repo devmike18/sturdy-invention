@@ -11,3 +11,4 @@ spec:
   backupOwnerReference: self
   cluster:
     name: cluster-immich
+    namespace: media
