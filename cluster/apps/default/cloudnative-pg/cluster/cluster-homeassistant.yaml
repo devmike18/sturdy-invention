@@ -52,6 +52,7 @@ spec:
         maxParallel: 8
       destinationPath: s3://pgbackup/homeassistant
       endpointURL: "http://${NFS_SERVER}:9000"
+      retentionPolicy: "30d"
       s3Credentials:
         accessKeyId:
           name: secret-cloudnative-pg-admin
