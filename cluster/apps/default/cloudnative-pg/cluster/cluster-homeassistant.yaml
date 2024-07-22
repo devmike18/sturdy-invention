@@ -47,6 +47,11 @@ spec:
   backup:
     retentionPolicy: 30d
     barmanObjectStore:
+      data:
+        compression: gzip
+        encryption: AES256
+        immediateCheckpoint: false
+        jobs: 2
       wal:
         compression: bzip2
         maxParallel: 8
