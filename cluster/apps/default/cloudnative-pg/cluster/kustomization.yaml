@@ -7,4 +7,5 @@ resources:
   - secret-cloudnativepg.sops.yaml
   - secret-homeassistant.sops.yaml
   - prometheus-rule.yaml
-  - scheduledbackup.yaml
+  - scheduledbackup-homeassistant.yaml
+  - scheduledbackup-prometheus.yaml
