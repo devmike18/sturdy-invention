@@ -8,4 +8,4 @@ resources:
   - secret-homeassistant.sops.yaml
   - prometheus-rule.yaml
   - scheduledbackup-homeassistant.yaml
-  - scheduledbackup-prometheus.yaml
+  - scheduledbackup-immich.yaml
