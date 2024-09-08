@@ -17,4 +17,4 @@ resources:
   # flux kustomizations
   - ./youtubedl-material/ks.yaml
   - ./bazarr/ks.yaml
-  - ./immich/ks.yaml
+  # - ./immich/ks.yaml
