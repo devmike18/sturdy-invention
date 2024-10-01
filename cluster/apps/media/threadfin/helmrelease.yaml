@@ -39,7 +39,7 @@ spec:
           app:
             image:
               repository: fyb3roptik/threadfin
-              tag: 1.1.16@sha256:e594e9e537988b4ff564eeed45f3116ee90d99116a4213dddb32154147682897
+              tag: 1.2.8@sha256:6eda42f6e56113b84af7d4ea97a6c28188de7b381ca06371eacdf1b826f04e4e
             env:
               TZ: "${TZ}"
               THREADFIN_PORT: 34400
