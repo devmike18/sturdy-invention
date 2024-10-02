@@ -88,65 +88,65 @@ spec:
               - --extensions-dir
               - "/config/.vscode"
 
-          whisper: # Speech to Text
-            image:
-              repository: rhasspy/wyoming-whisper
-              pullPolicy: IfNotPresent
-              tag: 2.1.0@sha256:d7485aded378780c4bf67d1f6d4950faad5fd5ddbaa2a7ddb5056012560f033e
-            env:
-              TZ: ${TZ}
-            args:
-              - --model
-              - "small"
-              - --language
-              - "en"
-              - --beam-size
-              - "1"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 396Mi
-              limits:
-                cpu: 500m
-                memory: 512Gi
+          # whisper: # Speech to Text
+          #   image:
+          #     repository: rhasspy/wyoming-whisper
+          #     pullPolicy: IfNotPresent
+          #     tag: 2.1.0@sha256:d7485aded378780c4bf67d1f6d4950faad5fd5ddbaa2a7ddb5056012560f033e
+          #   env:
+          #     TZ: ${TZ}
+          #   args:
+          #     - --model
+          #     - "small"
+          #     - --language
+          #     - "en"
+          #     - --beam-size
+          #     - "1"
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 396Mi
+          #     limits:
+          #       cpu: 500m
+          #       memory: 512Gi
 
-          piper: # Text to Speech
-            image:
-              repository: rhasspy/wyoming-piper
-              pullPolicy: IfNotPresent
-              tag: 1.5.0@sha256:b6bf208855f26168790ed336ad16576b2fb290f31b51fb98aca496a45561516f
-            env:
-              TZ: ${TZ}
-            args:
-              - --voice
-              - "en-us-libritts-high"
-            resources:
-              requests:
-                cpu: 10m
-                memory: 64Mi
-              limits:
-                cpu: 500m
-                memory: 256Gi
+          # piper: # Text to Speech
+          #   image:
+          #     repository: rhasspy/wyoming-piper
+          #     pullPolicy: IfNotPresent
+          #     tag: 1.5.0@sha256:b6bf208855f26168790ed336ad16576b2fb290f31b51fb98aca496a45561516f
+          #   env:
+          #     TZ: ${TZ}
+          #   args:
+          #     - --voice
+          #     - "en-us-libritts-high"
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 64Mi
+          #     limits:
+          #       cpu: 500m
+          #       memory: 256Gi
 
-          openwakeword: # Text to Speech
-            image:
-              repository: rhasspy/wyoming-openwakeword
-              pullPolicy: IfNotPresent
-              tag: 1.10.0@sha256:3165a5cd8aef84beb882e640aa1f5c01c97f8c0b1f50016164ecdf2ab65d033a
-            env:
-              TZ: ${TZ}
-            args:
-              - --preload-model
-              - ok_nabu
-              - --custom-model-dir
-              - /custom
-            resources:
-              requests:
-                cpu: 10m
-                memory: 64Mi
-              limits:
-                cpu: 500m
-                memory: 256Gi
+          # openwakeword: # Text to Speech
+          #   image:
+          #     repository: rhasspy/wyoming-openwakeword
+          #     pullPolicy: IfNotPresent
+          #     tag: 1.10.0@sha256:3165a5cd8aef84beb882e640aa1f5c01c97f8c0b1f50016164ecdf2ab65d033a
+          #   env:
+          #     TZ: ${TZ}
+          #   args:
+          #     - --preload-model
+          #     - ok_nabu
+          #     - --custom-model-dir
+          #     - /custom
+          #   resources:
+          #     requests:
+          #       cpu: 10m
+          #       memory: 64Mi
+          #     limits:
+          #       cpu: 500m
+          #       memory: 256Gi
 
     service:
       app:
@@ -161,55 +161,55 @@ spec:
           http:
             enabled: true
             port: 8080
-      whisper:
-        type: ClusterIP
-        controller: homeassistant
-        ports:
-          whisper:
-            port: 10300
-      piper:
-        type: ClusterIP
-        controller: homeassistant
-        ports:
-          piper:
-            port: 10200
-      openwakeword:
-        type: ClusterIP
-        controller: homeassistant
-        ports:
-          openwakeword:
-            port: 10400
+      # whisper:
+      #   type: ClusterIP
+      #   controller: homeassistant
+      #   ports:
+      #     whisper:
+      #       port: 10300
+      # piper:
+      #   type: ClusterIP
+      #   controller: homeassistant
+      #   ports:
+      #     piper:
+      #       port: 10200
+      # openwakeword:
+      #   type: ClusterIP
+      #   controller: homeassistant
+      #   ports:
+      #     openwakeword:
+      #       port: 10400
 
     persistence:
       config:
         enabled: true
         existingClaim: home-assistant-config-v1
-      whisper-data:
-        enabled: true
-        type: emptyDir
-        advancedMounts:
-          homeassistant:
-            piper:
-              - path: /data
-                readOnly: false
-      piper-data:
-        enabled: true
-        type: emptyDir
-        advancedMounts:
-          homeassistant:
-            whisper:
-              - path: /data
-                readOnly: false
-      openwakeword:
-        enabled: true
-        existingClaim: openwakeword-data-v1
-        advancedMounts:
-          homeassistant:
-            openwakeword:
-              - path: /data
-                subPath: data
-              - path: /custom
-                subPath: custom
+      # whisper-data:
+      #   enabled: true
+      #   type: emptyDir
+      #   advancedMounts:
+      #     homeassistant:
+      #       piper:
+      #         - path: /data
+      #           readOnly: false
+      # piper-data:
+      #   enabled: true
+      #   type: emptyDir
+      #   advancedMounts:
+      #     homeassistant:
+      #       whisper:
+      #         - path: /data
+      #           readOnly: false
+      # openwakeword:
+      #   enabled: true
+      #   existingClaim: openwakeword-data-v1
+      #   advancedMounts:
+      #     homeassistant:
+      #       openwakeword:
+      #         - path: /data
+      #           subPath: data
+      #         - path: /custom
+      #           subPath: custom
     ingress:
       app:
         enabled: true
