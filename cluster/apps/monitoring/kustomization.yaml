@@ -6,7 +6,7 @@ resources:
   - grafana
   - thanos
   - botkube
-  - loki
+  #- loki
   - exportarr
   - promtail
   - snmp-exporter-switch-0
