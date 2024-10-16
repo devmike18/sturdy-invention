@@ -57,7 +57,6 @@ spec:
     ingressClass:
       enabled: true
       isDefaultClass: true
-      fallbackApiVersion: v1
       name: traefik
 
     # ICK, I really don't like crossing my config with my deploy like this Traefik!!!!!!!
