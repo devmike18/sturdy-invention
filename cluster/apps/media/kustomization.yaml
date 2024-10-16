@@ -5,14 +5,14 @@ resources:
   #Pre-flux kustomizations (todo)
   - media-pv.yaml
   - jellyfin
-  - plex
+  #- plex
   - radarr
   - sonarr
   - qbittorrent
   - prowlarr
   # - bazarr
   - overseerr
-  - threadfin
+  #- threadfin
   #- immich
   # flux kustomizations
   - ./youtubedl-material/ks.yaml
