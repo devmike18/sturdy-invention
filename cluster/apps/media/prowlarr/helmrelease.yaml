@@ -78,7 +78,7 @@ spec:
           hajimari.io/enable: "true"
           hajimari.io/icon: "mdi:folder-search-outline"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+          #traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
 
         hosts:
