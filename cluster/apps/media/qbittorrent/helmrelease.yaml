@@ -125,7 +125,7 @@ spec:
           hajimari.io/icon: "mdi:cloud-download"
           hajimari.io/appName: "QBittorrent"
           traefik.ingress.kubernetes.io/router.entrypoints: "websecure"
-          traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
+          #traefik.ingress.kubernetes.io/router.middlewares: "networking-sso@kubernetescrd"
           cert-manager.io/cluster-issuer: "letsencrypt-production"
 
         hosts:
