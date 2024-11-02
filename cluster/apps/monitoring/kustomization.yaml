@@ -5,16 +5,16 @@ resources:
   # Pre-flux kustomizations (todo)
   - grafana
   #- thanos
-  - botkube
+  #- botkube
   #- loki
   #- exportarr
   #- promtail
   #- snmp-exporter-switch-0
   #- snmp-exporter-gw-0
   #- snmp-exporter-idrac
-  - synology-exporter-nas02
+  #- synology-exporter-nas02
   # flux kustomizations
-  - ./kube-prometheus-stack/ks.yaml
+  #- ./kube-prometheus-stack/ks.yaml
   #- ./prometheus-pve-exporter/ks.yaml
-  - ./speedtest-exporter/ks.yaml
-  - ./unifi-poller/ks.yaml
+  #- ./speedtest-exporter/ks.yaml
+  #- ./unifi-poller/ks.yaml
