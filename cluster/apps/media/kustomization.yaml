@@ -3,18 +3,18 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   #Pre-flux kustomizations (todo)
-  - media-pv.yaml
-  - jellyfin
+  #- media-pv.yaml
+    #- jellyfin
   #- plex
-  - radarr
-  - sonarr
-  - qbittorrent
-  - prowlarr
+  #- radarr
+  #- sonarr
+  #- qbittorrent
+  #- prowlarr
   # - bazarr
-  - overseerr
+  #- overseerr
   #- threadfin
   #- immich
   # flux kustomizations
-  - ./youtubedl-material/ks.yaml
-  - ./bazarr/ks.yaml
+  #- ./youtubedl-material/ks.yaml
+  #- ./bazarr/ks.yaml
   # - ./immich/ks.yaml
