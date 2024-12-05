@@ -15,7 +15,7 @@ spec:
     matchExpressions:
       - {key: node-role.kubernetes.io/control-plane, operator: DoesNotExist}
   prepare:
-    image: rancher/k3s-upgrade:v1.30.2-k3s1-amd64@sha256:36d6d360cd64d2d2d0dd45a722e2d12f78f92590343e32d494eff9401e4f181e
+    image: rancher/k3s-upgrade:v1.31.3-k3s1-amd64@sha256:7f3cccd130247677c48cbd01dff93ad63185068eb3d931a053f6275271b400ae
     args: ["prepare", "k3s-server"]
   upgrade:
-    image: rancher/k3s-upgrade:v1.30.2-k3s1-amd64@sha256:36d6d360cd64d2d2d0dd45a722e2d12f78f92590343e32d494eff9401e4f181e
+    image: rancher/k3s-upgrade:v1.31.3-k3s1-amd64@sha256:7f3cccd130247677c48cbd01dff93ad63185068eb3d931a053f6275271b400ae
