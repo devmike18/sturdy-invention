@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: ghcr.io/onedr0p/prowlarr-develop
-              tag: 1.20.0.4590@sha256:ff536a040340ad7382f31bcb1a1a91ced08da25d4138db63dd4b77cc3748ce92
+              tag: 1.30.0.4920@sha256:d204db1e4b73aa61600162da74ec85062acc54b0a7ee4f44444fab9b68816509
 
             env:
               TZ: "${TZ}"
