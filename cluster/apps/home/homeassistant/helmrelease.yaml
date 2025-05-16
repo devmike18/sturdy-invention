@@ -50,7 +50,7 @@ spec:
             image:
               repository: ghcr.io/home-assistant/home-assistant
               pullPolicy: IfNotPresent
-              tag: 2024.7.3@sha256:f8f13f6da9b38f6e33b9c40fded2a84ccd13ad69eb2a7e53bb045778fbccc229
+              tag: 2025.5.2@sha256:aa0d85544d00f135e6db6ab81f3ba3775e02715526fb524f0c8c67eaba31002b
             probes:
               liveness:
                 enabled: false
