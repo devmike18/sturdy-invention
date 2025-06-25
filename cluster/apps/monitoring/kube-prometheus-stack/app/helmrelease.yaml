@@ -526,7 +526,7 @@ spec:
                   storage: 15Gi
 
         thanos:
-          image: quay.io/thanos/thanos:v0.35.1@sha256:3c0ba6e10128e044f47fc4fcfd7652e4a5801a314415c49beedc1f19c364915f
+          image: quay.io/thanos/thanos:v0.39.0@sha256:cf5ec774f031046485790d6ad03fe1ed927345714b8a4681febc970e32c81aac
           # renovate: depName=quay.io/thanos/thanos datasource=docker
           version: "0.34.0"
           objectStorageConfig:
