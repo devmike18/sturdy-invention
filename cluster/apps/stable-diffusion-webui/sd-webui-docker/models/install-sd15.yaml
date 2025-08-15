@@ -8,7 +8,7 @@ spec:
     spec:
       containers:
         - name: downloader
-          image: busybox:1@sha256:768e5c6f5cb6db0794eec98dc7a967f40631746c32232b78a3105fb946f3ab83
+          image: busybox:1@sha256:ab33eacc8251e3807b85bb6dba570e4698c3998eca6f0fc2ccb60575a563ea74
           volumeMounts:
             - name: shared-models
               mountPath: /shared-models
