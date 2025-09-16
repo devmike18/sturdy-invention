@@ -15,7 +15,7 @@ spec:
     spec:
       initContainers:
         - name: init-fix-permissions
-          image: busybox:1@sha256:768e5c6f5cb6db0794eec98dc7a967f40631746c32232b78a3105fb946f3ab83
+          image: busybox:1@sha256:d82f458899c9696cb26a7c02d5568f81c8c8223f8661bb2a7988b269c8b9051e
           volumeMounts:
             - name: shared-embeddings
               mountPath: /shared-embeddings
