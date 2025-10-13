@@ -46,7 +46,7 @@ spec:
           app:
             image:
               repository: docker.io/nodered/node-red
-              tag: 4.0.2@sha256:5df8027df1f7f1bc2e87f7b78f6caa5edb1b4f2ddf9e7321cb9358b27f3d51b3
+              tag: 4.1.1@sha256:a840dff7e3f704466600d9e4660d46a9f795c589bf9be20a5727c636a8125563
             probes:
               liveness:
                 enabled: false
