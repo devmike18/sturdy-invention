@@ -41,7 +41,7 @@ spec:
           app:
             image:
               repository: jellyfin/jellyfin
-              tag: 10.9.7@sha256:76930362d2c266e8f0b2f51f1c6b039a5207525d0e138a1cdbec870c66c34b0f
+              tag: 10.11.1@sha256:c7dd335d455c95ad3fe7550824d93ceb911914bf4210e7899e11f9611ae53a92
             env:
               TZ: "${TZ}"
               JELLYFIN_CACHE_DIR: "/config/cache"
