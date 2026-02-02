@@ -38,7 +38,7 @@ spec:
           app:
             image:
               repository: ghcr.io/tarampampam/error-pages
-              tag: 3.3.0@sha256:43c9917e99ac1bb4df3c4e037327637e502e2ab4c3d84803b223d5b7db6d4cd7
+              tag: 3.8.0@sha256:6fda7ff61de68b3b188538221f718d834fd9aa6ddaf0c13044febc6100515fd1
             nameOverride: error-pages
             env:
               TEMPLATE_NAME: shuffle
