@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: downloader
-          image: busybox:1@sha256:768e5c6f5cb6db0794eec98dc7a967f40631746c32232b78a3105fb946f3ab83
+          image: busybox:1@sha256:b3255e7dfbcd10cb367af0d409747d511aeb66dfac98cf30e97e87e4207dd76f
           volumeMounts:
             - name: shared-embeddings
               mountPath: /shared-embeddings
