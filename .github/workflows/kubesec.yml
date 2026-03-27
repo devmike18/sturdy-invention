@@ -49,6 +49,6 @@ jobs:
           retention-days: 5          
 
       - name: Upload Kubesec scan results to GitHub Security tab
-        uses: github/codeql-action/upload-sarif@ebcb5b36ded6beda4ceefea6a8bc4cc885255bb3 # v3
+        uses: github/codeql-action/upload-sarif@13efb23391a0eb7aed73154e3ffd112417aedcf2 # v3
         with:
           sarif_file: kubesec-results.sarif
