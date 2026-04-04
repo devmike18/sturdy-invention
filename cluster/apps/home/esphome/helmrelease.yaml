@@ -55,7 +55,7 @@ spec:
             image:
               repository: codercom/code-server
               pullPolicy: IfNotPresent
-              tag: 4.93.1@sha256:c69e398d1b64589b3b77a7becfd03f4ec524982def20e6bffbb51b1b839e72ba
+              tag: 4.114.0@sha256:14e279b1e741d58d99b8afb1b24fa6cb0a433a3edf58bf271720e4d4ace225af
             env:
               TZ: ${TZ}
             args:
