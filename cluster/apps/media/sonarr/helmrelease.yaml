@@ -56,7 +56,7 @@ spec:
             image:
               repository: ghcr.io/onedr0p/sonarr
               pullPolicy: IfNotPresent
-              tag: 4.0.9.2244@sha256:2740c331757564877a344cdad41a9a092b36f0680f5f0133bcc971b0b2bd1f84
+              tag: 4.0.14.2938@sha256:f82e69b2d290877b89c2bcae9928df7ed74e05ab3cba905ecaeced85f4f1f2c6
             env:
               TZ: "${TZ}"
               SONARR__AUTHENTICATION_METHOD: "External"
