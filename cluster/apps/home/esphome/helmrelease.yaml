@@ -44,7 +44,7 @@ spec:
           app:
             image:
               repository: ghcr.io/esphome/esphome
-              tag: 2024.7.1@sha256:e7ab6a50806dfe787192077914986469edb24215290f4a0f5df86253281ae6a8
+              tag: 2026.9.0@sha256:f6509fcf917a732fd80058567b237d5b9286b9dc6c8dde1b655fbb69ebd600ad
             env:
               ESPHOME_DASHBOARD_USE_PING: "true"
               PLATFORMIO_CORE_DIR: .plattformio  # Running as non-root, so we need to change the default location
