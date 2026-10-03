@@ -35,7 +35,7 @@ jobs:
           token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Verify Renovate Configuration
-        uses: suzuki-shunsuke/github-action-renovate-config-validator@c22827f47f4f4a5364bdba19e1fe36907ef1318e # v1.1.1
+        uses: suzuki-shunsuke/github-action-renovate-config-validator@394f7a3d2641cad2995938f9dc7e54580c8a7089 # v2.3.0
       
       - name: Override default config from dispatch variables
         run: |
