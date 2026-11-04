@@ -40,7 +40,7 @@ spec:
           app:
             image:
               repository: jacobalberty/unifi
-              tag: v8.4.62@sha256:a107953e86227abd2fee4eff85c674337a0c08f704b14d7fe5c707f3ee4fd19e
+              tag: v10.0.162@sha256:896c0ab82d33300694dae82982fd7094497afcbea0be92cadc1e94bfead731d3
               pullPolicy: IfNotPresent
             resources:
               requests:
