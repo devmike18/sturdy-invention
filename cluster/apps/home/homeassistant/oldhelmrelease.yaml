@@ -25,7 +25,7 @@ spec:
     image:
       repository: ghcr.io/home-assistant/home-assistant
       pullPolicy: IfNotPresent
-      tag: 2024.7.3@sha256:f8f13f6da9b38f6e33b9c40fded2a84ccd13ad69eb2a7e53bb045778fbccc229
+      tag: 2026.11.2@sha256:493a07e8f6530fc640223f4a0a5248f20a61ca2f718bb1d31efbf08a2c5ea28f
 
     env:
       TZ: "${TZ}"
