@@ -30,7 +30,7 @@ spec:
           app:
             image:
               repository: ghcr.io/unpoller/unpoller
-              tag: v2.11.2@sha256:73b39c0b3b8fa92aa82a7613d3486253ffbd8c057833b4621402a268159bf2a2
+              tag: v5.10.2@sha256:1bd77eecb10f00c2f57d33a63fc1b3ccca73f3b5f0a9d13d2f9ab467e32bd6fb
             env:
               TZ: "${TZ}"
               UP_UNIFI_DEFAULT_URL: "https://unifi.networking.svc.cluster.local:8443/"
